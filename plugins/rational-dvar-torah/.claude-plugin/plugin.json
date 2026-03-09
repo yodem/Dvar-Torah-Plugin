@@ -1,6 +1,6 @@
 {
   "name": "rational-dvar-torah",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "כלי לכתיבת דבר תורה רציונלי/פילוסופי עם מקורות מהפילוסופיה היהודית — רמב״ם, רס״ג, רלב״ג, קרשקש, רמח״ל ועוד. משתמש ב-Sefaria MCP למחקר מקורות.",
   "skills": "./skills/",
   "commands": "./commands/"
