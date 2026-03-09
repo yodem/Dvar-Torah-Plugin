@@ -1,11 +1,23 @@
 ---
 name: source-research
-description: מחקר מקורות מעמיק בספריית ספריא עבור דבר תורה פילוסופי
+license: MIT
+compatibility: "Claude Code 2.1.59+."
+author: yodem
+description: מחקר מקורות מעמיק בספריית ספריא עבור דבר תורה פילוסופי. Use when searching Jewish texts, finding sources in Sefaria, or building a source bibliography.
 version: 1.0.0
-complexity: medium
+tags: [sefaria, source-research, jewish-texts, bibliography]
 user-invocable: false
-mcp-dependencies:
-  - sefaria
+disable-model-invocation: false
+context: fork
+complexity: medium
+metadata:
+  category: research
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - mcp__sefaria__*
+  - mcp__memory__*
 ---
 
 # מחקר מקורות — Source Research

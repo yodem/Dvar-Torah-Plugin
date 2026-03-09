@@ -1,17 +1,26 @@
 ---
 name: dvar-torah-writer
-description: כתיבת דבר תורה רציונלי/פילוסופי מקיף עם מקורות מהוגי הפילוסופיה היהודית
+license: MIT
+compatibility: "Claude Code 2.1.59+."
+author: yodem
+description: כתיבת דבר תורה רציונלי/פילוסופי מקיף עם מקורות מהוגי הפילוסופיה היהודית. Use when writing a Dvar Torah, preparing a Torah lecture, analyzing a parsha philosophically, or exploring Jewish philosophical texts.
 version: 1.0.0
-complexity: high
+tags: [dvar-torah, jewish-philosophy, rambam, sefaria, mussar, rationalism]
 user-invocable: true
-mcp-dependencies:
-  - sefaria
-  - memory
-  - sequential-thinking
-skills-dependencies:
-  - source-research
-  - philosophical-analysis
-  - mussar-ethics
+context: fork
+complexity: high
+metadata:
+  category: content-creation
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebFetch
+  - mcp__sefaria__*
+  - mcp__sequential-thinking__*
+  - mcp__memory__*
 ---
 
 # דבר תורה רציונלי — כותב ראשי

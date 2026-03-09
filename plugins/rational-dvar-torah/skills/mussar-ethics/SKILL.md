@@ -1,11 +1,22 @@
 ---
 name: mussar-ethics
-description: שילוב ממד מוסרי-מעשי מספרות המוסר בדבר תורה
+license: MIT
+compatibility: "Claude Code 2.1.59+."
+author: yodem
+description: שילוב ממד מוסרי-מעשי מספרות המוסר בדבר תורה. Use when adding ethical dimensions from Mussar literature, integrating Mesillat Yesharim, Chovot HaLevavot, or other Mussar texts.
 version: 1.0.0
-complexity: medium
+tags: [mussar, ethics, middot, mesillat-yesharim, ramchal]
 user-invocable: false
-mcp-dependencies:
-  - sefaria
+disable-model-invocation: false
+context: fork
+complexity: medium
+metadata:
+  category: ethics
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - mcp__sefaria__*
 ---
 
 # מוסר ואתיקה — Mussar & Ethics

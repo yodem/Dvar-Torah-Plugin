@@ -1,12 +1,23 @@
 ---
 name: philosophical-analysis
-description: ניתוח פילוסופי מעמיק של סוגיות במחשבת ישראל
+license: MIT
+compatibility: "Claude Code 2.1.59+."
+author: yodem
+description: ניתוח פילוסופי מעמיק של סוגיות במחשבת ישראל. Use when analyzing theological questions, comparing philosophical positions of Jewish thinkers, or building dialectical arguments.
 version: 1.0.0
-complexity: high
+tags: [philosophy, theology, analysis, jewish-thought, dialectics]
 user-invocable: false
-mcp-dependencies:
-  - sefaria
-  - sequential-thinking
+disable-model-invocation: false
+context: fork
+complexity: high
+metadata:
+  category: analysis
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - mcp__sefaria__*
+  - mcp__sequential-thinking__*
 ---
 
 # ניתוח פילוסופי — Philosophical Analysis
