@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "mcp__sefaria__*",
+      "mcp__memory__*",
+      "mcp__sequential-thinking__*"
+    ]
+  },
+  "env": {
+    "SEFARIA_MCP_PORT": "8089"
+  }
+}

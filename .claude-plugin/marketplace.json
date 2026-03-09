@@ -1,0 +1,12 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/anthropics/claude-code-plugins@main/schemas/marketplace.schema.json",
+  "plugin": "plugins/rational-dvar-torah",
+  "metadata": {
+    "name": "Rational Dvar Torah",
+    "author": "yodem",
+    "description": "Write philosophical Dvar Torah rooted in rationalist Jewish thought — Rambam, Rasag, Ralbag, Crescas, Ramchal, and more. Powered by Sefaria MCP.",
+    "tags": ["jewish-philosophy", "dvar-torah", "sefaria", "rambam", "mussar", "rationalism"],
+    "category": "Content",
+    "scope": ["Jewish Philosophy", "Torah Commentary", "Mussar", "Philosophical Analysis"]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "rational-dvar-torah-plugin",
+  "version": "1.0.0",
+  "description": "Claude Code plugin for writing rational/philosophical Dvar Torah using Sefaria MCP",
+  "author": "yodem",
+  "license": "MIT",
+  "scripts": {
+    "build": "bash scripts/build-plugin.sh"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
