@@ -16,7 +16,7 @@ allowed-tools:
   - Read
   - Glob
   - Grep
-  - mcp__sefaria__*
+  - mcp__claude_ai_Sefaria__*
 ---
 
 # מוסר ואתיקה — Mussar & Ethics

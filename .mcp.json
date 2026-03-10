@@ -1,13 +1,5 @@
 {
   "mcpServers": {
-    "sefaria": {
-      "type": "sse",
-      "url": "http://localhost:8089/sse",
-      "description": "Sefaria Jewish Library — access texts, search, cross-references, calendar, manuscripts",
-      "autoInvoke": {
-        "confidence": 0.8
-      }
-    },
     "sequential-thinking": {
       "command": "npx",
       "args": ["@anthropic/sequential-thinking"],

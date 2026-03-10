@@ -13,7 +13,7 @@ tools:
   - WebFetch
   - WebSearch
   - AskUserQuestion
-  - mcp__sefaria__*
+  - mcp__claude_ai_Sefaria__*
   - mcp__sequential-thinking__*
   - mcp__memory__*
 skills:

@@ -19,7 +19,7 @@ allowed-tools:
   - Grep
   - WebFetch
   - WebSearch
-  - mcp__sefaria__*
+  - mcp__claude_ai_Sefaria__*
   - mcp__sequential-thinking__*
   - mcp__memory__*
 ---

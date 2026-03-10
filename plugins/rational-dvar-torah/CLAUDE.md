@@ -42,7 +42,7 @@
 
 ## MCP Dependencies
 
-- **sefaria** (required): ספריית ספריא — 15 כלים לטקסטים, חיפוש, קשרים, לוח, כתבי יד
+- **claude_ai_Sefaria** (required, via Claude connector): ספריית ספריא — 15 כלים לטקסטים, חיפוש, קשרים, לוח, כתבי יד
 - **sequential-thinking** (recommended): חשיבה מורכבת לניתוח פילוסופי
 - **memory** (optional): זיכרון — דפוסי כתיבה, נושאים חוזרים
 
