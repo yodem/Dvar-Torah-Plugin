@@ -1,0 +1,28 @@
+{
+  "name": "dvar-torah-plugin",
+  "version": "3.0.0",
+  "description": "Write Dvar Torah, posts, and shiurim across all major Jewish thought streams — philosophy, kabbalah, hasidut, hazal, and modern scholars. Powered by Sefaria MCP.",
+  "author": {
+    "name": "yodem",
+    "url": "https://github.com/yodem"
+  },
+  "homepage": "https://github.com/yodem/Rational-Dvar-Torah-Plugin",
+  "repository": "https://github.com/yodem/Rational-Dvar-Torah-Plugin",
+  "license": "MIT",
+  "keywords": [
+    "jewish-philosophy",
+    "dvar-torah",
+    "sefaria",
+    "rambam",
+    "kabbalah",
+    "hasidut",
+    "hazal",
+    "mussar",
+    "rationalism",
+    "shiur",
+    "torah",
+    "jewish-thought"
+  ],
+  "skills": "./skills/",
+  "commands": "./commands/"
+}
