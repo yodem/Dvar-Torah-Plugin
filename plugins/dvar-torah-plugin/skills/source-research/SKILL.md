@@ -17,7 +17,6 @@ allowed-tools:
   - Glob
   - Grep
   - mcp__claude_ai_Sefaria__*
-  - mcp__memory__*
 ---
 
 # מחקר מקורות — Source Research

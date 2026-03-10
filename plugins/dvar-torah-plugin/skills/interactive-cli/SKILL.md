@@ -16,6 +16,7 @@ allowed-tools:
   - Read
   - Glob
   - Grep
+  - AskUserQuestion
   - mcp__claude_ai_Sefaria__*
   - mcp__memory__*
 ---

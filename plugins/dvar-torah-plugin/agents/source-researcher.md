@@ -9,7 +9,6 @@ tools:
   - Glob
   - Grep
   - mcp__claude_ai_Sefaria__*
-  - mcp__memory__*
 skills:
   - source-research
 allowed_tasks:

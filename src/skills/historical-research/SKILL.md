@@ -16,8 +16,6 @@ allowed-tools:
   - Read
   - Glob
   - Grep
-  - WebFetch
-  - WebSearch
   - mcp__claude_ai_Sefaria__*
   - mcp__sequential-thinking__*
 ---
@@ -91,8 +89,8 @@ get_text_catalogue_info(<ref>)  → מידע ביבליוגרפי
 ```
 english_semantic_search("ancient near east parallel to <topic>")
 text_search("<keyword>")
-WebSearch("<topic> ancient near east parallel")
-WebSearch("<topic> biblical archaeology")
+english_semantic_search("<topic> archaeology ancient")
+english_semantic_search("<topic> comparative ancient near east")
 ```
 
 ### 3. חיפוש פרשנות קלאסית
@@ -105,8 +103,8 @@ search_in_book("Kuzari", <topic>)
 
 ### 4. חיפוש מחקר מודרני
 ```
-WebSearch("<topic> Jewish philosophy research")
-WebSearch("<scholar name> <topic>")
+english_semantic_search("<topic> Jewish philosophy research")
+english_semantic_search("<scholar name> <topic>")
 ```
 
 ## פורמט פלט

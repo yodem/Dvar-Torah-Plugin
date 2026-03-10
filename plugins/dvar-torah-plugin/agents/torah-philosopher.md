@@ -10,8 +10,6 @@ tools:
   - Edit
   - Glob
   - Grep
-  - WebFetch
-  - WebSearch
   - AskUserQuestion
   - mcp__claude_ai_Sefaria__*
   - mcp__sequential-thinking__*

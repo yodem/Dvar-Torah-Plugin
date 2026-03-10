@@ -129,7 +129,7 @@ text_search(query, categories=["Talmud"])
 
 **הנחיות מחקר**:
 ```
-# ANE + academic — לרוב דרך WebSearch/WebFetch
+# ANE + academic — דרך english_semantic_search ו-Sefaria
 # Sefaria לטקסטים המקראיים עצמם
 get_text("Genesis 1:1-2:3")  # להשוואה עם ענומה אליש
 get_text("Exodus 21:1-24:18")  # להשוואה עם חמורבי
