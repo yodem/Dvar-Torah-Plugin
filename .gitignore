@@ -1,4 +1,4 @@
 node_modules/
-.claude/memory/
+.claude/
 *.tmp
 .DS_Store
