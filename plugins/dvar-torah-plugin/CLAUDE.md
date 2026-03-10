@@ -1,23 +1,37 @@
-# דבר תורה — Dvar Torah Plugin v3.0
+# דבר תורה — Dvar Torah Plugin v4.0
+
+## Architecture — Parallel Agent Orchestration
+
+```
+Phase 1 — Research (parallel, haiku)          ~15s
+  ├── previous-analyzer     ← scan output/ for patterns
+  ├── source-researcher     ← Sefaria lookups
+  ├── historical-researcher ← ANE, archaeology (conditional)
+  └── source-researcher     ← mussar sources (conditional)
+
+Phase 2 — Analysis + Verification (parallel)  ~20s
+  ├── philosophical-analyzer ← sonnet: deep reasoning
+  └── source-verifier        ← haiku: verify citations
+
+Phase 3 — Writing (opus)                      ~30s
+  └── torah-writer           ← compose final piece
+```
 
 ## Agent Routing Index
 
-| בקשה | סוכן | מיומנות |
-|------|------|---------|
-| כתוב דבר תורה / Write a dvar torah | torah-philosopher | interactive-cli → dvar-torah-writer |
-| כתוב פוסט / Write a post | torah-philosopher | interactive-cli → dvar-torah-writer |
-| הכן שיעור / Prepare a shiur | torah-philosopher | interactive-cli → dvar-torah-writer |
-| חפש מקורות / Find sources | source-researcher | source-research |
-| נתח פילוסופית / Analyze philosophically | torah-philosopher | philosophical-analysis |
-| הוסף מוסר / Add mussar | torah-philosopher | mussar-ethics |
-| חקור הקשר היסטורי / Historical context | torah-philosopher | historical-research |
-| אמת מקורות / Verify sources | source-researcher | source-references |
-| נתח כתיבות קודמות / Analyze previous | torah-philosopher | previous-analysis |
+| בקשה | סוכן | Model | תפקיד |
+|------|------|-------|-------|
+| כתוב דבר תורה | torah-writer | **opus** | כתיבה סופית בלבד |
+| חפש מקורות | source-researcher | **haiku** | חיפוש ב-Sefaria |
+| נתח קודמים | previous-analyzer | **haiku** | סריקת דפוסים |
+| חקור היסטורי | historical-researcher | **haiku** | הקשר תרבותי |
+| נתח פילוסופית | philosophical-analyzer | **sonnet** | ניתוח ודיאלוג |
+| אמת מקורות | source-verifier | **haiku** | אימות ציטוטים |
 
 ## Quick Start
 
 ```
-/dvar-torah                                              ← אשף אינטראקטיבי (שפה + אוריינטציה + נושא)
+/dvar-torah                                              ← אשף אינטראקטיבי
 /dvar-torah פרשת בראשית                                   ← פרשה ספציפית
 /dvar-torah פורמט: פוסט, נושא: השגחה                       ← פוסט קצר
 /dvar-torah פורמט: שיעור, אורך: שיעור, נושא: נבואה         ← שיעור 45 דק
@@ -26,85 +40,65 @@
 /dvar-torah סוג: מחקרי, נושא: חוקי חמורבי בפרשת משפטים    ← מחקרי
 ```
 
-## פורמטים ואורכים
+## Formats & Lengths
 
-| פורמט | אורכים זמינים | תיאור |
-|-------|--------------|-------|
+| פורמט | אורכים | תיאור |
+|-------|--------|-------|
 | **דבר תורה** | קצר (5 דק) · בינוני (10-15 דק) · ארוך (30 דק) | מובנה עם ניתוח |
 | **פוסט** | קצר (5 דק) | נגיש, ממוקד, לרשתות/בלוג |
-| **שיעור** | שיעור (45 דק) | מערך שיעור עם מקורות לחילוק ושאלות |
+| **שיעור** | שיעור (45 דק) | מערך שיעור עם מקורות ושאלות |
 
-## אוריינטציות (v3.0)
+## Orientations (5)
 
 | אוריינטציה | הוגים מרכזיים | Sefaria |
 |-----------|--------------|---------|
-| **פילוסופיה יהודית** | רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, הלוי | Guide for the Perplexed, Kuzari |
+| **פילוסופיה** | רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, הלוי | Guide for the Perplexed, Kuzari |
 | **קבלה** | זוהר, רמ״ק, האר״י, רמח״ל | Zohar, Etz Chaim, Pardes Rimonim |
 | **חסידות** | בעש״ט, מגיד, תניא, ברסלב | Tanya, Likkutei Moharan |
 | **חז״ל** | תנאים, אמוראים, מדרשים | Talmud Bavli, Bereishit Rabbah |
-| **חוקרים מודרניים** | קאופמן, קסוטו, פינס, אלטמן | + ANE texts |
+| **מודרני** | קאופמן, קסוטו, פינס, אלטמן | + ANE texts |
 
-## סוגי נושאים
-
-| סוג | תת-נושאים | skills |
-|-----|-----------|--------|
-| **פרשת השבוע** | אוטומטי מ-Sefaria calendar | source-research, philosophical-analysis |
-| **פילוסופי** | תיאולוגיה · אתיקה · אפיסטמולוגיה · מטאפיזיקה | philosophical-analysis |
-| **מחקרי** | הקשר היסטורי · מחקר המקרא · המזרח הקדום · ארכאולוגיה | historical-research |
-
-## הקשרים (v3.0)
+## Contexts (9)
 
 לידה · ברית מילה · בר/בת מצווה · נישואין · שבת · חג · שבעה · יארצייט · כללי
 
 ## MCP Dependencies
 
-- **claude_ai_Sefaria** (required, via Claude connector): ספריית ספריא — 15 כלים לטקסטים, חיפוש, קשרים, לוח, כתבי יד
+- **claude_ai_Sefaria** (required): 15 כלים לטקסטים, חיפוש, קשרים
 - **sequential-thinking** (recommended): חשיבה מורכבת לניתוח פילוסופי
-- **memory** (optional): זיכרון — דפוסי כתיבה, נושאים חוזרים
+- **memory** (optional): דפוסי כתיבה
 
 ## Core Principles
 
-> 1. העדף מחקר מקורות (retrieval) על ידע מוקדם (pre-training). תמיד חפש ב-Sefaria לפני שמצטט.
-> 2. אף ציטוט בלי אימות. כל מראה מקום חייב לעבור אימות ב-Sefaria MCP.
-> 3. למד מכתיבות קודמות. נתח דפוסים, הימנע מחזרות, שמור על עקביות סגנונית.
-> 4. הכבד כל זרם מחשבה — הצג בנאמנות ובכבוד, ללא דחייה פסקנית.
+> 1. העדף מחקר מקורות (retrieval) על ידע מוקדם (pre-training)
+> 2. אף ציטוט בלי אימות ב-Sefaria MCP
+> 3. למד מכתיבות קודמות — הימנע מחזרות
+> 4. הכבד כל זרם מחשבה — ללא דחייה פסקנית
+> 5. **חכמת מודלים**: haiku למחקר, sonnet לניתוח, opus לכתיבה בלבד
 
 ## Skills (8)
 
 | # | Skill | תיאור |
 |---|-------|-------|
 | 1 | **interactive-cli** | אשף אינטראקטיבי — שפה, אוריינטציה, פורמט, אורך, נושא, הוגים, הקשר |
-| 2 | **dvar-torah-writer** | כותב ראשי — מתזמן את כל התהליך, תבניות לכל פורמט ואורך |
+| 2 | **dvar-torah-writer** | **Orchestrator** — מתזמן סוכנים במקביל, מרכיב תוצאות |
 | 3 | **source-research** | מחקר מקורות דרך Sefaria MCP |
-| 4 | **source-references** | מראי מקומות מדויקים — אימות, פורמט אחיד, ביבליוגרפיה |
+| 4 | **source-references** | אימות מראי מקומות ופורמט אחיד |
 | 5 | **philosophical-analysis** | ניתוח פילוסופי מעמיק |
 | 6 | **mussar-ethics** | שילוב ממד מוסרי-מעשי |
-| 7 | **historical-research** | מחקר היסטורי — המזרח הקדום, ארכאולוגיה, ביקורת המקרא |
-| 8 | **previous-analysis** | ניתוח כתיבות קודמות — דפוסים, סגנון, כתיבה על בסיס קודמים |
+| 7 | **historical-research** | מחקר היסטורי — המזרח הקדום, ארכאולוגיה |
+| 8 | **previous-analysis** | ניתוח כתיבות קודמות — דפוסים, סגנון |
 
-## Agents (2)
+## Agents (6)
 
-| Agent | Model | Role |
-|-------|-------|------|
-| **torah-philosopher** | Opus | סוכן ראשי — כתיבה, ניתוח, שילוב |
-| **source-researcher** | Sonnet | מחקר מקורות מהיר, אימות מראי מקומות |
-
-## הוגים לפי אוריינטציה
-
-### פילוסופיה יהודית
-רמב״ם · רס״ג · רלב״ג · קרשקש · אלבו · אבן עזרא · ר״י הלוי · אבן פקודה
-
-### קבלה
-זוהר (ר״ש בר יוחאי / ר״מ דה ליאון) · רמ״ק · האר״י · רמח״ל
-
-### חסידות
-בעש״ט · המגיד ממזריץ׳ · אדמו״ר הזקן (תניא) · ר׳ נחמן מברסלב · ר׳ לוי יצחק מברדיטשוב
-
-### חז״ל
-תנאים (משנה) · אמוראים (גמרא) · מדרשים (בראשית רבה, תנחומא)
-
-### חוקרים מודרניים
-קאופמן · קסוטו · פינס · אלטמן · הרווי · קלנר · הלברטל + ANE texts
+| Agent | Model | Role | Phase |
+|-------|-------|------|-------|
+| **source-researcher** | haiku | חיפוש מקורות ב-Sefaria | 1 |
+| **previous-analyzer** | haiku | סריקת דפוסים מכתיבות קודמות | 1 |
+| **historical-researcher** | haiku | הקשר היסטורי ותרבותי | 1 |
+| **source-verifier** | haiku | אימות ציטוטים ופורמט | 2 |
+| **philosophical-analyzer** | sonnet | ניתוח פילוסופי ודיאלוג | 2 |
+| **torah-writer** | opus | כתיבה סופית בלבד | 3 |
 
 ## Output Directory
 

@@ -4,31 +4,48 @@ license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
 description: כתיבת דבר תורה מקיף בכל זרם מחשבה יהודית — פילוסופיה, קבלה, חסידות, חז״ל, מחקר מודרני. Use when writing a Dvar Torah, preparing a Torah lecture, writing a post, analyzing a parsha, or exploring Jewish thought.
-version: 3.0.0
-tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, rationalism, post, shiur]
+version: 4.0.0
+tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, rationalism, post, shiur, parallel-agents]
 user-invocable: true
 context: fork
 complexity: high
+model: sonnet
 metadata:
   category: content-creation
+  orchestration: parallel-agents
 allowed-tools:
   - Read
   - Write
   - Edit
   - Glob
   - Grep
-  - mcp__claude_ai_Sefaria__*
-  - mcp__sequential-thinking__*
-  - mcp__memory__*
+  - Agent
+  - AskUserQuestion
+  - mcp__claude_ai_Sefaria__get_current_calendar
 ---
 
-# דבר תורה — כותב ראשי
+# דבר תורה — Orchestrator (v4.0)
 
-## תיאור
+## Architecture
 
-כלי לכתיבת דבר תורה, פוסט, או שיעור בכל זרם מחשבה יהודית: פילוסופיה, קבלה, חסידות, חז״ל, וחוקרים מודרניים. שואב מקורות מספריית ספריא, תומך בעברית ואנגלית, ומתכוונן להקשר האירוע.
+This skill is an **orchestrator** — it dispatches specialized agents in parallel, then feeds results to the writer. It does NOT do research or writing itself.
 
-## הגדרות Config קלט
+```
+Phase 1 — Research (parallel, haiku)
+  ├── previous-analyzer        ← scan output/ for patterns
+  ├── source-researcher        ← Sefaria lookups
+  ├── historical-researcher    ← if topic.type == "research" or orientation == "modern"
+  └── source-researcher        ← mussar sources (if mussar requested)
+
+Phase 2 — Analysis + Verification (parallel)
+  ├── philosophical-analyzer   ← sonnet: deep reasoning with Phase 1 sources
+  └── source-verifier          ← haiku: verify all Phase 1 citations
+
+Phase 3 — Writing (opus)
+  └── torah-writer             ← opus: compose final piece from all results
+```
+
+## Config Input
 
 ```yaml
 config:
@@ -43,188 +60,272 @@ config:
   thinkers: [...]
   context:
     type: "birth" | "brit_milah" | "bar_bat_mitzvah" | "wedding" | "shabbat" | "holiday" | "shiva" | "yahrzeit" | "general"
-    description: "tone and theme guidance from contexts-guide.md"
+    description: "from contexts-guide.md"
   previous_patterns:
     mode: "avoid" | "base_on"
-    base_documents: [...]  # only in base_on mode
-    template_guidance: {...}  # from previous-analysis base_on output
+    base_documents: [...]
+    template_guidance: {...}
+  include_mussar: true | false
 ```
 
-## ניתוב לפי אוריינטציה
+## Orientation Routing
 
 ### philosophy — פילוסופיה יהודית
-הוגים: רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, ר״י הלוי, אבן עזרא, אבן פקודה
+Thinkers: רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, ר״י הלוי, אבן עזרא, אבן פקודה
 Sefaria: "Guide for the Perplexed", "Emunot veDeot", "Milhamot HaShem", "Or Hashem", "Kuzari"
-גישה: ניתוח פילוסופי-רציונלי, דיאלוג בין שיטות, שאלות תיאולוגיות
 
 ### kabbalah — קבלה
-הוגים: זוהר, רמ״ק, האר״י, רמח״ל
+Thinkers: זוהר, רמ״ק, האר״י, רמח״ל
 Sefaria: "Zohar", "Pardes Rimonim", "Etz Chaim", "Daat Tevunot"
-גישה: ניתוח ספירות ומושגים, חיבור לפסוק, עיון בעולמות עליונים
-- השתמש ב-`get_text_or_category_shape(path="Kabbalah")` לגילוי טקסטים זמינים
+Hint: `get_text_or_category_shape(path="Kabbalah")`
 
 ### hasidut — חסידות
-הוגים: בעש״ט, מגיד, תניא, ברסלב, קדושת לוי
+Thinkers: בעש״ט, מגיד, תניא, ברסלב, קדושת לוי
 Sefaria: "Tanya", "Likkutei Moharan", "Keter Shem Tov", "Maggid Devarav LeYaakov"
-גישה: תורות חסידיות, דרשה על הפסוק, רעיון מרכזי + נרטיב
-- השתמש ב-`get_text_or_category_shape(path="Chasidut")` לגילוי טקסטים זמינים
+Hint: `get_text_or_category_shape(path="Chasidut")`
 
 ### hazal — חז״ל
-הוגים: תנאים, אמוראים, מדרשים
+Thinkers: תנאים, אמוראים, מדרשים
 Sefaria: "Talmud Bavli", "Jerusalem Talmud", "Bereishit Rabbah", "Midrash Tanchuma"
-גישה: אגדה ופרשנות, דרשה מלשון הכתוב, מחלוקת וסינתזה
 
 ### modern — חוקרים מודרניים
-הוגים: קאופמן, קסוטו, פינס, אלטמן, ולהאוזן (כניגוד), ANE texts
-גישה: הקשר היסטורי, מקבילות מהמזרח הקדום, ביקורת המקרא ותגובתה
-- השתמש ב-`historical-research` skill כברירת מחדל
+Thinkers: קאופמן, קסוטו, פינס, אלטמן + ANE texts
+Default to historical-researcher agent
 
-## הנחיות הקשר (Context)
+## Execution
 
-קרא `references/contexts-guide.md` לפי `context.type` ויישם:
-- **tone**: התאם את הטון הכללי
-- **themes**: הגדר את הנושאים המרכזיים
-- **opening_suggestion**: עצות לפתיחה מתאימה להקשר
-- **sources**: הוסף מקורות ספציפיים להקשר (ראה contexts-guide.md)
+### Step 0: Interactive Wizard (if needed)
 
-### דוגמאות:
-- `shiva`: טון נחמה ועדין, נושאים: אובדן ומשמעות, משיב, קהלת, איוב
-- `wedding`: טון שמח ופואטי, נושאים: שותפות, שכינה ביניהם, שיר השירים
-- `bar_bat_mitzvah`: טון מעודד, נושאים: אחריות, מצוות כמשמעות, מעבר
-- `general`: עקוב אחרי האוריינטציה בלבד
+If the user did not provide full config — invoke `interactive-cli` skill to collect parameters. Once config is complete, proceed to orchestration.
 
-## שימוש ב-base_documents
+### Step 1: Resolve topic
 
-אם `previous_patterns.mode == "base_on"` ו-`template_guidance` קיים:
-- **חובה** לעקוב אחר `template_guidance.strict_instructions`
-- שמור על אותו מבנה פתיחה/גוף/סיום שחולץ מהקבצים הקודמים
-- שמור על אותו register וצפיפות ציטוטים
-- **אין** לחרוג מאורך שנקבע ב-`template_guidance.avg_length` ±20%
-
-## הוגים מרכזיים
-
-### פילוסופיה רציונלית
-- **רמב״ם** — מורה נבוכים, משנה תורה, שמונה פרקים
-- **רס״ג** — אמונות ודעות
-- **רלב״ג** — מלחמות ה׳, פירוש על התורה
-- **רבי חסדאי קרשקש** — אור ה׳
-- **רבי יוסף אלבו** — ספר העיקרים
-- **רבי אברהם אבן עזרא** — פירושים על התנ״ך
-- **ר׳ יהודה הלוי** — הכוזרי
-- **רבי בחיי אבן פקודה** — חובות הלבבות
-
-### קבלה
-- **זוהר** (ר״ש בר יוחאי / ר״מ דה ליאון) — ספר הזוהר
-- **רמ״ק** (רבי משה קורדובירו) — פרדס רמונים
-- **האר״י** (רבי יצחק לוריא) — עץ חיים
-- **רמח״ל** (רבי משה חיים לוצאטו) — דעת תבונות, כלח״ב
-
-### חסידות
-- **הבעש״ט** — כתר שם טוב
-- **המגיד ממזריץ׳** — מגיד דבריו ליעקב
-- **אדמו״ר הזקן** (שניאור זלמן מלאדי) — תניא
-- **ר׳ נחמן מברסלב** — ליקוטי מוהר״ן
-- **ר׳ לוי יצחק מברדיטשוב** — קדושת לוי
-
-### חז״ל
-- תנאים — משנה, מדרש הלכה
-- אמוראים — תלמוד בבלי, ירושלמי
-- מדרש אגדה — בראשית רבה, תנחומא
-
-### חוקרים מודרניים
-- **יחזקאל קאופמן** — תולדות האמונה הישראלית
-- **משה קסוטו** — ניתוח ספר בראשית ושמות
-- **שלמה פינס** — מחקרי רמב״ם, תרגומים
-- **אלכסנדר אלטמן** — פילוסופיה יהודית ניאו-אפלטונית
-
-## תהליך עבודה
-
-### שלב 0: אשף אינטראקטיבי (skill: interactive-cli)
-אם המשתמש לא סיפק פרמטרים מלאים — הפעל את האשף:
-0. בחירת שפה: עברית / English / Bilingual
-0.5. בחירת אוריינטציה: פילוסופיה / קבלה / חסידות / חז״ל / מודרני
-1. בחירת פורמט: דבר תורה / פוסט / שיעור
-2. בחירת אורך: קצר / בינוני / ארוך / שיעור
-3. בחירת נושא: פרשה / נושא / מחקרי
-4. בחירת הוגים (מסונן לפי אוריינטציה)
-5.5. הקשר: לידה / ברית / בר מצווה / חתונה / שבת / חג / שבעה / יארצייט / כללי
-5. ניתוח כתיבות קודמות (skill: previous-analysis)
-
-### שלב 1: ניתוח כתיבות קודמות (skill: previous-analysis)
-- סרוק `output/divrei-torah/` לקבצים קודמים
-- זהה דפוסי כתיבה, הוגים מועדפים, נושאים שכוסו
-- הימנע מחזרות, הצע כיוונים חדשים
-
-### שלב 2: מחקר מקורות (skill: source-research)
-1. השתמש ב-Sefaria MCP `get_current_calendar` לזיהוי פרשת השבוע אם לא צוין נושא
-2. השתמש ב-`get_text` לשליפת טקסט הפרשה/מקור
-3. השתמש ב-`get_links_between_texts` למציאת קשרים בין-טקסטואליים
-4. השתמש ב-`text_search` ו-`english_semantic_search` למציאת מקורות פילוסופיים רלוונטיים
-5. השתמש ב-`search_in_book` לחיפוש ספציפי במורה נבוכים, אמונות ודעות, וכו׳
-
-### שלב 3: מחקר היסטורי (skill: historical-research — אם הנושא מחקרי)
-1. הקשר היסטורי-תרבותי של הטקסט
-2. מקבילות מהמזרח הקדום
-3. ממצאים ארכאולוגיים רלוונטיים
-4. מחקר אקדמי מודרני
-
-### שלב 4: ניתוח פילוסופי (skill: philosophical-analysis)
-1. זהה את הסוגיה הפילוסופית/תיאולוגית המרכזית
-2. מפה את עמדות ההוגים השונים
-3. בנה דיאלוג בין השיטות
-
-### שלב 5: שילוב מוסר (skill: mussar-ethics — אופציונלי)
-1. חבר את הדיון הפילוסופי למימד המעשי-מוסרי
-2. שלב תובנות מספרות המוסר
-
-### שלב 6: אימות מראי מקומות (skill: source-references)
-1. אמת כל ציטוט דרך Sefaria MCP
-2. פרמט את כל מראי המקומות בפורמט אחיד
-3. סדר: תנ״ך → חז״ל → ראשונים → אחרונים → מחקר
-
-### שלב 7: כתיבה
-כתוב לפי הפורמט והאורך שנבחרו (ראה תבניות למטה).
-
-### שלב 8: שמירה
-שמור ב: `output/divrei-torah/<format>/YYYY-MM-DD-<topic>.md`
+If `topic.type == "parsha"` and no specific parsha given:
+```
+mcp__claude_ai_Sefaria__get_current_calendar()
+```
+Set `topic.value` from the calendar result.
 
 ---
 
-## תבניות
+### PHASE 1 — Research (parallel, all background)
 
-טען את התבניות לכל הפורמטים מ: `references/templates.md`
+Launch ALL of these agents in a **single message** with `run_in_background: true`:
+
+#### Agent 1: previous-analyzer (haiku)
+```
+Agent(
+  subagent_type: "dvar-torah-plugin:previous-analyzer",
+  model: "haiku",
+  run_in_background: true,
+  prompt: """
+    MODE: {previous_patterns.mode}
+    {if mode == "base_on": "SELECTED_FILES: {previous_patterns.base_documents}"}
+    Scan output/divrei-torah/ and return analysis per your instructions.
+  """
+)
+```
+
+#### Agent 2: source-researcher (haiku)
+```
+Agent(
+  subagent_type: "dvar-torah-plugin:source-researcher",
+  model: "haiku",
+  run_in_background: true,
+  prompt: """
+    TOPIC: {topic.value} ({topic.type})
+    ORIENTATION: {orientation}
+    THINKERS: {thinkers}
+    CONTEXT: {context.type}
+
+    Search Sefaria for sources relevant to this topic.
+    For orientation={orientation}, focus on:
+    - philosophy: Guide for the Perplexed, Emunot veDeot, Milhamot HaShem, Or Hashem, Kuzari
+    - kabbalah: Zohar, Pardes Rimonim, Etz Chaim, Daat Tevunot
+    - hasidut: Tanya, Likkutei Moharan, Keter Shem Tov
+    - hazal: Talmud Bavli, Bereishit Rabbah, Midrash Tanchuma
+    - modern: academic scholarship + ANE parallels
+
+    Search at least 3 different books. Find connections between sources.
+    Return structured YAML with sources, quotes, and sefaria_refs.
+  """
+)
+```
+
+#### Agent 3: historical-researcher (haiku, CONDITIONAL)
+Only launch if `topic.type == "research"` OR `orientation == "modern"`:
+```
+Agent(
+  subagent_type: "dvar-torah-plugin:historical-researcher",
+  model: "haiku",
+  run_in_background: true,
+  prompt: """
+    TOPIC: {topic.value}
+    VERSE/TEXT: {topic.sub_topic or topic.value}
+
+    Research the historical and cultural context of this text.
+    Find ANE parallels, archaeological evidence, and classical commentary.
+    Return structured YAML.
+  """
+)
+```
+
+#### Agent 4: mussar source-researcher (haiku, CONDITIONAL)
+Only launch if `include_mussar == true`:
+```
+Agent(
+  subagent_type: "dvar-torah-plugin:source-researcher",
+  model: "haiku",
+  run_in_background: true,
+  prompt: """
+    TOPIC: {topic.value}
+    ORIENTATION: mussar
+    TASK: Search ONLY mussar literature for sources related to this topic.
+
+    Search in:
+    - Mesillat Yesharim
+    - Chovot HaLevavot
+    - Shaarei Teshuvah
+    - Shemonah Perakim
+
+    Identify which middah/virtue is relevant and find 2-3 mussar sources.
+    Return structured YAML with sources, quotes, and practical applications.
+  """
+)
+```
+
+**Wait for all Phase 1 agents to complete before proceeding.**
 
 ---
 
-## הנחיות סגנון
+### PHASE 2 — Analysis + Verification (parallel)
 
-1. **שפה**: כתוב בשפה שנבחרה (`language`). עברית — מלאה; English — מלאה; bilingual — גוף עברי + סיכום אנגלי
-2. **ציטוטים**: תמיד ציין מקור מדויק — השתמש ב-skill `source-references`
-3. **אובייקטיביות**: הצג כל זרם מחשבה בנאמנות ובכבוד — אל תפסול שיטה אלא הצג
-4. **רלוונטיות**: חבר את הדיון העתיק לשאלות עכשוויות
-5. **עומק**: אל תישאר ברמת השטח — צלול לתוך הטיעונים
-6. **בהירות**: הסבר מונחים טכניים (ספירות, תצמצום, צדיק וכו׳) בבהירות
-7. **מראי מקומות**: כל מקור חייב להיות מאומת ב-Sefaria
-8. **הקשר**: אם `context.type != "general"` — הקדם בהתאמה לטון ולנושאים של ההקשר
-9. **base_documents**: אם `mode == "base_on"` — עקוב בקפדנות אחרי `template_guidance`
+Launch BOTH agents in a **single message** with `run_in_background: true`:
 
-## שימוש ב-Sefaria MCP
+#### Agent 5: philosophical-analyzer (sonnet)
+```
+Agent(
+  subagent_type: "dvar-torah-plugin:philosophical-analyzer",
+  model: "sonnet",
+  run_in_background: true,
+  prompt: """
+    TOPIC: {topic.value}
+    ORIENTATION: {orientation}
+    THINKERS: {thinkers}
+    CONTEXT: {context.type}
 
-### כלים עיקריים:
-- `get_text("Genesis 1:1-5")` — שליפת טקסט מקורי
-- `text_search("צלם אלהים")` — חיפוש כללי
-- `search_in_book("Guide for the Perplexed", "divine attributes")` — חיפוש ממוקד
-- `get_links_between_texts("Genesis 1:1", "Maimonides")` — קשרים
-- `english_semantic_search("problem of evil in Jewish philosophy")` — חיפוש סמנטי
-- `get_topic_details("Divine Providence")` — מידע על נושא
-- `get_current_calendar()` — פרשת השבוע והלוח היהודי
-- `clarify_name_argument("מורה נבוכים")` — אימות שם ספר
-- `get_english_translations("Genesis 1:27")` — תרגומים
-- `search_in_dictionaries("צלם")` — הגדרות
+    SOURCES FROM PHASE 1:
+    {source_researcher_results}
 
-## שמירת פלט
+    {if historical: "HISTORICAL CONTEXT: {historical_researcher_results}"}
+    {if mussar: "MUSSAR SOURCES: {mussar_researcher_results}"}
 
-שמור תמיד את התוצר ב:
+    Build a philosophical analysis:
+    1. Identify the core philosophical question
+    2. Map each thinker's position using the sources provided
+    3. Build critical dialogue between positions
+    4. Synthesize conclusions
+
+    If sources are insufficient, you may search Sefaria for additional texts.
+    Return structured YAML with question, positions, dialogue, synthesis.
+  """
+)
+```
+
+#### Agent 6: source-verifier (haiku)
+```
+Agent(
+  subagent_type: "dvar-torah-plugin:source-verifier",
+  model: "haiku",
+  run_in_background: true,
+  prompt: """
+    CITATIONS TO VERIFY:
+    {all citations from Phase 1 agents}
+
+    Verify each citation through Sefaria MCP.
+    Format all references uniformly.
+    Build bibliography: תנ״ך → חז״ל → ראשונים → אחרונים → מחקר
+  """
+)
+```
+
+**Wait for both Phase 2 agents to complete.**
+
+---
+
+### PHASE 3 — Writing (opus)
+
+Launch the writer with ALL collected results:
+
+#### Agent 7: torah-writer (opus)
+```
+Agent(
+  subagent_type: "dvar-torah-plugin:torah-writer",
+  model: "opus",
+  prompt: """
+    WRITE a {format} in {language}.
+
+    CONFIG:
+    - Format: {format}
+    - Length: {length}
+    - Language: {language}
+    - Orientation: {orientation}
+    - Context: {context.type} — {context.description}
+    - Thinkers: {thinkers}
+
+    RESEARCH BUNDLE:
+    ================
+
+    PREVIOUS ANALYSIS:
+    {previous_analyzer_results}
+
+    SOURCES:
+    {source_researcher_results}
+
+    {if historical: "HISTORICAL CONTEXT:\n{historical_researcher_results}"}
+
+    {if mussar: "MUSSAR:\n{mussar_researcher_results}"}
+
+    PHILOSOPHICAL ANALYSIS:
+    {philosophical_analyzer_results}
+
+    VERIFIED CITATIONS:
+    {source_verifier_results}
+
+    {if base_on: "TEMPLATE GUIDANCE (FOLLOW STRICTLY):\n{template_guidance}"}
+
+    INSTRUCTIONS:
+    1. Read references/templates.md for the {format}/{length} template
+    2. Read references/contexts-guide.md for {context.type} guidance
+    3. Use ONLY verified citations (status: verified or corrected)
+    4. Write the complete piece
+    5. Save to: output/divrei-torah/{format_dir}/YYYY-MM-DD-{topic_slug}.md
+    6. Include frontmatter with all metadata
+  """
+)
+```
+
+**This agent runs in FOREGROUND — wait for it to complete.**
+
+---
+
+## Context Guidance
+
+Read `references/contexts-guide.md` per `context.type`:
+- **shiva**: comforting tone, themes of loss and meaning
+- **wedding**: joyful and poetic, themes of partnership and Shekhinah
+- **bar_bat_mitzvah**: encouraging, themes of responsibility and free choice
+- **general**: follow orientation only
+
+## base_on Mode
+
+If `previous_patterns.mode == "base_on"` and `template_guidance` exists:
+- Pass `template_guidance.strict_instructions` to torah-writer
+- Writer MUST follow: same structure, register, citation density, length (±20%)
+
+## Output
+
+Final output saved by torah-writer to:
 ```
 output/divrei-torah/
   ├── dvar-torah/YYYY-MM-DD-<topic>.md
@@ -232,7 +333,7 @@ output/divrei-torah/
   └── shiurim/YYYY-MM-DD-<topic>.md
 ```
 
-כלול frontmatter בכל קובץ:
+Frontmatter:
 ```yaml
 ---
 date: YYYY-MM-DD
@@ -241,9 +342,15 @@ length: short | medium | long | shiur
 language: he | en | bilingual
 orientation: philosophy | kabbalah | hasidut | hazal | modern | custom
 context: general | wedding | shabbat | shiva | ...
-parsha: שם הפרשה (אם רלוונטי)
+parsha: שם הפרשה (if relevant)
 topic: הנושא
 thinkers: [רמב״ם, רס״ג]
-sources_count: 5
+sources_count: N
+agents_used: [source-researcher, philosophical-analyzer, torah-writer, ...]
 ---
 ```
+
+## Sefaria MCP Tools (for Step 1 only)
+
+- `get_current_calendar()` — פרשת השבוע
+- Other Sefaria tools are used by the research agents, not by this orchestrator

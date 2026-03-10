@@ -1,9 +1,10 @@
 ---
 name: source-researcher
 description: סוכן מחקר מקורות — מחפש ומאסוף מקורות מספריית ספריא
-model: sonnet
-max_turns: 25
+model: haiku
+max_turns: 20
 memory_scope: session
+context: fork
 tools:
   - Read
   - Glob
@@ -15,12 +16,13 @@ allowed_tasks:
   - חיפוש מקורות בספריא
   - איסוף ציטוטים
   - מציאת קשרים בין טקסטים
-  - אימות מקורות
+  - חיפוש מקורות מוסר
 forbidden_tasks:
   - כתיבת דבר תורה מלא
+  - ניתוח פילוסופי מעמיק
   - פסיקת הלכה
 resource_allocation:
-  estimated_tokens: 4000
+  estimated_tokens: 3000
   parallel_searches: 5
 ---
 
