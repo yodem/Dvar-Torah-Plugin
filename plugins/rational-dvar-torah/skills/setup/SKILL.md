@@ -2,7 +2,7 @@
 name: setup
 license: MIT
 compatibility: "Claude Code 2.1.59+."
-description: "Interactive setup wizard for Rational Dvar Torah. Checks Sefaria MCP, configures preferred thinkers and writing style, and generates a readiness score."
+description: "Interactive setup wizard for Dvar Torah Plugin. Checks Sefaria MCP, configures preferred thinkers and writing style, and generates a readiness score."
 argument-hint: "[--rescan] [--score-only] [--plan-only]"
 context: inherit
 version: 1.0.0
@@ -15,13 +15,13 @@ metadata:
   category: configuration
 ---
 
-# Rational Dvar Torah — Setup Wizard
+# Dvar Torah Plugin — Setup Wizard
 
 Interactive onboarding that checks your Sefaria MCP connection, configures preferred thinkers and style, sets up your output directory, and generates a readiness score.
 
 ## When to Use
 
-- First time after installing the plugin (`/plugin install rational-dvar-torah@yodem`)
+- First time after installing the plugin (`/plugin install dvar-torah-plugin@yodem`)
 - When Sefaria MCP changes (Docker port, connector URL)
 - To reconfigure thinker preferences or writing style
 - Run with `--score-only` to check current readiness
@@ -29,10 +29,10 @@ Interactive onboarding that checks your Sefaria MCP connection, configures prefe
 ## Quick Start
 
 ```bash
-/rational-dvar-torah:setup              # Full wizard
-/rational-dvar-torah:setup --rescan     # Re-check MCP + score, skip preferences
-/rational-dvar-torah:setup --score-only # Readiness score only
-/rational-dvar-torah:setup --plan-only  # Improvement plan only
+/dvar-torah-plugin:setup              # Full wizard
+/dvar-torah-plugin:setup --rescan     # Re-check MCP + score, skip preferences
+/dvar-torah-plugin:setup --score-only # Readiness score only
+/dvar-torah-plugin:setup --plan-only  # Improvement plan only
 ```
 
 ## Argument Resolution
@@ -99,7 +99,7 @@ AskUserQuestion(questions=[{
     {
       "label": "Skip for now",
       "description": "Continue setup without Sefaria. Source lookup will not work.",
-      "markdown": "```\n⚠ Source verification will be disabled.\nRun /rational-dvar-torah:setup again after configuring Sefaria.\n```"
+      "markdown": "```\n⚠ Source verification will be disabled.\nRun /dvar-torah-plugin:setup again after configuring Sefaria.\n```"
     }
   ],
   "multiSelect": false
@@ -119,18 +119,18 @@ Sefaria MCP:  ✓ Connected (claude_ai connector)   — Parsha: פרשת X
 
 ```python
 AskUserQuestion(questions=[{
-  "question": "How should Rational Dvar Torah be installed?",
+  "question": "How should Dvar Torah Plugin be installed?",
   "header": "Install scope",
   "options": [
     {
       "label": "User-only (Recommended)",
       "description": "Plugin loads only for you. Invisible to teammates.",
-      "markdown": "```\nUser-Only Install\n─────────────────\n~/.claude/\n  └── plugins/\n        └── rational-dvar-torah/  ← only YOU see this\n\nTeammates: unaffected\nGit:       nothing committed\n```"
+      "markdown": "```\nUser-Only Install\n─────────────────\n~/.claude/\n  └── plugins/\n        └── dvar-torah-plugin/  ← only YOU see this\n\nTeammates: unaffected\nGit:       nothing committed\n```"
     },
     {
       "label": "Project-wide",
       "description": "Adds to .claude/plugins — loads for everyone in this repo.",
-      "markdown": "```\nProject-Wide Install\n────────────────────\nyour-repo/\n  └── .claude/\n        └── plugins/\n              └── rational-dvar-torah/  ← everyone sees this\n\nTeammates: auto-loaded for all\nGit:       committed to repo\n```"
+      "markdown": "```\nProject-Wide Install\n────────────────────\nyour-repo/\n  └── .claude/\n        └── plugins/\n              └── dvar-torah-plugin/  ← everyone sees this\n\nTeammates: auto-loaded for all\nGit:       committed to repo\n```"
     },
     {
       "label": "Already installed",
@@ -210,9 +210,9 @@ AskUserQuestion(questions=[{
   "header": "Writing Style",
   "options": [
     {
-      "label": "Hebrew — רציונלי (Recommended)",
-      "description": "Write in Hebrew, rationalist/philosophical register, academic references",
-      "markdown": "```\nHebrew · Rationalist\n────────────────────\nLanguage:  Hebrew (עברית)\nRegister:  Philosophical, structured\nSources:   Sefaria primary texts + academic commentary\nAudience:  Hebrew-literate, philosophically inclined\n```"
+      "label": "Hebrew — פילוסופי (Recommended)",
+      "description": "Write in Hebrew, philosophical register, academic references",
+      "markdown": "```\nHebrew · Philosophical\n────────────────────\nLanguage:  Hebrew (עברית)\nRegister:  Philosophical, structured\nSources:   Sefaria primary texts + academic commentary\nAudience:  Hebrew-literate, philosophically inclined\n```"
     },
     {
       "label": "Hebrew — מוסרי",
@@ -220,9 +220,9 @@ AskUserQuestion(questions=[{
       "markdown": "```\nHebrew · Mussar\n───────────────\nLanguage:  Hebrew (עברית)\nRegister:  Mussar, practical ethics\nSources:   Mesillat Yesharim, Chovot ha-Levavot, Orchot Tzaddikim\nAudience:  Hebrew-literate, character-development focus\n```"
     },
     {
-      "label": "English — Rationalist",
+      "label": "English — Philosophical",
       "description": "Write in English, philosophical register, good for English-speaking audiences",
-      "markdown": "```\nEnglish · Rationalist\n─────────────────────\nLanguage:  English\nRegister:  Philosophical, structured\nSources:   English translations + academic sources\nAudience:  English-literate, philosophically inclined\n```"
+      "markdown": "```\nEnglish · Philosophical\n─────────────────────\nLanguage:  English\nRegister:  Philosophical, structured\nSources:   English translations + academic sources\nAudience:  English-literate, philosophically inclined\n```"
     },
     {
       "label": "Bilingual — Hebrew + English",
@@ -236,7 +236,7 @@ AskUserQuestion(questions=[{
 
 Persist as env var:
 ```
-DVAR_TORAH_DEFAULT_STYLE="hebrew-rationalist"  # hebrew-rationalist | hebrew-mussar | english-rationalist | bilingual
+DVAR_TORAH_DEFAULT_STYLE="hebrew-philosophical"  # hebrew-philosophical | hebrew-mussar | english-philosophical | bilingual
 ```
 
 ---
@@ -260,14 +260,14 @@ Glob(pattern="output/divrei-torah/**/*.md")
 ### Score Display
 
 ```
-Rational Dvar Torah Readiness: 7.5 / 10
+Dvar Torah Plugin Readiness: 7.5 / 10
 
   Sefaria MCP          ████████████░░░░  Connected ✓
   Output Directory     ████████████████  Set up ✓
   Preferences          ████████░░░░░░░░  Thinkers set, style missing
   Previous Writings    ░░░░░░░░░░░░░░░░  0 divrei torah yet
 
-  Top gap: Set writing style → run /rational-dvar-torah:setup Phase 4
+  Top gap: Set writing style → run /dvar-torah-plugin:setup Phase 4
 ```
 
 ---
@@ -291,7 +291,7 @@ P1 (this week):
   → previous-analysis skill will start detecting your patterns.
 
 P2 (ongoing):
-  /rational-dvar-torah:setup --rescan
+  /dvar-torah-plugin:setup --rescan
   → Re-run after writing a few divrei torah to track progress.
 ```
 

@@ -2,7 +2,7 @@
 name: setup
 license: MIT
 compatibility: "Claude Code 2.1.59+."
-description: "Interactive setup wizard for Dvar Torah Plugin v3.0. Checks Sefaria MCP, configures language preference, orientation, preferred thinkers, writing style, and generates a readiness score."
+description: "Interactive setup wizard for Dvar Torah Plugin. Checks Sefaria MCP, configures language preference, orientation, preferred thinkers, writing style, and generates a readiness score."
 argument-hint: "[--rescan] [--score-only] [--plan-only]"
 context: inherit
 version: 3.0.0
@@ -93,6 +93,8 @@ DVAR_TORAH_LANGUAGE="he"  # he | en | bilingual
 
 ## Phase 1: Sefaria MCP Detection
 
+Sefaria MCP is required for source lookups, text retrieval, and citation verification.
+
 First, check what MCP servers are configured:
 
 ```python
@@ -102,7 +104,7 @@ Bash(command="cat ~/.claude/settings.json 2>/dev/null | python3 -c \"import json
 ```
 
 Look for a Sefaria MCP entry in either file. Identify which connector type is configured:
-- `claude_ai_Sefaria` — Claude native connector (cloud, recommended)
+- `claude_ai_Sefaria` — Claude Account Connector (cloud, recommended)
 - `sefaria-mcp` with `url: http://localhost:{port}/sse` — Docker/local SSE
 
 ### Live Connection Test
@@ -119,23 +121,23 @@ If it fails, present repair options:
 
 ```python
 AskUserQuestion(questions=[{
-  "question": "Sefaria MCP is not responding. How would you like to fix this?",
+  "question": "Sefaria MCP is not responding. How would you like to connect?",
   "header": "Sefaria MCP Setup",
   "options": [
     {
-      "label": "Claude connector (Recommended)",
-      "description": "Uses the built-in claude_ai_Sefaria connector. No Docker required.",
-      "markdown": "```\nAdd to ~/.claude/settings.json:\n{\n  \"mcpServers\": {\n    \"claude_ai_Sefaria\": {\n      \"type\": \"claude_ai\",\n      \"name\": \"Sefaria\"\n    }\n  }\n}\n```"
+      "label": "Claude Account Connector (Recommended)",
+      "description": "One-click setup via Claude's built-in integrations. No Docker or local install needed.",
+      "markdown": "```\nOption A — Claude.ai Account Connectors:\n  1. Go to claude.ai/settings/integrations\n  2. Find \"Sefaria\" and click Connect\n  3. Done! Available in all Claude Code sessions.\n\nOption B — Claude Code CLI:\n  Run: claude mcp add-oauth Sefaria\n  This connects your Claude account to\n  the Sefaria MCP server automatically.\n```"
     },
     {
       "label": "Docker (local SSE)",
-      "description": "Run Sefaria MCP as a local Docker container on port 8089.",
-      "markdown": "```bash\ndocker build -t sefaria-mcp \\\n  https://github.com/Sefaria/sefaria-mcp.git\ndocker run -d --name sefaria-mcp \\\n  -p 8089:8088 sefaria-mcp\n```"
+      "description": "Self-host Sefaria MCP as a local Docker container on port 8089.",
+      "markdown": "```bash\ndocker build -t sefaria-mcp \\\n  https://github.com/Sefaria/sefaria-mcp.git\ndocker run -d --name sefaria-mcp \\\n  -p 8089:8088 sefaria-mcp\n\n# Then add to .mcp.json:\n# \"sefaria\": {\n#   \"type\": \"sse\",\n#   \"url\": \"http://localhost:8089/sse\"\n# }\n```"
     },
     {
       "label": "Skip for now",
-      "description": "Continue setup without Sefaria. Source lookup will not work.",
-      "markdown": "```\n⚠ Source verification will be disabled.\nRun /rational-dvar-torah:setup again after configuring Sefaria.\n```"
+      "description": "Continue setup without Sefaria. Source lookup and citation verification will not work.",
+      "markdown": "```\n⚠ Source verification will be disabled.\nRun /dvar-torah-plugin:setup again after\nconnecting Sefaria.\n```"
     }
   ],
   "multiSelect": false
@@ -144,9 +146,9 @@ AskUserQuestion(questions=[{
 
 Show final status:
 ```
-Sefaria MCP:  ✓ Connected (claude_ai connector)   — Parsha: פרשת X
-              ✗ Not configured — source lookup disabled
+Sefaria MCP:  ✓ Connected (Account Connector)     — Parsha: פרשת X
               ✓ Connected (Docker, port 8089)
+              ✗ Not configured — source lookup disabled
 ```
 
 ---
@@ -155,18 +157,18 @@ Sefaria MCP:  ✓ Connected (claude_ai connector)   — Parsha: פרשת X
 
 ```python
 AskUserQuestion(questions=[{
-  "question": "How should Rational Dvar Torah be installed?",
+  "question": "How should Dvar Torah Plugin be installed?",
   "header": "Install scope",
   "options": [
     {
       "label": "User-only (Recommended)",
       "description": "Plugin loads only for you. Invisible to teammates.",
-      "markdown": "```\nUser-Only Install\n─────────────────\n~/.claude/\n  └── plugins/\n        └── rational-dvar-torah/  ← only YOU see this\n\nTeammates: unaffected\nGit:       nothing committed\n```"
+      "markdown": "```\nUser-Only Install\n─────────────────\n~/.claude/\n  └── plugins/\n        └── dvar-torah-plugin/  ← only YOU see this\n\nTeammates: unaffected\nGit:       nothing committed\n```"
     },
     {
       "label": "Project-wide",
       "description": "Adds to .claude/plugins — loads for everyone in this repo.",
-      "markdown": "```\nProject-Wide Install\n────────────────────\nyour-repo/\n  └── .claude/\n        └── plugins/\n              └── rational-dvar-torah/  ← everyone sees this\n\nTeammates: auto-loaded for all\nGit:       committed to repo\n```"
+      "markdown": "```\nProject-Wide Install\n────────────────────\nyour-repo/\n  └── .claude/\n        └── plugins/\n              └── dvar-torah-plugin/  ← everyone sees this\n\nTeammates: auto-loaded for all\nGit:       committed to repo\n```"
     },
     {
       "label": "Already installed",
@@ -264,9 +266,9 @@ AskUserQuestion(questions=[{
   "header": "Writing Style",
   "options": [
     {
-      "label": "Hebrew — רציונלי (Recommended)",
-      "description": "Write in Hebrew, rationalist/philosophical register, academic references",
-      "markdown": "```\nHebrew · Rationalist\n────────────────────\nLanguage:  Hebrew (עברית)\nRegister:  Philosophical, structured\nSources:   Sefaria primary texts + academic commentary\nAudience:  Hebrew-literate, philosophically inclined\n```"
+      "label": "Hebrew — פילוסופי (Recommended)",
+      "description": "Write in Hebrew, philosophical register, academic references",
+      "markdown": "```\nHebrew · Philosophical\n────────────────────\nLanguage:  Hebrew (עברית)\nRegister:  Philosophical, structured\nSources:   Sefaria primary texts + academic commentary\nAudience:  Hebrew-literate, philosophically inclined\n```"
     },
     {
       "label": "Hebrew — מוסרי",
@@ -274,9 +276,9 @@ AskUserQuestion(questions=[{
       "markdown": "```\nHebrew · Mussar\n───────────────\nLanguage:  Hebrew (עברית)\nRegister:  Mussar, practical ethics\nSources:   Mesillat Yesharim, Chovot ha-Levavot, Orchot Tzaddikim\nAudience:  Hebrew-literate, character-development focus\n```"
     },
     {
-      "label": "English — Rationalist",
+      "label": "English — Philosophical",
       "description": "Write in English, philosophical register, good for English-speaking audiences",
-      "markdown": "```\nEnglish · Rationalist\n─────────────────────\nLanguage:  English\nRegister:  Philosophical, structured\nSources:   English translations + academic sources\nAudience:  English-literate, philosophically inclined\n```"
+      "markdown": "```\nEnglish · Philosophical\n─────────────────────\nLanguage:  English\nRegister:  Philosophical, structured\nSources:   English translations + academic sources\nAudience:  English-literate, philosophically inclined\n```"
     },
     {
       "label": "Bilingual — Hebrew + English",
@@ -290,7 +292,7 @@ AskUserQuestion(questions=[{
 
 Persist as env var:
 ```
-DVAR_TORAH_DEFAULT_STYLE="hebrew-rationalist"  # hebrew-rationalist | hebrew-mussar | english-rationalist | bilingual
+DVAR_TORAH_DEFAULT_STYLE="hebrew-philosophical"  # hebrew-philosophical | hebrew-mussar | english-philosophical | bilingual
 ```
 
 ---
@@ -321,7 +323,7 @@ Dvar Torah Plugin Readiness: 7.5 / 10
   Preferences          ████████░░░░░░░░  Thinkers set, style missing
   Previous Writings    ░░░░░░░░░░░░░░░░  0 divrei torah yet
 
-  Top gap: Set writing style → run /rational-dvar-torah:setup Phase 4
+  Top gap: Set writing style → run /dvar-torah-plugin:setup Phase 4
 ```
 
 ---

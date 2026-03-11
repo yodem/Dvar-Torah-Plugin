@@ -3,7 +3,7 @@ name: source-research
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: מחקר מקורות מעמיק בספריית ספריא עבור דבר תורה פילוסופי. Use when searching Jewish texts, finding sources in Sefaria, or building a source bibliography.
+description: מחקר מקורות מעמיק בספריית ספריא עבור דבר תורה. Use when searching Jewish texts, finding sources in Sefaria, or building a source bibliography.
 version: 1.0.0
 tags: [sefaria, source-research, jewish-texts, bibliography]
 user-invocable: false
@@ -24,7 +24,7 @@ allowed-tools:
 
 ## תיאור
 
-מיומנות לביצוע מחקר מקורות מעמיק דרך Sefaria MCP. מוצאת מקורות רלוונטיים מהספרות הפילוסופית היהודית, מזהה קשרים בין טקסטים, ובונה רשת מקורות מקיפה.
+מיומנות לביצוע מחקר מקורות מעמיק דרך Sefaria MCP. מוצאת מקורות רלוונטיים מכל זרמי המחשבה היהודית, מזהה קשרים בין טקסטים, ובונה רשת מקורות מקיפה.
 
 ## תהליך עבודה
 
@@ -33,7 +33,25 @@ allowed-tools:
 - השתמש ב-`clarify_name_argument` לאימות שמות ספרים
 - השתמש ב-`get_text` לשליפת הטקסט המקורי
 
-### 2. חיפוש מקורות פילוסופיים
+### 1.5. הבנת הפשט — שטיינזלץ
+
+**לפני שצוללים למקורות פילוסופיים, קרא את שטיינזלץ להבנת הפשט.**
+
+כשהמקור הוא סוגיה תלמודית, משנה, או טקסט שיש עליו פירוש שטיינזלץ בספריא — שלוף אותו:
+
+```
+get_text("Steinsaltz on <reference>")
+```
+
+לדוגמה:
+- `get_text("Steinsaltz on Berakhot 10a")` — פירוש שטיינזלץ על ברכות י.
+- `get_text("Steinsaltz on Shabbat 31a")` — פירוש שטיינזלץ על שבת לא.
+
+**מטרה**: להבין מה הטקסט אומר ברמת הפשט — מילים, מבנה, הקשר — לפני שבונים ניתוח פילוסופי או אחר. שטיינזלץ נותן את הבסיס שעליו נבנה הדבר תורה.
+
+**מתי**: תמיד כשהמקור הוא תלמודי או שיש פירוש שטיינזלץ זמין. ניתן לדלג כשמדובר בפסוקי תנ״ך פשוטים.
+
+### 2. חיפוש מקורות
 בצע חיפושים ממוקדים בספרים הבאים:
 
 #### רמב״ם

@@ -3,9 +3,9 @@ name: dvar-torah-writer
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: כתיבת דבר תורה רציונלי/פילוסופי מקיף עם מקורות מהוגי הפילוסופיה היהודית. Use when writing a Dvar Torah, preparing a Torah lecture, writing a post, analyzing a parsha philosophically, or exploring Jewish philosophical texts.
+description: כתיבת דבר תורה מקיף עם מקורות מהוגי הפילוסופיה היהודית. Use when writing a Dvar Torah, preparing a Torah lecture, writing a post, analyzing a parsha philosophically, or exploring Jewish philosophical texts.
 version: 2.0.0
-tags: [dvar-torah, jewish-philosophy, rambam, sefaria, mussar, rationalism, post, shiur]
+tags: [dvar-torah, jewish-philosophy, rambam, sefaria, mussar, jewish-thought, post, shiur]
 user-invocable: true
 context: fork
 complexity: high
@@ -24,11 +24,11 @@ allowed-tools:
   - mcp__memory__*
 ---
 
-# דבר תורה רציונלי — כותב ראשי
+# דבר תורה — כותב ראשי
 
 ## תיאור
 
-כלי לכתיבת דבר תורה, פוסט, או שיעור רציונלי/פילוסופי שמשלב ניתוח טקסטואלי מעמיק עם הגות פילוסופית יהודית, מחקר אקדמי, והקשר היסטורי. הכלי שואב מקורות מספריית ספריא ומדגיש את ההוגים הרציונליסטיים של המסורת היהודית.
+כלי לכתיבת דבר תורה, פוסט, או שיעור שמשלב ניתוח טקסטואלי מעמיק עם הגות פילוסופית יהודית, מחקר אקדמי, והקשר היסטורי. הכלי שואב מקורות מספריית ספריא ומשלב הוגים מכל זרמי המסורת היהודית.
 
 ## הוגים מרכזיים
 

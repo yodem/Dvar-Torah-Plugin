@@ -3,6 +3,9 @@
 ## Architecture — Parallel Agent Orchestration
 
 ```
+Phase 0 — Selection (haiku)                   ~5s
+  └── interactive-cli        ← fast wizard, instant responses
+
 Phase 1 — Research (parallel, haiku)          ~15s
   ├── previous-analyzer     ← scan output/ for patterns
   ├── source-researcher     ← Sefaria lookups
@@ -64,7 +67,7 @@ Phase 3 — Writing (opus)                      ~30s
 
 ## MCP Dependencies
 
-- **claude_ai_Sefaria** (required): 15 כלים לטקסטים, חיפוש, קשרים
+- **claude_ai_Sefaria** (required): 15 tools for texts, search, links, calendar. Connect via Claude Account Connectors (claude.ai/settings/integrations) or `claude mcp add-oauth Sefaria`
 - **sequential-thinking** (recommended): חשיבה מורכבת לניתוח פילוסופי
 - **memory** (optional): דפוסי כתיבה
 
@@ -72,9 +75,10 @@ Phase 3 — Writing (opus)                      ~30s
 
 > 1. העדף מחקר מקורות (retrieval) על ידע מוקדם (pre-training)
 > 2. אף ציטוט בלי אימות ב-Sefaria MCP
-> 3. למד מכתיבות קודמות — הימנע מחזרות
-> 4. הכבד כל זרם מחשבה — ללא דחייה פסקנית
-> 5. **חכמת מודלים**: haiku למחקר, sonnet לניתוח, opus לכתיבה בלבד
+> 3. **שטיינזלץ לפשט**: קרא שטיינזלץ להבנת הפשט לפני ניתוח — `get_text("Steinsaltz on ...")`
+> 4. למד מכתיבות קודמות — הימנע מחזרות
+> 5. הכבד כל זרם מחשבה — ללא דחייה פסקנית
+> 6. **חכמת מודלים**: haiku לבחירות ומחקר, sonnet לניתוח, opus לכתיבה בלבד
 
 ## Skills (8)
 
@@ -89,10 +93,11 @@ Phase 3 — Writing (opus)                      ~30s
 | 7 | **historical-research** | מחקר היסטורי — המזרח הקדום, ארכאולוגיה |
 | 8 | **previous-analysis** | ניתוח כתיבות קודמות — דפוסים, סגנון |
 
-## Agents (6)
+## Agents (7)
 
-| Agent | Model | Role | Phase |
+| Agent / Skill | Model | Role | Phase |
 |-------|-------|------|-------|
+| **interactive-cli** | haiku | אשף אינטראקטיבי — בחירות מהירות | 0 |
 | **source-researcher** | haiku | חיפוש מקורות ב-Sefaria | 1 |
 | **previous-analyzer** | haiku | סריקת דפוסים מכתיבות קודמות | 1 |
 | **historical-researcher** | haiku | הקשר היסטורי ותרבותי | 1 |

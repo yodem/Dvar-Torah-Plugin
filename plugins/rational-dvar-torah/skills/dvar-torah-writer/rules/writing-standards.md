@@ -3,7 +3,7 @@ impact: critical
 category: writing
 ---
 
-# כללי כתיבה לדבר תורה רציונלי
+# כללי כתיבה לדבר תורה
 
 ## DO
 
