@@ -22,17 +22,6 @@
       },
       "category": "content",
       "source": "./plugins/dvar-torah-plugin"
-    },
-    {
-      "name": "rational-dvar-torah",
-      "description": "Write philosophical Dvar Torah, posts, and shiurim rooted in rationalist Jewish thought — Rambam, Rasag, Ralbag, Crescas, Ramchal, and more. Powered by Sefaria MCP.",
-      "version": "2.0.0",
-      "author": {
-        "name": "yodem",
-        "url": "https://github.com/yodem"
-      },
-      "category": "content",
-      "source": "./plugins/rational-dvar-torah"
     }
   ]
 }
