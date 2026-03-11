@@ -6,8 +6,8 @@
     "name": "yodem",
     "url": "https://github.com/yodem"
   },
-  "homepage": "https://github.com/yodem/Rational-Dvar-Torah-Plugin",
-  "repository": "https://github.com/yodem/Rational-Dvar-Torah-Plugin",
+  "homepage": "https://github.com/yodem/Dvar-Torah-Plugin",
+  "repository": "https://github.com/yodem/Dvar-Torah-Plugin",
   "license": "MIT",
   "keywords": [
     "jewish-philosophy",
@@ -18,7 +18,7 @@
     "hasidut",
     "hazal",
     "mussar",
-    "rationalism",
+    "jewish-thought",
     "shiur",
     "torah",
     "jewish-thought"

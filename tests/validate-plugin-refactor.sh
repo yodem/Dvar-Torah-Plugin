@@ -19,8 +19,8 @@ check() {
   fi
 }
 
-PLUGIN_DIR="/Users/yotamfromm/dev/Rational-Dvar-Torah-Plugin/plugins/dvar-torah-plugin"
-SRC_DIR="/Users/yotamfromm/dev/Rational-Dvar-Torah-Plugin/src"
+PLUGIN_DIR="/Users/yotamfromm/dev/Dvar-Torah-Plugin/plugins/dvar-torah-plugin"
+SRC_DIR="/Users/yotamfromm/dev/Dvar-Torah-Plugin/src"
 
 # --- Change 1: torah-philosopher — WebFetch and WebSearch removed ---
 

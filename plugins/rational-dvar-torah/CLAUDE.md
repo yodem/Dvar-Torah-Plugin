@@ -1,4 +1,4 @@
-# דבר תורה רציונלי — Rational Dvar Torah Plugin v2.0
+# דבר תורה — Dvar Torah Plugin v2.0
 
 ## Agent Routing Index
 

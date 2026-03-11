@@ -2,7 +2,7 @@
 name: setup
 license: MIT
 compatibility: "Claude Code 2.1.59+."
-description: "Interactive setup wizard for Dvar Torah Plugin v3.0. Checks Sefaria MCP, configures language preference, orientation, preferred thinkers, writing style, and generates a readiness score."
+description: "Interactive setup wizard for Dvar Torah Plugin. Checks Sefaria MCP, configures language preference, orientation, preferred thinkers, writing style, and generates a readiness score."
 argument-hint: "[--rescan] [--score-only] [--plan-only]"
 context: inherit
 version: 3.0.0
@@ -157,18 +157,18 @@ Sefaria MCP:  ✓ Connected (Account Connector)     — Parsha: פרשת X
 
 ```python
 AskUserQuestion(questions=[{
-  "question": "How should Rational Dvar Torah be installed?",
+  "question": "How should Dvar Torah Plugin be installed?",
   "header": "Install scope",
   "options": [
     {
       "label": "User-only (Recommended)",
       "description": "Plugin loads only for you. Invisible to teammates.",
-      "markdown": "```\nUser-Only Install\n─────────────────\n~/.claude/\n  └── plugins/\n        └── rational-dvar-torah/  ← only YOU see this\n\nTeammates: unaffected\nGit:       nothing committed\n```"
+      "markdown": "```\nUser-Only Install\n─────────────────\n~/.claude/\n  └── plugins/\n        └── dvar-torah-plugin/  ← only YOU see this\n\nTeammates: unaffected\nGit:       nothing committed\n```"
     },
     {
       "label": "Project-wide",
       "description": "Adds to .claude/plugins — loads for everyone in this repo.",
-      "markdown": "```\nProject-Wide Install\n────────────────────\nyour-repo/\n  └── .claude/\n        └── plugins/\n              └── rational-dvar-torah/  ← everyone sees this\n\nTeammates: auto-loaded for all\nGit:       committed to repo\n```"
+      "markdown": "```\nProject-Wide Install\n────────────────────\nyour-repo/\n  └── .claude/\n        └── plugins/\n              └── dvar-torah-plugin/  ← everyone sees this\n\nTeammates: auto-loaded for all\nGit:       committed to repo\n```"
     },
     {
       "label": "Already installed",
@@ -266,9 +266,9 @@ AskUserQuestion(questions=[{
   "header": "Writing Style",
   "options": [
     {
-      "label": "Hebrew — רציונלי (Recommended)",
-      "description": "Write in Hebrew, rationalist/philosophical register, academic references",
-      "markdown": "```\nHebrew · Rationalist\n────────────────────\nLanguage:  Hebrew (עברית)\nRegister:  Philosophical, structured\nSources:   Sefaria primary texts + academic commentary\nAudience:  Hebrew-literate, philosophically inclined\n```"
+      "label": "Hebrew — פילוסופי (Recommended)",
+      "description": "Write in Hebrew, philosophical register, academic references",
+      "markdown": "```\nHebrew · Philosophical\n────────────────────\nLanguage:  Hebrew (עברית)\nRegister:  Philosophical, structured\nSources:   Sefaria primary texts + academic commentary\nAudience:  Hebrew-literate, philosophically inclined\n```"
     },
     {
       "label": "Hebrew — מוסרי",
@@ -276,9 +276,9 @@ AskUserQuestion(questions=[{
       "markdown": "```\nHebrew · Mussar\n───────────────\nLanguage:  Hebrew (עברית)\nRegister:  Mussar, practical ethics\nSources:   Mesillat Yesharim, Chovot ha-Levavot, Orchot Tzaddikim\nAudience:  Hebrew-literate, character-development focus\n```"
     },
     {
-      "label": "English — Rationalist",
+      "label": "English — Philosophical",
       "description": "Write in English, philosophical register, good for English-speaking audiences",
-      "markdown": "```\nEnglish · Rationalist\n─────────────────────\nLanguage:  English\nRegister:  Philosophical, structured\nSources:   English translations + academic sources\nAudience:  English-literate, philosophically inclined\n```"
+      "markdown": "```\nEnglish · Philosophical\n─────────────────────\nLanguage:  English\nRegister:  Philosophical, structured\nSources:   English translations + academic sources\nAudience:  English-literate, philosophically inclined\n```"
     },
     {
       "label": "Bilingual — Hebrew + English",
@@ -292,7 +292,7 @@ AskUserQuestion(questions=[{
 
 Persist as env var:
 ```
-DVAR_TORAH_DEFAULT_STYLE="hebrew-rationalist"  # hebrew-rationalist | hebrew-mussar | english-rationalist | bilingual
+DVAR_TORAH_DEFAULT_STYLE="hebrew-philosophical"  # hebrew-philosophical | hebrew-mussar | english-philosophical | bilingual
 ```
 
 ---
@@ -323,7 +323,7 @@ Dvar Torah Plugin Readiness: 7.5 / 10
   Preferences          ████████░░░░░░░░  Thinkers set, style missing
   Previous Writings    ░░░░░░░░░░░░░░░░  0 divrei torah yet
 
-  Top gap: Set writing style → run /rational-dvar-torah:setup Phase 4
+  Top gap: Set writing style → run /dvar-torah-plugin:setup Phase 4
 ```
 
 ---

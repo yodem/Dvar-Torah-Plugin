@@ -209,7 +209,7 @@ plugins/
     skills/                     8 skills
     commands/                   /dvar-torah command
     CLAUDE.md                   Architecture guide
-  rational-dvar-torah/        ← v2.0 — philosophy-focused
+  dvar-torah/              ← v2.0 — philosophy-focused
     skills/                     8 skills
     commands/                   /dvar-torah command
     CLAUDE.md                   Architecture guide

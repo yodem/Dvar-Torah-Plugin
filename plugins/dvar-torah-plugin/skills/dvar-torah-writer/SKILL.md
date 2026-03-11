@@ -5,7 +5,7 @@ compatibility: "Claude Code 2.1.59+."
 author: yodem
 description: כתיבת דבר תורה מקיף בכל זרם מחשבה יהודית — פילוסופיה, קבלה, חסידות, חז״ל, מחקר מודרני. Use when writing a Dvar Torah, preparing a Torah lecture, writing a post, analyzing a parsha, or exploring Jewish thought.
 version: 4.0.0
-tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, rationalism, post, shiur, parallel-agents]
+tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, jewish-thought, post, shiur, parallel-agents]
 user-invocable: true
 context: fork
 complexity: high
