@@ -10,8 +10,10 @@ user-invocable: false
 disable-model-invocation: false
 context: fork
 complexity: low
+model: haiku
 metadata:
   category: ui
+  performance-note: "Uses Haiku for fast interactive selection — keeps wizard snappy"
 allowed-tools:
   - Read
   - Glob

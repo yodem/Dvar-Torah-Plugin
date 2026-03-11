@@ -42,7 +42,7 @@
 
 ## MCP Dependencies
 
-- **claude_ai_Sefaria** (required, via Claude connector): ספריית ספריא — 15 כלים לטקסטים, חיפוש, קשרים, לוח, כתבי יד
+- **claude_ai_Sefaria** (required): 15 tools for texts, search, links, calendar. Connect via Claude Account Connectors (claude.ai/settings/integrations) or `claude mcp add-oauth Sefaria`
 - **sequential-thinking** (recommended): חשיבה מורכבת לניתוח פילוסופי
 - **memory** (optional): זיכרון — דפוסי כתיבה, נושאים חוזרים
 
@@ -65,12 +65,15 @@
 | 7 | **historical-research** | מחקר היסטורי — המזרח הקדום, ארכאולוגיה, ביקורת המקרא |
 | 8 | **previous-analysis** | ניתוח כתיבות קודמות — דפוסים, סגנון, המלצות |
 
-## Agents (2)
+## Agents & Model Routing
 
-| Agent | Model | Role |
+| Agent / Skill | Model | Role |
 |-------|-------|------|
-| **torah-philosopher** | Opus | סוכן ראשי — כתיבה, ניתוח, שילוב |
+| **interactive-cli** | Haiku | אשף אינטראקטיבי — בחירות מהירות |
 | **source-researcher** | Sonnet | מחקר מקורות מהיר, אימות מראי מקומות |
+| **torah-philosopher** | Opus | סוכן ראשי — כתיבה, ניתוח, שילוב |
+
+> Haiku handles the wizard for instant responsiveness. Sonnet does research. Opus writes.
 
 ## הוגים
 

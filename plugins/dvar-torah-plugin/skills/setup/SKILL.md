@@ -93,6 +93,8 @@ DVAR_TORAH_LANGUAGE="he"  # he | en | bilingual
 
 ## Phase 1: Sefaria MCP Detection
 
+Sefaria MCP is required for source lookups, text retrieval, and citation verification.
+
 First, check what MCP servers are configured:
 
 ```python
@@ -102,7 +104,7 @@ Bash(command="cat ~/.claude/settings.json 2>/dev/null | python3 -c \"import json
 ```
 
 Look for a Sefaria MCP entry in either file. Identify which connector type is configured:
-- `claude_ai_Sefaria` — Claude native connector (cloud, recommended)
+- `claude_ai_Sefaria` — Claude Account Connector (cloud, recommended)
 - `sefaria-mcp` with `url: http://localhost:{port}/sse` — Docker/local SSE
 
 ### Live Connection Test
@@ -119,23 +121,23 @@ If it fails, present repair options:
 
 ```python
 AskUserQuestion(questions=[{
-  "question": "Sefaria MCP is not responding. How would you like to fix this?",
+  "question": "Sefaria MCP is not responding. How would you like to connect?",
   "header": "Sefaria MCP Setup",
   "options": [
     {
-      "label": "Claude connector (Recommended)",
-      "description": "Uses the built-in claude_ai_Sefaria connector. No Docker required.",
-      "markdown": "```\nAdd to ~/.claude/settings.json:\n{\n  \"mcpServers\": {\n    \"claude_ai_Sefaria\": {\n      \"type\": \"claude_ai\",\n      \"name\": \"Sefaria\"\n    }\n  }\n}\n```"
+      "label": "Claude Account Connector (Recommended)",
+      "description": "One-click setup via Claude's built-in integrations. No Docker or local install needed.",
+      "markdown": "```\nOption A — Claude.ai Account Connectors:\n  1. Go to claude.ai/settings/integrations\n  2. Find \"Sefaria\" and click Connect\n  3. Done! Available in all Claude Code sessions.\n\nOption B — Claude Code CLI:\n  Run: claude mcp add-oauth Sefaria\n  This connects your Claude account to\n  the Sefaria MCP server automatically.\n```"
     },
     {
       "label": "Docker (local SSE)",
-      "description": "Run Sefaria MCP as a local Docker container on port 8089.",
-      "markdown": "```bash\ndocker build -t sefaria-mcp \\\n  https://github.com/Sefaria/sefaria-mcp.git\ndocker run -d --name sefaria-mcp \\\n  -p 8089:8088 sefaria-mcp\n```"
+      "description": "Self-host Sefaria MCP as a local Docker container on port 8089.",
+      "markdown": "```bash\ndocker build -t sefaria-mcp \\\n  https://github.com/Sefaria/sefaria-mcp.git\ndocker run -d --name sefaria-mcp \\\n  -p 8089:8088 sefaria-mcp\n\n# Then add to .mcp.json:\n# \"sefaria\": {\n#   \"type\": \"sse\",\n#   \"url\": \"http://localhost:8089/sse\"\n# }\n```"
     },
     {
       "label": "Skip for now",
-      "description": "Continue setup without Sefaria. Source lookup will not work.",
-      "markdown": "```\n⚠ Source verification will be disabled.\nRun /rational-dvar-torah:setup again after configuring Sefaria.\n```"
+      "description": "Continue setup without Sefaria. Source lookup and citation verification will not work.",
+      "markdown": "```\n⚠ Source verification will be disabled.\nRun /dvar-torah-plugin:setup again after\nconnecting Sefaria.\n```"
     }
   ],
   "multiSelect": false
@@ -144,9 +146,9 @@ AskUserQuestion(questions=[{
 
 Show final status:
 ```
-Sefaria MCP:  ✓ Connected (claude_ai connector)   — Parsha: פרשת X
-              ✗ Not configured — source lookup disabled
+Sefaria MCP:  ✓ Connected (Account Connector)     — Parsha: פרשת X
               ✓ Connected (Docker, port 8089)
+              ✗ Not configured — source lookup disabled
 ```
 
 ---
