@@ -139,6 +139,12 @@ Agent(
     CONTEXT: {context.type}
 
     Search Sefaria for sources relevant to this topic.
+
+    IMPORTANT: When the source is Talmudic or has Steinsaltz commentary available,
+    FIRST read Steinsaltz for pshat understanding:
+      get_text("Steinsaltz on <reference>")
+    This gives you the baseline meaning before philosophical analysis.
+
     For orientation={orientation}, focus on:
     - philosophy: Guide for the Perplexed, Emunot veDeot, Milhamot HaShem, Or Hashem, Kuzari
     - kabbalah: Zohar, Pardes Rimonim, Etz Chaim, Daat Tevunot
