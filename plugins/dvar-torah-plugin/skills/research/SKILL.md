@@ -1,12 +1,12 @@
 ---
-name: source-research
+name: research
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: מחקר מקורות מעמיק בספריית ספריא עבור דבר תורה. Use when searching Jewish texts, finding sources in Sefaria, or building a source bibliography.
-version: 1.0.0
+description: Search Jewish texts in Sefaria and build a source bibliography. Use when searching for Torah sources, finding Talmudic or philosophical texts, or exploring a topic in Sefaria.
+version: 4.2.0
 tags: [sefaria, source-research, jewish-texts, bibliography]
-user-invocable: false
+user-invocable: true
 disable-model-invocation: false
 context: fork
 complexity: medium

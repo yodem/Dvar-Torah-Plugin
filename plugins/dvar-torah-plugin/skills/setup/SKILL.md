@@ -29,10 +29,10 @@ Interactive onboarding that checks your Sefaria MCP connection, configures langu
 ## Quick Start
 
 ```bash
-/dvar-torah-plugin:setup              # Full wizard
-/dvar-torah-plugin:setup --rescan     # Re-check MCP + score, skip preferences
-/dvar-torah-plugin:setup --score-only # Readiness score only
-/dvar-torah-plugin:setup --plan-only  # Improvement plan only
+/dvar-torah:setup              # Full wizard
+/dvar-torah:setup --rescan     # Re-check MCP + score, skip preferences
+/dvar-torah:setup --score-only # Readiness score only
+/dvar-torah:setup --plan-only  # Improvement plan only
 ```
 
 ## Argument Resolution
@@ -137,7 +137,7 @@ AskUserQuestion(questions=[{
     {
       "label": "Skip for now",
       "description": "Continue setup without Sefaria. Source lookup and citation verification will not work.",
-      "markdown": "```\n⚠ Source verification will be disabled.\nRun /dvar-torah-plugin:setup again after\nconnecting Sefaria.\n```"
+      "markdown": "```\n⚠ Source verification will be disabled.\nRun /dvar-torah:setup again after\nconnecting Sefaria.\n```"
     }
   ],
   "multiSelect": false
@@ -323,7 +323,7 @@ Dvar Torah Plugin Readiness: 7.5 / 10
   Preferences          ████████░░░░░░░░  Thinkers set, style missing
   Previous Writings    ░░░░░░░░░░░░░░░░  0 divrei torah yet
 
-  Top gap: Set writing style → run /dvar-torah-plugin:setup Phase 4
+  Top gap: Set writing style → run /dvar-torah:setup Phase 4
 ```
 
 ---
@@ -347,7 +347,7 @@ P1 (this week):
   → previous-analysis skill will start detecting your patterns.
 
 P2 (ongoing):
-  /dvar-torah-plugin:setup --rescan
+  /dvar-torah:setup --rescan
   → Re-run after writing a few divrei torah to track progress.
 ```
 
@@ -398,4 +398,4 @@ Read the existing file first, merge (never overwrite existing keys), then write 
 ## Related Commands
 
 - `/dvar-torah` — Write a dvar torah (the main command this plugin provides)
-- `/dvar-torah-plugin:setup --rescan` — Re-check MCP + readiness score after writing a few divrei torah
+- `/dvar-torah:setup --rescan` — Re-check MCP + readiness score after writing a few divrei torah

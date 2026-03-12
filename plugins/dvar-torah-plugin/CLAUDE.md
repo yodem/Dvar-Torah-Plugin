@@ -1,10 +1,10 @@
-# דבר תורה — Dvar Torah Plugin v4.1
+# דבר תורה — Dvar Torah Plugin v4.2
 
 ## Architecture — Parallel Agent Orchestration
 
 ```
 Phase 0 — Selection (haiku)                   ~5s
-  └── interactive-cli        ← fast wizard, instant responses
+  └── wizard              ← fast wizard, instant responses
 
 Phase 1 — Research (parallel, haiku)          ~15s
   ├── previous-analyzer     ← scan output/ for patterns
@@ -41,6 +41,18 @@ Phase 3 — Writing (opus)                      ~30s
 /dvar-torah אוריינטציה: קבלה, נושא: ספירות               ← קבלה
 /dvar-torah אוריינטציה: חסידות, הקשר: חתונה               ← חסידות + הקשר
 /dvar-torah סוג: מחקרי, נושא: חוקי חמורבי בפרשת משפטים    ← מחקרי
+```
+
+## Standalone Skills
+
+```
+/dvar-torah:compose     ← direct compose (skip wizard)
+/dvar-torah:research    ← standalone Sefaria search
+/dvar-torah:analyze     ← standalone philosophical analysis
+/dvar-torah:history     ← standalone historical context
+/dvar-torah:previous    ← analyze previous writings (patterns + recommendations)
+/dvar-torah:previous --base  ← extract writing template from selected pieces
+/dvar-torah:setup       ← configuration wizard
 ```
 
 ## Formats & Lengths
@@ -90,30 +102,31 @@ Use MCP `english_semantic_search` for discovery; API script for targeted lookups
 > 5. הכבד כל זרם מחשבה — ללא דחייה פסקנית
 > 6. **חכמת מודלים**: haiku לבחירות ומחקר, sonnet לניתוח, opus לכתיבה בלבד
 
-## Skills (8)
+## Skills (9)
 
-| # | Skill | תיאור |
-|---|-------|-------|
-| 1 | **interactive-cli** | אשף אינטראקטיבי — שפה, אוריינטציה, פורמט, אורך, נושא, הוגים, הקשר |
-| 2 | **dvar-torah-writer** | **Orchestrator** — מתזמן סוכנים במקביל, מרכיב תוצאות |
-| 3 | **source-research** | מחקר מקורות דרך Sefaria MCP |
-| 4 | **source-references** | אימות מראי מקומות ופורמט אחיד |
-| 5 | **philosophical-analysis** | ניתוח פילוסופי מעמיק |
-| 6 | **mussar-ethics** | שילוב ממד מוסרי-מעשי |
-| 7 | **historical-research** | מחקר היסטורי — המזרח הקדום, ארכאולוגיה |
-| 8 | **previous-analysis** | ניתוח כתיבות קודמות — דפוסים, סגנון |
+| # | Skill | Displays as | תיאור |
+|---|-------|-------------|-------|
+| 1 | **wizard** | `dvar-torah:wizard` | אשף אינטראקטיבי — שפה, אוריינטציה, פורמט, אורך, נושא, הוגים, הקשר |
+| 2 | **compose** | `dvar-torah:compose` | **Orchestrator** — מתזמן סוכנים במקביל, מרכיב תוצאות |
+| 3 | **research** | `dvar-torah:research` | מחקר מקורות דרך Sefaria MCP |
+| 4 | **verify** | `dvar-torah:verify` | אימות מראי מקומות ופורמט אחיד |
+| 5 | **analyze** | `dvar-torah:analyze` | ניתוח פילוסופי מעמיק |
+| 6 | **mussar** | `dvar-torah:mussar` | שילוב ממד מוסרי-מעשי |
+| 7 | **history** | `dvar-torah:history` | מחקר היסטורי — המזרח הקדום, ארכאולוגיה |
+| 8 | **previous** | `dvar-torah:previous` | ניתוח כתיבות קודמות — דפוסים, סגנון |
+| 9 | **setup** | `dvar-torah:setup` | אשף הגדרות |
 
 ## Agents (7)
 
-| Agent / Skill | Model | Role | Phase |
-|-------|-------|------|-------|
-| **interactive-cli** | haiku | אשף אינטראקטיבי — בחירות מהירות | 0 |
-| **source-researcher** | haiku | חיפוש מקורות ב-Sefaria | 1 |
-| **previous-analyzer** | haiku | סריקת דפוסים מכתיבות קודמות | 1 |
-| **historical-researcher** | haiku | הקשר היסטורי ותרבותי | 1 |
-| **source-verifier** | haiku | אימות ציטוטים ופורמט | 2 |
-| **philosophical-analyzer** | sonnet | ניתוח פילוסופי ודיאלוג | 2 |
-| **torah-writer** | opus | כתיבה סופית בלבד | 3 |
+| Agent | Skill | Model | Role | Phase |
+|-------|-------|-------|------|-------|
+| — | **wizard** | haiku | אשף אינטראקטיבי — בחירות מהירות | 0 |
+| **source-researcher** | research | haiku | חיפוש מקורות ב-Sefaria | 1 |
+| **previous-analyzer** | previous | haiku | סריקת דפוסים מכתיבות קודמות | 1 |
+| **historical-researcher** | history | haiku | הקשר היסטורי ותרבותי | 1 |
+| **source-verifier** | verify | haiku | אימות ציטוטים ופורמט | 2 |
+| **philosophical-analyzer** | analyze | sonnet | ניתוח פילוסופי ודיאלוג | 2 |
+| **torah-writer** | compose | opus | כתיבה סופית בלבד | 3 |
 
 ## Output Directory
 

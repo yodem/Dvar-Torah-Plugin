@@ -21,7 +21,7 @@ tools:
   - mcp__claude_ai_Sefaria__text_search
   - mcp__claude_ai_Sefaria__clarify_name_argument
 skills:
-  - historical-research
+  - history
 allowed_tasks:
   - מחקר הקשר היסטורי
   - מציאת מקבילות מהמזרח הקדום

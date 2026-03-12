@@ -1,10 +1,10 @@
 ---
-name: dvar-torah-writer
+name: compose
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: כתיבת דבר תורה מקיף בכל זרם מחשבה יהודית — פילוסופיה, קבלה, חסידות, חז״ל, מחקר מודרני. Use when writing a Dvar Torah, preparing a Torah lecture, writing a post, analyzing a parsha, or exploring Jewish thought.
-version: 4.1.0
+description: Compose a dvar torah, post, or shiur by orchestrating research, analysis, and writing agents. Use when writing a dvar torah, preparing a Torah lecture, or composing a Jewish thought piece.
+version: 4.2.0
 tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, jewish-thought, post, shiur, parallel-agents]
 user-invocable: true
 context: fork
@@ -96,7 +96,7 @@ Default to historical-researcher agent
 
 ### Step 0: Interactive Wizard (if needed)
 
-If the user did not provide full config — invoke `interactive-cli` skill to collect parameters. Once config is complete, proceed to orchestration.
+If the user did not provide full config — invoke `wizard` skill to collect parameters. Once config is complete, proceed to orchestration.
 
 ### Step 1: Resolve topic
 
@@ -131,7 +131,7 @@ Launch ALL of these agents in a **single message** with `run_in_background: true
 #### Agent 1: previous-analyzer (haiku)
 ```
 Agent(
-  subagent_type: "dvar-torah-plugin:previous-analyzer",
+  subagent_type: "dvar-torah:previous-analyzer",
   model: "haiku",
   run_in_background: true,
   prompt: """
@@ -145,7 +145,7 @@ Agent(
 #### Agent 2: source-researcher (haiku)
 ```
 Agent(
-  subagent_type: "dvar-torah-plugin:source-researcher",
+  subagent_type: "dvar-torah:source-researcher",
   model: "haiku",
   run_in_background: true,
   prompt: """
@@ -178,7 +178,7 @@ Agent(
 Only launch if `topic.type == "research"` OR `orientation == "modern"`:
 ```
 Agent(
-  subagent_type: "dvar-torah-plugin:historical-researcher",
+  subagent_type: "dvar-torah:historical-researcher",
   model: "haiku",
   run_in_background: true,
   prompt: """
@@ -196,7 +196,7 @@ Agent(
 Only launch if `include_mussar == true`:
 ```
 Agent(
-  subagent_type: "dvar-torah-plugin:source-researcher",
+  subagent_type: "dvar-torah:source-researcher",
   model: "haiku",
   run_in_background: true,
   prompt: """
@@ -227,7 +227,7 @@ Launch BOTH agents in a **single message** with `run_in_background: true`:
 #### Agent 5: philosophical-analyzer (sonnet)
 ```
 Agent(
-  subagent_type: "dvar-torah-plugin:philosophical-analyzer",
+  subagent_type: "dvar-torah:philosophical-analyzer",
   model: "sonnet",
   run_in_background: true,
   prompt: """
@@ -257,7 +257,7 @@ Agent(
 #### Agent 6: source-verifier (haiku)
 ```
 Agent(
-  subagent_type: "dvar-torah-plugin:source-verifier",
+  subagent_type: "dvar-torah:source-verifier",
   model: "haiku",
   run_in_background: true,
   prompt: """
@@ -282,7 +282,7 @@ Launch the writer with ALL collected results:
 #### Agent 7: torah-writer (opus)
 ```
 Agent(
-  subagent_type: "dvar-torah-plugin:torah-writer",
+  subagent_type: "dvar-torah:torah-writer",
   model: "opus",
   prompt: """
     WRITE a {format} in {language}.

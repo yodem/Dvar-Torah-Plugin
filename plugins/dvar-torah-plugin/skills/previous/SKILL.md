@@ -1,12 +1,13 @@
 ---
-name: previous-analysis
+name: previous
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: ניתוח דברי תורה קודמים לזיהוי דפוסים, סגנון, ומניעת חזרות — או כתיבה על בסיסם. Use when starting a new dvar torah to learn from previous outputs, or to base a new one on selected previous pieces.
-version: 3.0.0
+description: Analyze previous divrei torah to discover patterns, avoid repetition, or extract a writing template. Use when reviewing writing history or basing a new piece on a previous one.
+version: 4.2.0
 tags: [analysis, patterns, history, style, base-on]
-user-invocable: false
+user-invocable: true
+argument-hint: "[--base]"
 disable-model-invocation: false
 context: fork
 complexity: medium
@@ -19,9 +20,23 @@ allowed-tools:
   - mcp__memory__*
 ---
 
-# ניתוח כתיבות קודמות — Previous Analysis
+# Previous Analysis — ניתוח כתיבות קודמות
 
-## תיאור
+## Standalone Invocation
+
+```
+/dvar-torah:previous           → scan all, show patterns + recommendations
+/dvar-torah:previous --base    → list files for selection, extract template
+```
+
+- **Default** (no flag): Scans `output/divrei-torah/` and returns pattern analysis, recommendations for new topics, underused thinkers, and style observations.
+- **`--base`**: Lists previous divrei torah for selection, then extracts a writing template (structure, register, citation density) from the selected files.
+
+Pipeline usage from the compose orchestrator is unchanged.
+
+---
+
+## Description
 
 מיומנות שמנתחת דברי תורה ופוסטים שנכתבו בעבר.
 
@@ -30,6 +45,16 @@ allowed-tools:
 - `mode: "base_on"` — חילוץ סגנון ומבנה מדברי תורה נבחרים, שימוש כתבנית לכתיבה חדשה
 
 ---
+
+## Argument Resolution
+
+```python
+FLAG = "$ARGUMENTS[0]"  # --base | (none)
+if FLAG == "--base":
+    mode = "base_on"
+else:
+    mode = "avoid"
+```
 
 ## פרמטר `mode`
 

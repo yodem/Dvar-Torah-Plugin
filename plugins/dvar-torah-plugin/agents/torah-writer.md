@@ -13,7 +13,7 @@ tools:
   - Grep
   - mcp__memory__*
 skills:
-  - dvar-torah-writer
+  - compose
 allowed_tasks:
   - כתיבת דבר תורה מלא מתוצאות מחקר מוכנות
   - כתיבת פוסט תורני

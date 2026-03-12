@@ -1,10 +1,10 @@
 ---
-name: interactive-cli
+name: wizard
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: אשף אינטראקטיבי לבחירת שפה, אוריינטציה, נושא, פורמט, אורך, הוגים, הקשר, ודברי תורה קודמים. Use when starting a new dvar torah session or when the user runs /dvar-torah without parameters.
-version: 3.0.0
+description: Interactive wizard for selecting parameters. Use when starting a new dvar torah session or when the user runs /dvar-torah without parameters.
+version: 4.2.0
 tags: [cli, interactive, wizard, selection, hebrew, orientation, context]
 user-invocable: false
 disable-model-invocation: false
@@ -261,16 +261,16 @@ header: "כתיבות קודמות / Previous Writings"
 **מצב "כתוב על בסיס קודמים"**:
 1. הצג רשימה של כל דברי התורה הקודמים עם תאריך, נושא, פורמט
 2. משתמש בוחר 1-3 קבצים
-3. הפעל `previous-analysis` עם `mode: "base_on"` על הקבצים שנבחרו
+3. הפעל `previous` עם `mode: "base_on"` על הקבצים שנבחרו
 
 **מצב "הימנע מחזרות"**:
-הפעל `previous-analysis` עם `mode: "avoid"` (התנהגות קיימת).
+הפעל `previous` עם `mode: "avoid"` (התנהגות קיימת).
 
 ---
 
 ### פלט
 
-העבר את כל הבחירות כ-context ל-skill `dvar-torah-writer`:
+העבר את כל הבחירות כ-context ל-skill `compose`:
 
 ```yaml
 config:

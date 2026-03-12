@@ -1,10 +1,10 @@
 ---
-name: source-references
+name: verify
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: מערכת מראי מקומות מדויקים — אימות, פורמט אחיד, ומעקב אחר כל ציטוט. Use when verifying sources, formatting citations, or building a bibliography.
-version: 1.0.0
+description: Verify citations through Sefaria and format references uniformly.
+version: 4.2.0
 tags: [citations, references, verification, bibliography, sefaria]
 user-invocable: false
 disable-model-invocation: false

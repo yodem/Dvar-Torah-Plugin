@@ -21,7 +21,7 @@ tools:
   - mcp__claude_ai_Sefaria__clarify_name_argument
   - mcp__sequential-thinking__*
 skills:
-  - philosophical-analysis
+  - analyze
 allowed_tasks:
   - ניתוח פילוסופי מעמיק
   - מיפוי עמדות הוגים

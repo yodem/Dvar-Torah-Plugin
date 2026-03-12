@@ -1,12 +1,12 @@
 ---
-name: philosophical-analysis
+name: analyze
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: ניתוח פילוסופי מעמיק של סוגיות במחשבת ישראל. Use when analyzing theological questions, comparing philosophical positions of Jewish thinkers, or building dialectical arguments.
-version: 1.0.0
+description: Philosophical analysis of Jewish thought. Use when comparing positions of Jewish thinkers, analyzing theological questions, or building dialectical arguments.
+version: 4.2.0
 tags: [philosophy, theology, analysis, jewish-thought, dialectics]
-user-invocable: false
+user-invocable: true
 disable-model-invocation: false
 context: fork
 complexity: high

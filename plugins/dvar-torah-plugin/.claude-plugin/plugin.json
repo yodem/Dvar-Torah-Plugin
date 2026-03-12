@@ -1,6 +1,6 @@
 {
-  "name": "dvar-torah-plugin",
-  "version": "4.1.0",
+  "name": "dvar-torah",
+  "version": "4.2.0",
   "description": "Write Dvar Torah, posts, and shiurim across all major Jewish thought streams — philosophy, kabbalah, hasidut, hazal, and modern scholars. Powered by Sefaria MCP (bundled).",
   "author": {
     "name": "yodem",

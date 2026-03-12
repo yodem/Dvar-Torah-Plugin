@@ -1,12 +1,12 @@
 ---
-name: historical-research
+name: history
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: מחקר היסטורי והקשר תרבותי של טקסטים תורניים — ביקורת המקרא, המזרח הקדום, ארכאולוגיה. Use when exploring the historical context of Torah texts, Ancient Near East parallels, biblical criticism, or archaeological evidence.
-version: 1.0.0
+description: Research historical and cultural context of Torah texts. Use when exploring ANE parallels, biblical criticism, or archaeological evidence.
+version: 4.2.0
 tags: [research, history, ancient-near-east, biblical-criticism, archaeology]
-user-invocable: false
+user-invocable: true
 disable-model-invocation: false
 context: fork
 complexity: high

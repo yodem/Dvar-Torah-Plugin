@@ -9,6 +9,8 @@ tools:
   - Read
   - Glob
   - Grep
+skills:
+  - previous
 allowed_tasks:
   - סריקת דברי תורה קודמים
   - זיהוי דפוסי כתיבה

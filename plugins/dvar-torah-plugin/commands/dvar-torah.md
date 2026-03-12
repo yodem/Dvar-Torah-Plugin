@@ -10,7 +10,7 @@ user-invocable: true
 
 ## תהליך
 
-### אם אין פרמטרים — הפעל אשף אינטראקטיבי (skill: interactive-cli):
+### אם אין פרמטרים — הפעל אשף אינטראקטיבי (skill: wizard):
 
 0. **בחירת שפה**: עברית / English / Bilingual
 0.5. **בחירת אוריינטציה**: פילוסופיה / קבלה / חסידות / חז״ל / חוקרים מודרניים / אחר
@@ -23,12 +23,12 @@ user-invocable: true
 
 ### אחרי הבחירות:
 
-6. **מחקר מקורות** (skill: source-research)
-7. **מחקר היסטורי** (skill: historical-research) — אם מחקרי
-8. **ניתוח פילוסופי** (skill: philosophical-analysis)
-9. **שילוב מוסר** (skill: mussar-ethics) — אם רלוונטי
-10. **אימות מראי מקומות** (skill: source-references)
-11. **כתיבה** (skill: dvar-torah-writer) — לפי פורמט, אורך, אוריינטציה, הקשר
+6. **מחקר מקורות** (skill: research)
+7. **מחקר היסטורי** (skill: history) — אם מחקרי
+8. **ניתוח פילוסופי** (skill: analyze)
+9. **שילוב מוסר** (skill: mussar) — אם רלוונטי
+10. **אימות מראי מקומות** (skill: verify)
+11. **כתיבה** (skill: compose) — לפי פורמט, אורך, אוריינטציה, הקשר
 12. **שמירה** — `output/divrei-torah/<format>/YYYY-MM-DD-<topic>.md`
 
 ## פרמטרים (אם ניתנים ישירות — דלג על האשף)
@@ -57,8 +57,8 @@ user-invocable: true
 
 ## כללים
 
-- **כל מקור חייב להיות מאומת ב-Sefaria MCP** — אף ציטוט בלי אימות
-- מראי מקומות בפורמט אחיד (skill: source-references)
+- כל מקור מאומת ב-Sefaria MCP — אף ציטוט בלי אימות
+- מראי מקומות בפורמט אחיד (skill: verify)
 - שמור את התוצר בתיקייה המתאימה
-- למד מכתיבות קודמות (skill: previous-analysis)
+- למד מכתיבות קודמות (skill: previous)
 - הכבד כל זרם מחשבה — הצג בנאמנות
