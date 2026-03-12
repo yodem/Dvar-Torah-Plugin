@@ -79,21 +79,20 @@ allowed-tools:
 
 ## שיטת עבודה
 
-### 1. זיהוי הטקסט וההקשר
-```
-get_text(<reference>)           → טקסט מקורי
-get_text_catalogue_info(<ref>)  → מידע ביבליוגרפי
-```
-
-### 2. חיפוש מקבילות
+### 1. גילוי ראשוני
 ```
 english_semantic_search("ancient near east parallel to <topic>")
-text_search("<keyword>")
 english_semantic_search("<topic> archaeology ancient")
-english_semantic_search("<topic> comparative ancient near east")
 ```
 
-### 3. חיפוש פרשנות קלאסית
+### 2. שליפת טקסט מקורי
+```
+get_text(<reference>)                                          → Sefaria MCP
+python scripts/sefaria_api.py get-text "<ref>"                 → API (מהיר יותר)
+get_text_catalogue_info(<ref>)                                 → מטא-נתונים
+```
+
+### 3. קשרים ופרשנות קלאסית
 ```
 get_links_between_texts(<verse>, "Rashi")
 get_links_between_texts(<verse>, "Ramban")
@@ -101,7 +100,7 @@ get_links_between_texts(<verse>, "Ibn Ezra")
 search_in_book("Kuzari", <topic>)
 ```
 
-### 4. חיפוש מחקר מודרני
+### 4. מחקר מודרני
 ```
 english_semantic_search("<topic> Jewish philosophy research")
 english_semantic_search("<scholar name> <topic>")

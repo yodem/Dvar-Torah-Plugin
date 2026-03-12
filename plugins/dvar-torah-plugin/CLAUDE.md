@@ -1,4 +1,4 @@
-# דבר תורה — Dvar Torah Plugin v4.0
+# דבר תורה — Dvar Torah Plugin v4.1
 
 ## Architecture — Parallel Agent Orchestration
 
@@ -67,9 +67,19 @@ Phase 3 — Writing (opus)                      ~30s
 
 ## MCP Dependencies
 
-- **claude_ai_Sefaria** (required): 15 tools for texts, search, links, calendar. Connect via Claude Account Connectors (claude.ai/settings/integrations) or `claude mcp add-oauth Sefaria`
+- **claude_ai_Sefaria** (bundled): Sefaria MCP is configured via `.mcp.json` in this plugin directory — no manual setup required. 15 tools for texts, search, links, calendar.
 - **sequential-thinking** (recommended): חשיבה מורכבת לניתוח פילוסופי
 - **memory** (optional): דפוסי כתיבה
+
+## API Script (v4.1)
+
+`scripts/sefaria_api.py` — direct REST calls, faster than MCP for known references:
+```
+python scripts/sefaria_api.py get-text "Genesis 1:1"
+python scripts/sefaria_api.py get-calendar
+python scripts/sefaria_api.py get-links "Berakhot 5a"
+```
+Use MCP `english_semantic_search` for discovery; API script for targeted lookups.
 
 ## Core Principles
 

@@ -76,18 +76,30 @@ allowed-tools:
 - האם ניתן ליישב בין השיטות?
 - מה הרלוונטיות העכשווית?
 
+<use_parallel_tool_calls>
+If you intend to call multiple tools and there are no dependencies between
+the tool calls, make all of the independent tool calls in parallel. Prioritize
+calling tools simultaneously whenever the actions can be done in parallel
+rather than sequentially. For example, when searching for sources on multiple
+thinkers, run all searches at once. Maximize use of parallel tool calls where
+possible to increase speed and efficiency.
+However, if some tool calls depend on previous calls to inform dependent
+values, do NOT call these tools in parallel.
+</use_parallel_tool_calls>
+
 ## כלים
 
 ### Sequential Thinking MCP
-השתמש בכלי `sequential-thinking` לניתוח מורכב:
+כשהניתוח מורכב, `sequential-thinking` יכול לסייע:
 - פירוק טיעונים פילוסופיים לצעדים
 - בחינת תוקף לוגי של הנמקות
 - השוואה שיטתית בין עמדות
 
-### Sefaria MCP
-- `get_topic_details` — רקע על נושאים פילוסופיים
-- `english_semantic_search` — מציאת טקסטים הקשורים לסוגיה
-- `get_links_between_texts` — קשרים בין הוגים
+### Sefaria MCP (עדיפויות)
+1. `english_semantic_search` — גילוי ראשוני
+2. `get_links_between_texts` — קשרים בין הוגים
+3. `get_text` — שליפת מקור מדויק
+4. `get_topic_details` — רקע על נושאים פילוסופיים
 
 ## פורמט פלט
 

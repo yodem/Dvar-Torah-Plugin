@@ -4,7 +4,7 @@ license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
 description: כתיבת דבר תורה מקיף בכל זרם מחשבה יהודית — פילוסופיה, קבלה, חסידות, חז״ל, מחקר מודרני. Use when writing a Dvar Torah, preparing a Torah lecture, writing a post, analyzing a parsha, or exploring Jewish thought.
-version: 4.0.0
+version: 4.1.0
 tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, jewish-thought, post, shiur, parallel-agents]
 user-invocable: true
 context: fork
@@ -103,10 +103,26 @@ If the user did not provide full config — invoke `interactive-cli` skill to co
 If `topic.type == "parsha"` and no specific parsha given:
 ```
 mcp__claude_ai_Sefaria__get_current_calendar()
+# or faster: python scripts/sefaria_api.py get-calendar
 ```
 Set `topic.value` from the calendar result.
 
 ---
+
+<use_parallel_tool_calls>
+If you intend to call multiple tools and there are no dependencies between
+the tool calls, make all of the independent tool calls in parallel. Prioritize
+calling tools simultaneously whenever the actions can be done in parallel
+rather than sequentially. Maximize use of parallel tool calls where possible
+to increase speed and efficiency.
+However, if some tool calls depend on previous calls to inform dependent
+values, do NOT call these tools in parallel.
+
+Agent dispatch pattern:
+- Phase 1 agents: launch ALL in a single message with run_in_background: true
+- Phase 2 agents: launch BOTH in a single message with run_in_background: true
+- Phase 3 (torah-writer): foreground — wait for completion
+</use_parallel_tool_calls>
 
 ### PHASE 1 — Research (parallel, all background)
 
@@ -356,7 +372,17 @@ agents_used: [source-researcher, philosophical-analyzer, torah-writer, ...]
 ---
 ```
 
-## Sefaria MCP Tools (for Step 1 only)
+## Sefaria MCP Tool Priority (for agents)
 
-- `get_current_calendar()` — פרשת השבוע
-- Other Sefaria tools are used by the research agents, not by this orchestrator
+Research agents use tools in this order:
+1. `english_semantic_search` — primary discovery
+2. `get_links_between_texts` — connections & commentary
+3. `get_text` — exact text (or: `python scripts/sefaria_api.py get-text "<ref>"`)
+4. `get_text_catalogue_info` — metadata
+5. `get_text_or_category_shape` — structure
+6. `get_topic_details` — topic context
+7. `search_in_book` — focused book search
+8. `search_in_dictionaries` — term definitions
+9. `text_search` — general fallback
+
+This orchestrator uses only `get_current_calendar` (Step 1) or `python scripts/sefaria_api.py get-calendar`.

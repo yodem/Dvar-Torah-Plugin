@@ -1,7 +1,7 @@
 {
   "name": "dvar-torah-plugin",
-  "version": "4.0.0",
-  "description": "Write Dvar Torah, posts, and shiurim across all major Jewish thought streams — philosophy, kabbalah, hasidut, hazal, and modern scholars. Powered by Sefaria MCP.",
+  "version": "4.1.0",
+  "description": "Write Dvar Torah, posts, and shiurim across all major Jewish thought streams — philosophy, kabbalah, hasidut, hazal, and modern scholars. Powered by Sefaria MCP (bundled).",
   "author": {
     "name": "yodem",
     "url": "https://github.com/yodem"
@@ -20,9 +20,9 @@
     "mussar",
     "jewish-thought",
     "shiur",
-    "torah",
-    "jewish-thought"
+    "torah"
   ],
   "skills": "./skills/",
-  "commands": "./commands/"
+  "commands": "./commands/",
+  "agents": "./agents/"
 }

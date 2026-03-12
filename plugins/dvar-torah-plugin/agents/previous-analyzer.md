@@ -29,7 +29,8 @@ resource_allocation:
 1. `Glob("output/divrei-torah/**/*.md")` — מצא קבצים
 2. קרא את ה-frontmatter + 20 שורות ראשונות מכל קובץ
 3. חלץ: format, topic, thinkers, opening_pattern, structure
-4. החזר:
+
+החזר בדיוק את המבנה הבא:
 
 ```yaml
 analysis:
@@ -49,11 +50,13 @@ recommendations:
 2. חלץ סגנון: opening_style, argument_structure, paragraph_length, closing_style, register, citation_density
 3. סנתז `template_guidance` עם `strict_instructions`
 
+החזר בדיוק את המבנה הבא:
+
 ```yaml
 template_guidance:
-  opening: { style, example_pattern }
-  body: { structure, thinker_order, citation_style, paragraph_length }
-  closing: { style }
+  opening: { style: "...", example_pattern: "..." }
+  body: { structure: "...", thinker_order: "...", citation_style: "...", paragraph_length: N }
+  closing: { style: "..." }
   register: "..."
   avg_length: N
   strict_instructions: "..."
