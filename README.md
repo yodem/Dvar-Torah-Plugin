@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-4.0-blue" alt="Version 4.0">
+  <img src="https://img.shields.io/badge/version-4.2-blue" alt="Version 4.2">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet" alt="Claude Code Plugin">
   <img src="https://img.shields.io/badge/Sefaria-MCP_Powered-orange" alt="Sefaria MCP">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License">
@@ -24,11 +24,12 @@ An interactive Claude Code plugin that writes Torah content grounded in real sou
 
 | Stream | Thinkers & Texts |
 |--------|-----------------|
-| **Jewish Philosophy** | Rambam, Saadia Gaon, Gersonides, Crescas, Albo, Kuzari, Ibn Ezra |
-| **Kabbalah** | Zohar, Ari, Ramak, Ramchal |
-| **Hasidut** | Baal Shem Tov, Tanya, Breslov, Kedushat Levi |
-| **Talmud & Midrash** | Mishnah, Bavli, Yerushalmi, Bereishit Rabbah, Tanchuma |
-| **Modern Scholarship** | Kaufmann, Cassuto, Pines, Altmann, ANE parallels |
+| **Jewish Philosophy** | Rambam, Saadia Gaon, Gersonides, Crescas, Albo, Yehuda HaLevi, Bahya Ibn Paquda, Ran, Akeidat Yitzchak |
+| **Kabbalah** | Zohar, Ari, Ramak, Ramchal, Abulafia, Baal HaSulam |
+| **Hasidut** | Baal Shem Tov, Maggid, Tanya/Chabad, Breslov, Kedushat Levi, Izhbitz, R. Tzadok, Sefat Emet, Esh Kodesh |
+| **Hazal / Midrash** | Mishnah, Tosefta, Bavli, Yerushalmi, Mekhilta, Sifra, Sifrei, Midrash Rabbah, Tanchuma, Pesikta, Yalkut Shimoni |
+| **Modern Jewish Thought** | Rav Kook, Jonathan Sacks, Eliezer Berkovits, Y. Leibowitz + academic lenses (Kaufmann, Cassuto, etc.) |
+| **Musar + Halakhic Frameworks** | Sha'arei Teshuvah, Orchot Tzadikim, Mesillat Yesharim, Mishneh Torah, Shulchan Arukh, Sefer HaChinukh |
 
 ### Formats & Lengths
 
@@ -92,7 +93,7 @@ Then add to your `.mcp.json`:
 ### 3. Run Setup (Optional)
 
 ```bash
-/dvar-torah-plugin:setup
+/dvar-torah:setup
 ```
 
 The setup wizard checks your Sefaria connection, configures language, orientation, default thinkers, and writing style.
@@ -149,18 +150,19 @@ Phase 3 — Writing (Opus)                       ~30s
 
 ---
 
-## The 8 Skills
+## The 9 Skills
 
 | Skill | What It Does |
 |-------|-------------|
-| **interactive-cli** | Guided wizard — language, orientation, format, length, topic, thinkers, occasion |
-| **dvar-torah-writer** | Orchestrator — dispatches agents, assembles the final piece |
-| **source-research** | Searches Sefaria for relevant texts across 15 API tools |
-| **source-references** | Verifies every citation, formats uniform references |
-| **philosophical-analysis** | Builds dialectical arguments between thinkers |
-| **mussar-ethics** | Integrates ethical/practical dimensions |
-| **historical-research** | ANE parallels, archaeology, biblical criticism |
-| **previous-analysis** | Learns from your past writings — avoids repetition, detects patterns |
+| **wizard** | Guided interactive intake — language, orientation, format, length, topic, thinkers, context |
+| **compose** | Orchestrator — dispatches agents in parallel and assembles the final output |
+| **research** | Searches Sefaria for relevant texts across Torah, Hazal, Jewish Thought, Kabbalah, Hasidut, Musar |
+| **verify** | Verifies every citation and standardizes references |
+| **analyze** | Builds dialectical/philosophical arguments across selected thinkers |
+| **mussar** | Integrates ethical/practical dimensions and action takeaways |
+| **history** | ANE parallels, archaeology, historical context |
+| **previous** | Learns from your past writings — avoids repetition, detects patterns |
+| **setup** | Configuration and readiness wizard |
 
 ---
 
@@ -205,19 +207,18 @@ The `.mcp.json` is pre-configured for Sequential Thinking and Memory. Sefaria co
 
 ```
 plugins/
-  dvar-torah-plugin/          ← v4.2 — all orientations, parallel agents
+  dvar-torah-plugin/          ← canonical plugin root (v4.2)
+    .claude-plugin/plugin.json  canonical plugin manifest
     skills/                     9 skills
     commands/                   /dvar-torah command
     agents/                     7 specialized agents
     hooks/                      PostToolUse + Stop validation hooks
     scripts/                    Sefaria REST API helper
-    CLAUDE.md                   Architecture guide
-archive/
-  rational-dvar-torah-v2/     ← v2.0 archived (superseded by v4.2)
-src/                          ← Source templates
-output/divrei-torah/          ← Your generated content
-manifests/                    ← Plugin manifests
-scripts/                      ← Build scripts
+    CLAUDE.md                   architecture + routing guide
+.claude-plugin/
+  marketplace.json            ← marketplace catalog metadata
+output/divrei-torah/          ← generated content
+scripts/                      ← repository maintenance scripts
 ```
 
 ## Build

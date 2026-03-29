@@ -1,136 +1,126 @@
 # מדריך הוגים לפי נושא / Thinkers by Subject
 
-מפה מלאה של חמש אוריינטציות עם הוגים, יצירות, ומזהי Sefaria.
+מפה מורחבת של זרמי מחשבה, מחברים, וקורפוסים ב-Sefaria.
+הקובץ מיועד לבחירת כיוון כתיבה מהירה; לפירוט עומק השתמש ב-`thinkers-guide.md`.
 
 ---
 
 ## 1. פילוסופיה יהודית (philosophy)
-*רציונליזם — לא קבלה*
+*רציונליזם, הגות שיטתית, ותיאולוגיה יהודית*
 
 | הוגה | Thinker | יצירות מרכזיות | Sefaria Ref |
 |------|---------|----------------|-------------|
-| **רס״ג** | Saadia Gaon (882–942) | אמונות ודעות | "Emunot veDeot" |
-| **רמב״ם** | Maimonides (1138–1204) | מורה נבוכים, משנה תורה, שמונה פרקים | "Guide for the Perplexed", "Mishneh Torah", "Shemonah Perakim" |
-| **רלב״ג** | Gersonides (1288–1344) | מלחמות ה׳, פירוש על התורה | "Milhamot HaShem", "Ralbag on Torah" |
-| **קרשקש** | Hasdai Crescas (1340–1410) | אור ה׳ | "Or Hashem" |
-| **אלבו** | Joseph Albo (1380–1444) | ספר העיקרים | "Sefer HaIkkarim" |
-| **ר״י הלוי** | Judah HaLevi (1075–1141) | הכוזרי | "Kuzari" |
-| **אבן עזרא** | Abraham Ibn Ezra (1089–1167) | פירושים על התורה | "Ibn Ezra on Torah" |
-| **אבן פקודה** | Bahya Ibn Paquda (11th c.) | חובות הלבבות | "Chovot HaLevavot" |
+| **רס״ג** | Saadia Gaon | אמונות ודעות | "HaEmunot veHaDeot" |
+| **רמב״ם** | Maimonides | מורה נבוכים, משנה תורה, שמונה פרקים | "Guide for the Perplexed", "Mishneh Torah", "Eight Chapters" |
+| **רלב״ג** | Gersonides | מלחמות ה׳ | "The Wars of the Lord" |
+| **קרשקש** | Hasdai Crescas | אור ה׳ | "Ohr Hashem" |
+| **אלבו** | Joseph Albo | ספר העיקרים | "Sefer HaIkkarim" |
+| **ריה״ל** | Judah HaLevi | הכוזרי | "Kuzari" |
+| **אבן פקודה** | Bahya Ibn Paquda | חובות הלבבות | "Duties of the Heart" |
+| **אבן עזרא** | Abraham Ibn Ezra | יסוד מורא, פירושים | "Yesod Mora VeSod HaTorah", "Ibn Ezra on Torah" |
+| **הר״ן** | Ran | דרשות הר״ן | "Derashot HaRan" |
+| **עקידת יצחק** | R. Yitzchak Arama | עקידת יצחק | "Akeidat Yitzchak" |
 
-**נושאים מרכזיים**: תארי האל, נבואה, השגחה, בחירה חופשית, ידיעה, בריאה, טעמי המצוות, נפש האדם
-
-**הנחיות Sefaria**:
-```
-search_in_book("Guide for the Perplexed", query)
-search_in_book("Emunot veDeot", query)
-search_in_book("Or Hashem", query)
-get_text("Guide for the Perplexed 1:1")
-```
+**נושאים מרכזיים**: תארי האל, נבואה, השגחה, בחירה חופשית, בריאה, טעמי המצוות, שכר ועונש.
 
 ---
 
 ## 2. קבלה (kabbalah)
+*זוהרית, לוריאנית, ופירושים מודרניים*
 
-| הוגה | Thinker | יצירות מרכזיות | Sefaria Ref |
-|------|---------|----------------|-------------|
-| **זוהר** | Zohar (ר״ש בר יוחאי / ר״מ דה ליאון) | ספר הזוהר | "Zohar" |
-| **רמ״ק** | Ramak — Moses Cordovero (1522–1570) | פרדס רמונים | "Pardes Rimonim" |
-| **האר״י** | Ari — Isaac Luria (1534–1572) | עץ חיים, פרי עץ חיים | "Etz Chaim" |
-| **רמח״ל** | Ramchal — Moses Luzzatto (1707–1746) | דעת תבונות, כלח פתחי חכמה | "Daat Tevunot", "Klach Pitchei Chochmah" |
+| הוגה / זרם | Thinker / School | יצירות מרכזיות | Sefaria Ref |
+|------------|------------------|----------------|-------------|
+| **זוהר** | Zoharic corpus | ספר הזוהר | "Zohar" |
+| **רמ״ק** | Ramak | פרדס רימונים | "Pardes Rimonim" |
+| **האר״י** | Ari (Lurianic) | עץ חיים, שער הכוונות | "Etz Chaim", "Sha'ar HaKavanot" |
+| **רמח״ל** | Ramchal | דעת תבונות, דרך ה׳, כלח פתחי חכמה | "Daat Tevunot", "Derekh Hashem", "Klach Pitchei Chochmah" |
+| **אברהם אבולעפיה** | Abraham Abulafia | אור השכל, גן נעול | "Ohr HaSekhel", "Gan Naul (Abulafia)" |
+| **בעל הסולם** | Baal HaSulam | תלמוד עשר הספירות, הקדמות לזוהר | "Talmud Eser HaSefirot", "Baal HaSulam's Introduction to Zohar" |
 
-**נושאים מרכזיים**: עשר ספירות, צמצום, שבירת הכלים, תיקון, ניצוצות, עולמות אצי-בריא-יצ-עשי, אין סוף
-
-**הנחיות Sefaria**:
-```
-get_text_or_category_shape(path="Kabbalah")
-search_in_book("Zohar", query)
-get_text("Zohar 1:1a")
-```
+**נושאים מרכזיים**: ספירות, צמצום, שבירה ותיקון, נשמה ועולמות, שפה וסוד.
 
 ---
 
 ## 3. חסידות (hasidut)
+*מוקדמת, חב״ד, ברסלב, איזביצא, ותנועות מאוחרות*
 
-| הוגה | Thinker | יצירות מרכזיות | Sefaria Ref |
-|------|---------|----------------|-------------|
-| **הבעש״ט** | Baal Shem Tov (1698–1760) | כתר שם טוב, בן פורת יוסף | "Keter Shem Tov" |
-| **המגיד ממזריץ׳** | Maggid of Mezeritch (1704–1772) | מגיד דבריו ליעקב | "Maggid Devarav LeYaakov" |
-| **אדמו״ר הזקן** | Shneur Zalman of Liadi (1745–1812) | תניא, שו״ע הרב | "Tanya" |
-| **ר׳ נחמן מברסלב** | Nachman of Breslov (1772–1810) | ליקוטי מוהר״ן, ליקוטי תפילות | "Likkutei Moharan" |
-| **ר׳ לוי יצחק מברדיטשוב** | Levi Yitzchak of Berditchev (1740–1810) | קדושת לוי | "Kedushat Levi" |
+| זרם / הוגה | School / Thinker | יצירות מרכזיות | Sefaria Ref |
+|------------|------------------|----------------|-------------|
+| **הבעש״ט ובית מדרשו** | Early Hasidut | כתר שם טוב, תולדות יעקב יוסף, בן פורת יוסף | "Keter Shem Tov", "Toldot Yaakov Yosef", "Ben Porat Yosef" |
+| **המגיד ממזריץ׳** | Maggid | מגיד דבריו ליעקב | "Maggid Devarav leYaakov" |
+| **חב״ד** | Chabad | תניא, תורה אור, ליקוטי תורה | "Tanya", "Torah Ohr", "Likkutei Torah" |
+| **ברסלב** | Breslov | ליקוטי מוהר״ן, ליקוטי תפילות, סיפורי מעשיות | "Likutei Moharan", "Likutei Tefilot", "Sippurei Maasiyot" |
+| **ר׳ לוי יצחק מברדיטשוב** | Kedushat Levi | קדושת לוי | "Kedushat Levi" |
+| **איזביצא ור׳ צדוק** | Izhbitz / R. Tzadok | מי השילוח, פרי צדיק, צדקת הצדיק | "Mei HaShiloach", "Peri Tzadik", "Tzidkat HaTzadik" |
+| **חסידות מאוחרת** | Later Hasidut | שפת אמת, שם משמואל, אש קודש | "Sefat Emet", "Shem MiShmuel", "Esh Kodesh" |
 
-**נושאים מרכזיים**: דבקות, בטול, שמחה, צדיק, עבודת השם, תפילה, אמונה, התעלות
+**נושאים מרכזיים**: דבקות, שמחה, תיקון המידות, תפילה, צדיק, פנימיות התורה.
 
-**הנחיות Sefaria**:
-```
+---
+
+## 4. חז״ל ומדרש (hazal)
+*מפת קורפוסים ולא רק שמות יחידים*
+
+| משפחה | Corpus Family | דוגמאות | Sefaria Ref |
+|-------|----------------|---------|-------------|
+| **משנה ותוספתא** | Mishnah/Tosefta | סדרי משנה, תוספתא | "Mishnah", "Tosefta" |
+| **תלמודים** | Bavli/Yerushalmi | בבלי, ירושלמי | "Talmud Bavli", "Jerusalem Talmud" |
+| **מדרשי הלכה** | Halakhic Midrash | מכילתא, ספרא, ספרי במדבר/דברים | "Mekhilta DeRabbi Yishmael", "Sifra", "Sifrei Bamidbar", "Sifrei Devarim" |
+| **מדרש רבה** | Midrash Rabbah | בראשית רבה, שמות רבה, ויקרא רבה ועוד | "Bereshit Rabbah", "Shemot Rabbah", "Vayikra Rabbah" |
+| **מדרש אגדה** | Aggadic Midrash | תנחומא, פסיקתא, פרקי דר׳ אליעזר | "Midrash Tanchuma", "Pesikta Rabbati", "Pirkei DeRabbi Eliezer" |
+| **אוספים** | Collections | ילקוט שמעוני, עין יעקב | "Yalkut Shimoni on Torah", "Ein Yaakov" |
+
+**נושאים מרכזיים**: דרש ופשט, אגדה והלכה, מחלוקת, מוסר, גאולה.
+
+---
+
+## 5. מחשבה יהודית מודרנית (modern-jewish-thought)
+
+| קבוצה | Group | הוגים / יצירות | Sefaria Ref |
+|-------|-------|-----------------|-------------|
+| **מודרנה ציונית-דתית** | Religious Zionist modern thought | הראי״ה קוק, אורות, אורות התשובה | "Orot", "Orot HaTeshuvah", "Orot HaKodesh" |
+| **פילוסופיה יהודית מודרנית** | Modern theology/philosophy | יונתן זקס, אליעזר ברקוביץ, ישעיהו ליבוביץ | "Rabbi Lord Jonathan Sacks", "Eliezer Berkovits", "Talks of Yeshayahu Leibowitz on the Parasha" |
+| **מחקר רמב״ם ופילוסופיה** | Academic Jewish philosophy | שלמה פינס, אלטמן, קלנר, הרווי, הלברטל | use `text_search()` + guided references |
+| **ביקורת מקרא יהודית** | Jewish Bible scholarship | קאופמן, קסוטו | use `text_search()` + Torah base texts |
+
+---
+
+## 6. מוסר (musar)
+
+| תקופה | Era | יצירות מרכזיות | Sefaria Ref |
+|-------|-----|----------------|-------------|
+| **ראשונים** | Rishonim | שערי תשובה, אורחות צדיקים, איגרת הרמב״ן, ספר היראה | "Sha'arei Teshuvah", "Orchot Tzadikim", "Letter from Ramban to his Son", "Sefer HaYirah" |
+| **אחרונים** | Acharonim | מסילת ישרים, פלא יועץ, שמירת הלשון | "Mesillat Yesharim", "Pele Yoetz", "Shemirat HaLashon" |
+| **מודרני** | Modern | אור הצפון ועוד קורפוסים מודרניים | "Ohr HaTzafun" |
+
+---
+
+## 7. הלכה שימושית להקשר כתיבה (halakhic-framework)
+*לא כתחליף לפסיקה; ככלי מסגור לרעיונות תורה*
+
+| מסגרת | Framework | שימוש בכתיבה | Sefaria Ref |
+|-------|-----------|--------------|-------------|
+| **משנה תורה** | Mishneh Torah | שפה עקרונית, מבנה ערכי-הלכתי | "Mishneh Torah" |
+| **שולחן ערוך** | Shulchan Arukh | מיפוי מעשי לנושאים יומיומיים | "Shulchan Arukh, Orach Chayim" |
+| **ספרות מצוות** | Mitzvot literature | עקרונות חינוך ומשמעות המצוות | "Sefer HaChinukh", "Sefer HaMitzvot" |
+
+---
+
+## הנחיות Sefaria (כלליות)
+
+```python
+# מפת קטגוריות לפני בחירת טקסטים
+get_text_or_category_shape(path="Jewish Thought")
 get_text_or_category_shape(path="Chasidut")
+get_text_or_category_shape(path="Musar")
+get_text_or_category_shape(path="Kabbalah")
+
+# שליפה ממוקדת
+search_in_book("Guide for the Perplexed", query)
 search_in_book("Tanya", query)
-search_in_book("Likkutei Moharan", query)
-get_text("Tanya, Likutei Amarim 1")
-```
+search_in_book("Mesillat Yesharim", query)
+search_in_book("Bereshit Rabbah", query)
 
----
-
-## 4. חז״ל (hazal)
-
-| מקור | Source | כינוי | Sefaria Ref |
-|------|--------|-------|-------------|
-| **תנאים** | Tannaim (1st–3rd c.) | משנה, מדרש הלכה | "Mishnah", "Mekhilta", "Sifra", "Sifre" |
-| **אמוראים** | Amoraim (3rd–6th c.) | תלמוד בבלי, ירושלמי | "Talmud Bavli", "Jerusalem Talmud" |
-| **מדרש אגדה** | Aggadic Midrash | בראשית רבה, תנחומא, ויקרא רבה | "Bereishit Rabbah", "Midrash Tanchuma" |
-| **תנאים בודדים** | Individual sages | ר״ע, ר״י הנשיא, בית שמאי/הלל | varies |
-
-**נושאים מרכזיים**: אגדה ופרשנות, מחלוקת לשם שמים, הלכה ומחשבה, דרשת הפסוק, עולמות הבא, גאולה
-
-**הנחיות Sefaria**:
-```
-get_text("Mishnah Avot 2:1")
-search_in_book("Bereishit Rabbah", query)
-get_links_between_texts("Genesis 1:1")
-text_search(query, categories=["Talmud"])
-```
-
----
-
-## 5. חוקרים מודרניים (modern)
-*Wissenschaft des Judentums + ANE + Biblical Criticism*
-
-### חוקרים יהודיים (נגד/ביקורת/אחר)
-
-| חוקר | Scholar | תחום | הערות |
-|------|---------|------|-------|
-| **יחזקאל קאופמן** | Y. Kaufmann (1889–1963) | תולדות האמונה הישראלית | נגד תיאוריית תעודות, ייחודיות הדת הישראלית |
-| **משה קסוטו** | M. Cassuto (1883–1951) | ביקורת ספר בראשית ושמות | נגד תיאוריית תעודות, עדות ספרותית |
-| **שלמה פינס** | S. Pines (1908–1990) | מחקרי רמב״ם, תרגומים | Academic Jewish philosophy |
-| **אלכסנדר אלטמן** | A. Altmann (1906–1987) | פילוסופיה יהודית ניאו-אפלטונית, רס״ג | Academic |
-| **וורן זאב הרווי** | W. Harvey | קרשקש, רלב״ג | Academic Crescas & Gersonides studies |
-| **מנחם קלנר** | M. Kellner | רמב״ם, אמונה | Academic Maimonides |
-| **משה הלברטל** | M. Halbertal | רמב״ם, מהפכה ומסורת | Academic |
-
-### תיאוריית התעודות (כרקע/ניגוד)
-
-| חוקר | Scholar | תרומה |
-|------|---------|-------|
-| **ולהאוזן** | Wellhausen | תיאוריית J, E, D, P |
-| **גרף** | Graf | מקדימן לולהאוזן |
-
-### טקסטים מהמזרח הקדום (ANE)
-
-| טקסט | Topic | מקבילה בתורה |
-|------|-------|--------------|
-| **ענומה אליש** | Enuma Elish (Babylonian) | בריאת העולם — בראשית א |
-| **אטרהסיס** | Atrahasis Epic | מבול — נח |
-| **גלגמש** | Gilgamesh Epic | מבול — נח |
-| **חמורבי** | Code of Hammurabi | חוקי משפטים |
-| **חוקי חיתים** | Hittite Laws | חוקים + ברית סיני |
-| **אמרנה** | Amarna Letters | הקשר כנען |
-| **בריתות חיתיות** | Hittite suzerain-vassal treaties | מבנה ברית סיני |
-
-**הנחיות מחקר**:
-```
-# ANE + academic — דרך english_semantic_search ו-Sefaria
-# Sefaria לטקסטים המקראיים עצמם
-get_text("Genesis 1:1-2:3")  # להשוואה עם ענומה אליש
-get_text("Exodus 21:1-24:18")  # להשוואה עם חמורבי
+# חיפוש רוחבי
+text_search(query, categories=["Jewish Thought", "Chasidut", "Musar"])
 ```

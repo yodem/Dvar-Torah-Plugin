@@ -25,7 +25,7 @@ allowed-tools:
   - mcp__claude_ai_Sefaria__get_current_calendar
 ---
 
-# דבר תורה — Orchestrator (v4.0)
+# דבר תורה — Orchestrator (v4.2)
 
 ## Architecture
 

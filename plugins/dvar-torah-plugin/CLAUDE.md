@@ -67,11 +67,11 @@ Phase 3 — Writing (opus)                      ~30s
 
 | אוריינטציה | הוגים מרכזיים | Sefaria |
 |-----------|--------------|---------|
-| **פילוסופיה** | רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, הלוי | Guide for the Perplexed, Kuzari |
-| **קבלה** | זוהר, רמ״ק, האר״י, רמח״ל | Zohar, Etz Chaim, Pardes Rimonim |
-| **חסידות** | בעש״ט, מגיד, תניא, ברסלב | Tanya, Likkutei Moharan |
-| **חז״ל** | תנאים, אמוראים, מדרשים | Talmud Bavli, Bereishit Rabbah |
-| **מודרני** | קאופמן, קסוטו, פינס, אלטמן | + ANE texts |
+| **פילוסופיה** | רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, ריה״ל, אבן פקודה, הר״ן | Guide for the Perplexed, HaEmunot veHaDeot, Kuzari |
+| **קבלה** | זוהר, רמ״ק, האר״י, רמח״ל, אבולעפיה, בעל הסולם | Zohar, Etz Chaim, Pardes Rimonim, Talmud Eser HaSefirot |
+| **חסידות** | בעש״ט, מגיד, תניא, ברסלב, קדושת לוי, איזביצא, ר׳ צדוק, שפת אמת | Tanya, Likutei Moharan, Kedushat Levi, Mei HaShiloach |
+| **חז״ל** | משנה/תוספתא, בבלי/ירושלמי, מדרשי הלכה ואגדה | Mishnah, Talmud Bavli, Jerusalem Talmud, Midrash Rabbah |
+| **מודרני** | הרב קוק, הרב זקס, ברקוביץ, ליבוביץ (+ קאופמן/קסוטו כרקע מחקרי) | Orot, Rabbi Lord Jonathan Sacks corpus, thematic search |
 
 ## Contexts (9)
 

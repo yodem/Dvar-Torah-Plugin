@@ -344,7 +344,7 @@ P0 (do now):
 
 P1 (this week):
   Build a writing history — run /dvar-torah 3-5 times.
-  → previous-analysis skill will start detecting your patterns.
+  → previous skill will start detecting your patterns.
 
 P2 (ongoing):
   /dvar-torah:setup --rescan
