@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/dvar-torah-plugin/hooks/validate-output.sh",
+            "statusMessage": "Validating dvar torah output..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "plugins/dvar-torah-plugin/hooks/verify-saved.sh",
+            "statusMessage": "Checking output was saved..."
+          }
+        ]
+      }
+    ]
+  }
+}

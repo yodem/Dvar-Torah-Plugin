@@ -205,14 +205,15 @@ The `.mcp.json` is pre-configured for Sequential Thinking and Memory. Sefaria co
 
 ```
 plugins/
-  dvar-torah-plugin/          ← v4.0 — all orientations, parallel agents
-    skills/                     8 skills
+  dvar-torah-plugin/          ← v4.2 — all orientations, parallel agents
+    skills/                     9 skills
     commands/                   /dvar-torah command
+    agents/                     7 specialized agents
+    hooks/                      PostToolUse + Stop validation hooks
+    scripts/                    Sefaria REST API helper
     CLAUDE.md                   Architecture guide
-  dvar-torah/              ← v2.0 — philosophy-focused
-    skills/                     8 skills
-    commands/                   /dvar-torah command
-    CLAUDE.md                   Architecture guide
+archive/
+  rational-dvar-torah-v2/     ← v2.0 archived (superseded by v4.2)
 src/                          ← Source templates
 output/divrei-torah/          ← Your generated content
 manifests/                    ← Plugin manifests

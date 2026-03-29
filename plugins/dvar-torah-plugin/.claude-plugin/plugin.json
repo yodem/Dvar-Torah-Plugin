@@ -23,5 +23,7 @@
     "torah"
   ],
   "skills": "./skills/",
-  "commands": "./commands/"
+  "commands": "./commands/",
+  "agents": "./agents/",
+  "hooks": "./hooks/"
 }

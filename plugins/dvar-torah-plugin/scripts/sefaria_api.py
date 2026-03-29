@@ -18,25 +18,46 @@ Use this script for targeted lookups of known references.
 import argparse
 import json
 import sys
+import time
 import urllib.parse
 import urllib.request
 
 
 BASE = "https://www.sefaria.org/api"
+TIMEOUT = 30  # increased from 15s for complex queries
+MAX_RETRIES = 3
 
 
 def _get(path: str) -> dict:
     url = f"{BASE}{path}"
-    with urllib.request.urlopen(url, timeout=15) as r:
-        return json.loads(r.read().decode())
+    for attempt in range(MAX_RETRIES):
+        try:
+            with urllib.request.urlopen(url, timeout=TIMEOUT) as r:
+                return json.loads(r.read().decode())
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < MAX_RETRIES - 1:
+                wait = 2 ** attempt
+                print(f"Rate limited, retrying in {wait}s...", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            raise
 
 
 def _post(path: str, data: dict) -> dict:
     url = f"{BASE}{path}"
     payload = json.dumps(data).encode()
     req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=15) as r:
-        return json.loads(r.read().decode())
+    for attempt in range(MAX_RETRIES):
+        try:
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+                return json.loads(r.read().decode())
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < MAX_RETRIES - 1:
+                wait = 2 ** attempt
+                print(f"Rate limited, retrying in {wait}s...", file=sys.stderr)
+                time.sleep(wait)
+                continue
+            raise
 
 
 def cmd_get_text(ref: str) -> dict:
@@ -136,7 +157,10 @@ def main():
 
     except urllib.error.HTTPError as e:
         body = e.read().decode(errors="replace")
-        print(json.dumps({"error": f"HTTP {e.code}", "detail": body}), file=sys.stderr)
+        if e.code == 429:
+            print(json.dumps({"error": "rate_limited", "detail": "Sefaria API rate limit reached after retries. Wait a moment and try again."}), file=sys.stderr)
+        else:
+            print(json.dumps({"error": f"HTTP {e.code}", "detail": body}), file=sys.stderr)
         sys.exit(1)
     except Exception as e:
         print(json.dumps({"error": str(e)}), file=sys.stderr)

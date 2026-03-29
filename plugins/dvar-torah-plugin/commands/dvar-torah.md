@@ -41,12 +41,31 @@ user-invocable: true
 - **הוגים**: הוגים ספציפיים להדגיש
 - **הקשר**: `לידה` / `ברית` / `בר-מצווה` / `חתונה` / `שבת` / `חג` / `שבעה` / `יארצייט` / `כללי`
 - **סוג**: `פילוסופי` / `מחקרי` / `מעורב`
+- **`--parasha <name|+N>`**: Parasha planning mode — prepare for a specific upcoming parasha
+
+### `--parasha` Argument
+
+```
+/dvar-torah --parasha בראשית          # Specific parasha by name
+/dvar-torah --parasha +1              # Next week's parasha
+/dvar-torah --parasha +3              # Three weeks from now
+/dvar-torah --parasha current         # Current week (same as no argument)
+```
+
+**Resolution logic:**
+1. If `--parasha current` or no argument: use `get_current_calendar()` to get this week's parsha
+2. If `--parasha <name>`: look up the parasha by name — use `python scripts/sefaria_api.py get-calendar` and find the matching week
+3. If `--parasha +N`: call `get_current_calendar()`, then advance N weeks in the annual cycle
+
+Once the parasha is resolved, proceed normally with `topic.type = "parsha"` and `topic.value = <resolved parasha name>`.
 
 ## דוגמאות
 
 ```
 /dvar-torah
 /dvar-torah פרשת בראשית
+/dvar-torah --parasha +1                                     # Next week's parsha
+/dvar-torah --parasha נח                                      # Parsha Noach
 /dvar-torah פורמט: פוסט, נושא: השגחה פרטית
 /dvar-torah אוריינטציה: קבלה, נושא: ספירות, הקשר: שבת
 /dvar-torah אוריינטציה: חסידות, נושא: דבקות, הקשר: חתונה

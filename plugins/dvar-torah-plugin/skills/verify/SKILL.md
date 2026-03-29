@@ -125,6 +125,26 @@ Sefaria ref: `Rashi on Genesis 1:1`, `Ramban on Genesis 1:1`
 
 ## תהליך אימות
 
+### Fallback Protocol (Graceful Degradation)
+
+If Sefaria MCP is unavailable (connection error, timeout, or tool not found):
+
+1. **Try Sefaria MCP first** — use `mcp__claude_ai_Sefaria__get_text` as primary
+2. **Fall back to REST API** — if MCP fails, run `python scripts/sefaria_api.py get-text "<ref>"`
+3. **Mark as UNVERIFIED and proceed** — if both fail, mark citation as `[UNVERIFIED]` with reason, and continue without blocking the pipeline
+
+```
+Priority:
+  1. mcp__claude_ai_Sefaria__get_text(ref)
+     ↓ (on failure)
+  2. python scripts/sefaria_api.py get-text "<ref>"
+     ↓ (on failure)
+  3. Mark as [UNVERIFIED] — include reason + original citation, continue
+```
+
+> Do NOT hard-fail the entire pipeline due to Sefaria unavailability.
+> A dvar torah with some `[UNVERIFIED]` citations is better than no output at all.
+
 ### לכל ציטוט:
 
 ```

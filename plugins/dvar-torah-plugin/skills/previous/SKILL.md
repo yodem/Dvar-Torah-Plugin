@@ -110,8 +110,20 @@ style:
 content:
   main_argument: "..."
   sources_count: 5
-  philosophical_depth: "deep"       # surface / moderate / deep
+  philosophical_depth: "deep"       # surface / moderate / deep — see rubric below
 ```
+
+### Philosophical Depth Rubric
+
+Use these criteria when assigning `philosophical_depth` to each previous piece:
+
+| Level | Criteria |
+|-------|----------|
+| **deep** | Engages primary sources directly; develops an original argument; creates multi-layered analysis with at least two thinkers in genuine dialogue; reaches a non-obvious synthesis |
+| **moderate** | References key texts with correct attribution; standard analysis of a known debate; clear thesis with logical support; at least one primary source quoted accurately |
+| **surface** | Mentions themes or thinkers without substantive source engagement; generic observations that don't advance an argument; no original synthesis; paraphrase without analysis |
+
+Apply this rubric consistently so that pattern-detection across previous writings reflects real depth variation.
 
 ### 3. זיהוי דפוסים
 מתוך כל הקבצים, חלץ:
