@@ -10,5 +10,31 @@
       "mcp__memory__*",
       "mcp__sequential-thinking__*"
     ]
+  },
+  "agents": {
+    "previous-analyzer": {
+      "model": "claude-haiku-4-5",
+      "description": "Scans previous divrei torah for patterns and recommendations"
+    },
+    "source-researcher": {
+      "model": "claude-haiku-4-5",
+      "description": "Searches Sefaria for relevant source texts"
+    },
+    "historical-researcher": {
+      "model": "claude-haiku-4-5",
+      "description": "Researches ANE parallels and historical context"
+    },
+    "source-verifier": {
+      "model": "claude-haiku-4-5",
+      "description": "Verifies citations through Sefaria and formats references"
+    },
+    "philosophical-analyzer": {
+      "model": "claude-sonnet-4-5",
+      "description": "Builds dialectical philosophical analysis between thinkers"
+    },
+    "torah-writer": {
+      "model": "claude-opus-4-5",
+      "description": "Composes the final dvar torah, post, or shiur"
+    }
   }
 }

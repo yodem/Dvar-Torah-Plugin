@@ -2,55 +2,42 @@
 set -euo pipefail
 
 # Build script for Dvar Torah Plugin
-# Copies source files to plugins/ output directory
+# Canonical source is plugins/dvar-torah-plugin (no src mirroring).
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-SRC_DIR="$ROOT_DIR/src"
 PLUGIN_DIR="$ROOT_DIR/plugins/dvar-torah-plugin"
+PLUGIN_MANIFEST="$PLUGIN_DIR/.claude-plugin/plugin.json"
+PACKAGE_JSON="$ROOT_DIR/package.json"
 
 echo "=== Building Dvar Torah Plugin ==="
 
-# Ensure output directories exist
-mkdir -p "$PLUGIN_DIR/skills"
-mkdir -p "$PLUGIN_DIR/agents"
-mkdir -p "$PLUGIN_DIR/commands"
-mkdir -p "$PLUGIN_DIR/.claude-plugin"
-
-# Copy skills
-echo "Copying skills..."
-for skill_dir in "$SRC_DIR/skills"/*/; do
-  skill_name="$(basename "$skill_dir")"
-  echo "  - $skill_name"
-  rm -rf "$PLUGIN_DIR/skills/$skill_name"
-  cp -r "$skill_dir" "$PLUGIN_DIR/skills/$skill_name"
-done
-
-# Copy agents
-echo "Copying agents..."
-for agent_file in "$SRC_DIR/agents"/*.md; do
-  agent_name="$(basename "$agent_file")"
-  echo "  - $agent_name"
-  cp "$agent_file" "$PLUGIN_DIR/agents/$agent_name"
-done
-
-# Copy settings
-if [ -f "$SRC_DIR/settings/dvar-torah-plugin.settings.json" ]; then
-  echo "Copying settings..."
-  cp "$SRC_DIR/settings/dvar-torah-plugin.settings.json" "$PLUGIN_DIR/settings.json"
+if [ ! -f "$PLUGIN_MANIFEST" ]; then
+  echo "ERROR: Missing plugin manifest at $PLUGIN_MANIFEST" >&2
+  exit 1
 fi
 
-# Sync version from manifest to plugin.json
+echo "Canonical plugin root: $PLUGIN_DIR"
+
 if command -v jq &> /dev/null; then
-  MANIFEST_VERSION=$(jq -r '.version' "$ROOT_DIR/manifests/dvar-torah-plugin.json")
-  echo "Syncing version: $MANIFEST_VERSION"
-  jq --arg v "$MANIFEST_VERSION" '.version = $v' "$PLUGIN_DIR/.claude-plugin/plugin.json" > /tmp/plugin.json.tmp
-  mv /tmp/plugin.json.tmp "$PLUGIN_DIR/.claude-plugin/plugin.json"
+  PLUGIN_VERSION="$(jq -r '.version' "$PLUGIN_MANIFEST")"
+  PACKAGE_VERSION="$(jq -r '.version' "$PACKAGE_JSON")"
+  echo "Plugin version:  $PLUGIN_VERSION"
+  echo "Package version: $PACKAGE_VERSION"
+
+  if [ "$PLUGIN_VERSION" != "$PACKAGE_VERSION" ]; then
+    echo "Version mismatch detected; syncing package.json to plugin version..."
+    jq --arg v "$PLUGIN_VERSION" '.version = $v' "$PACKAGE_JSON" > /tmp/package.json.tmp
+    mv /tmp/package.json.tmp "$PACKAGE_JSON"
+    echo "Synced package.json to $PLUGIN_VERSION"
+  fi
+else
+  echo "WARNING: jq not installed; skipping version consistency check."
 fi
 
 echo ""
 echo "=== Build complete ==="
-echo "Plugin output: $PLUGIN_DIR"
+echo "Plugin root: $PLUGIN_DIR"
 echo ""
 echo "Skills:"
 ls -1 "$PLUGIN_DIR/skills/"

@@ -7,6 +7,7 @@ description: Compose a dvar torah, post, or shiur by orchestrating research, ana
 version: 4.2.0
 tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, jewish-thought, post, shiur, parallel-agents]
 user-invocable: true
+disable-model-invocation: false
 context: fork
 complexity: high
 model: sonnet
@@ -24,7 +25,7 @@ allowed-tools:
   - mcp__claude_ai_Sefaria__get_current_calendar
 ---
 
-# דבר תורה — Orchestrator (v4.0)
+# דבר תורה — Orchestrator (v4.2)
 
 ## Architecture
 
@@ -70,27 +71,20 @@ config:
 
 ## Orientation Routing
 
-### philosophy — פילוסופיה יהודית
-Thinkers: רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, ר״י הלוי, אבן עזרא, אבן פקודה
-Sefaria: "Guide for the Perplexed", "Emunot veDeot", "Milhamot HaShem", "Or Hashem", "Kuzari"
+> For full thinker profiles, works, and Sefaria references, see **`references/thinkers-guide.md`**.
+> The table below is a quick routing summary only.
 
-### kabbalah — קבלה
-Thinkers: זוהר, רמ״ק, האר״י, רמח״ל
-Sefaria: "Zohar", "Pardes Rimonim", "Etz Chaim", "Daat Tevunot"
-Hint: `get_text_or_category_shape(path="Kabbalah")`
+| Orientation | Key Thinkers | Primary Sefaria Texts |
+|-------------|-------------|----------------------|
+| **philosophy** | רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, ר״י הלוי, אבן עזרא | Guide for the Perplexed, Emunot veDeot, Milhamot HaShem, Or Hashem, Kuzari |
+| **kabbalah** | זוהר, רמ״ק, האר״י, רמח״ל | Zohar, Pardes Rimonim, Etz Chaim, Daat Tevunot |
+| **hasidut** | בעש״ט, מגיד, תניא, ברסלב, קדושת לוי | Tanya, Likkutei Moharan, Keter Shem Tov |
+| **hazal** | תנאים, אמוראים, מדרשים | Talmud Bavli, Jerusalem Talmud, Bereishit Rabbah, Midrash Tanchuma |
+| **modern** | קאופמן, קסוטו, פינס, אלטמן + ANE texts | (historical-researcher agent) |
 
-### hasidut — חסידות
-Thinkers: בעש״ט, מגיד, תניא, ברסלב, קדושת לוי
-Sefaria: "Tanya", "Likkutei Moharan", "Keter Shem Tov", "Maggid Devarav LeYaakov"
-Hint: `get_text_or_category_shape(path="Chasidut")`
-
-### hazal — חז״ל
-Thinkers: תנאים, אמוראים, מדרשים
-Sefaria: "Talmud Bavli", "Jerusalem Talmud", "Bereishit Rabbah", "Midrash Tanchuma"
-
-### modern — חוקרים מודרניים
-Thinkers: קאופמן, קסוטו, פינס, אלטמן + ANE texts
-Default to historical-researcher agent
+### Sefaria category hints
+- kabbalah: `get_text_or_category_shape(path="Kabbalah")`
+- hasidut: `get_text_or_category_shape(path="Chasidut")`
 
 ## Execution
 
@@ -119,21 +113,21 @@ However, if some tool calls depend on previous calls to inform dependent
 values, do NOT call these tools in parallel.
 
 Agent dispatch pattern:
-- Phase 1 agents: launch ALL in a single message with run_in_background: true
-- Phase 2 agents: launch BOTH in a single message with run_in_background: true
+- Phase 1 agents: launch ALL in a single message with background: true
+- Phase 2 agents: launch BOTH in a single message with background: true
 - Phase 3 (torah-writer): foreground — wait for completion
 </use_parallel_tool_calls>
 
 ### PHASE 1 — Research (parallel, all background)
 
-Launch ALL of these agents in a **single message** with `run_in_background: true`:
+Launch ALL of these agents in a **single message** with `background: true`:
 
 #### Agent 1: previous-analyzer (haiku)
 ```
 Agent(
   subagent_type: "dvar-torah:previous-analyzer",
   model: "haiku",
-  run_in_background: true,
+  background: true,
   prompt: """
     MODE: {previous_patterns.mode}
     {if mode == "base_on": "SELECTED_FILES: {previous_patterns.base_documents}"}
@@ -147,7 +141,7 @@ Agent(
 Agent(
   subagent_type: "dvar-torah:source-researcher",
   model: "haiku",
-  run_in_background: true,
+  background: true,
   prompt: """
     TOPIC: {topic.value} ({topic.type})
     ORIENTATION: {orientation}
@@ -180,7 +174,7 @@ Only launch if `topic.type == "research"` OR `orientation == "modern"`:
 Agent(
   subagent_type: "dvar-torah:historical-researcher",
   model: "haiku",
-  run_in_background: true,
+  background: true,
   prompt: """
     TOPIC: {topic.value}
     VERSE/TEXT: {topic.sub_topic or topic.value}
@@ -198,7 +192,7 @@ Only launch if `include_mussar == true`:
 Agent(
   subagent_type: "dvar-torah:source-researcher",
   model: "haiku",
-  run_in_background: true,
+  background: true,
   prompt: """
     TOPIC: {topic.value}
     ORIENTATION: mussar
@@ -222,14 +216,14 @@ Agent(
 
 ### PHASE 2 — Analysis + Verification (parallel)
 
-Launch BOTH agents in a **single message** with `run_in_background: true`:
+Launch BOTH agents in a **single message** with `background: true`:
 
 #### Agent 5: philosophical-analyzer (sonnet)
 ```
 Agent(
   subagent_type: "dvar-torah:philosophical-analyzer",
   model: "sonnet",
-  run_in_background: true,
+  background: true,
   prompt: """
     TOPIC: {topic.value}
     ORIENTATION: {orientation}
@@ -259,7 +253,7 @@ Agent(
 Agent(
   subagent_type: "dvar-torah:source-verifier",
   model: "haiku",
-  run_in_background: true,
+  background: true,
   prompt: """
     CITATIONS TO VERIFY:
     {all citations from Phase 1 agents}

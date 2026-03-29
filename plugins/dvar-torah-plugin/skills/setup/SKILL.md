@@ -5,7 +5,7 @@ compatibility: "Claude Code 2.1.59+."
 description: "Interactive setup wizard for Dvar Torah Plugin. Checks Sefaria MCP, configures language preference, orientation, preferred thinkers, writing style, and generates a readiness score."
 argument-hint: "[--rescan] [--score-only] [--plan-only]"
 context: inherit
-version: 3.0.0
+version: 4.2.0
 author: yodem
 tags: [onboarding, setup, wizard, configuration, sefaria, mcp, language, orientation]
 user-invocable: true
@@ -344,7 +344,7 @@ P0 (do now):
 
 P1 (this week):
   Build a writing history — run /dvar-torah 3-5 times.
-  → previous-analysis skill will start detecting your patterns.
+  → previous skill will start detecting your patterns.
 
 P2 (ongoing):
   /dvar-torah:setup --rescan

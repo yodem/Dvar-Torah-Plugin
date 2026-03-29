@@ -64,11 +64,23 @@ values, do NOT call these tools in parallel.
 
 ## תהליך
 
-לכל ציטוט:
-1. `clarify_name_argument(<book_name>)` — אמת שם ספר (אפשר גם: `python scripts/sefaria_api.py lookup-name "<name>"`)
-2. `get_text(<sefaria_ref>)` — שלוף טקסט מדויק (אפשר גם: `python scripts/sefaria_api.py get-text "<ref>"`)
-3. השווה ציטוט לטקסט ב-Sefaria
+לכל ציטוט — עם Graceful Degradation:
+
+1. **Primary: Sefaria MCP**
+   - `clarify_name_argument(<book_name>)` — אמת שם ספר
+   - `get_text(<sefaria_ref>)` — שלוף טקסט מדויק
+
+2. **Fallback: REST API** (if MCP unavailable)
+   - `python scripts/sefaria_api.py lookup-name "<name>"`
+   - `python scripts/sefaria_api.py get-text "<ref>"`
+
+3. **Last resort: mark as [UNVERIFIED]** (if both fail)
+   - סמן: `unverified` עם reason: `"sefaria_unavailable"`
+   - **המשך בכל מקרה** — אל תעצור את הפייפליין
+
 4. סמן: `verified` / `unverified` / `corrected`
+
+> **כלל**: אי-זמינות של Sefaria אינה סיבה לכישלון כולל. דבר תורה עם ציטוטים `[UNVERIFIED]` עדיף על פני שום פלט.
 
 ## פלט
 
