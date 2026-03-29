@@ -2,3 +2,7 @@ node_modules/
 .claude/
 *.tmp
 .DS_Store
+.academic-helper/
+.academic-writer/
+__pycache__/
+*.pyc
