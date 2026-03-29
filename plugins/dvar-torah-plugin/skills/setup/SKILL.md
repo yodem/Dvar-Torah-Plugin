@@ -5,7 +5,7 @@ compatibility: "Claude Code 2.1.59+."
 description: "Interactive setup wizard for Dvar Torah Plugin. Checks Sefaria MCP, configures language preference, orientation, preferred thinkers, writing style, and generates a readiness score."
 argument-hint: "[--rescan] [--score-only] [--plan-only]"
 context: inherit
-version: 3.0.0
+version: 4.2.0
 author: yodem
 tags: [onboarding, setup, wizard, configuration, sefaria, mcp, language, orientation]
 user-invocable: true

@@ -7,6 +7,7 @@ description: Compose a dvar torah, post, or shiur by orchestrating research, ana
 version: 4.2.0
 tags: [dvar-torah, jewish-philosophy, kabbalah, hasidut, hazal, rambam, sefaria, mussar, jewish-thought, post, shiur, parallel-agents]
 user-invocable: true
+disable-model-invocation: false
 context: fork
 complexity: high
 model: sonnet
