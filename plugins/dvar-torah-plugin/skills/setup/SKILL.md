@@ -9,7 +9,7 @@ version: 4.2.0
 author: yodem
 tags: [onboarding, setup, wizard, configuration, sefaria, mcp, language, orientation]
 user-invocable: true
-disable-model-invocation: true
+disable-model-invocation: false
 allowed-tools: [Read, Grep, Glob, Bash, Write, AskUserQuestion, mcp__claude_ai_Sefaria__get_current_calendar]
 metadata:
   category: configuration
