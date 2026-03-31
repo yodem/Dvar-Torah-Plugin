@@ -2,12 +2,12 @@
 name: setup
 license: MIT
 compatibility: "Claude Code 2.1.59+."
-description: "Interactive setup wizard for Dvar Torah Plugin. Checks Sefaria MCP, configures language preference, orientation, preferred thinkers, writing style, and generates a readiness score."
-argument-hint: "[--rescan] [--score-only] [--plan-only]"
+description: "Quick setup for Dvar Torah Plugin. Checks Sefaria MCP connection and configures language preference."
+argument-hint: "[--rescan] [--score-only]"
 context: inherit
-version: 4.2.0
+version: 4.3.0
 author: yodem
-tags: [onboarding, setup, wizard, configuration, sefaria, mcp, language, orientation]
+tags: [onboarding, setup, wizard, configuration, sefaria, mcp, language]
 user-invocable: true
 disable-model-invocation: false
 allowed-tools: [Read, Grep, Glob, Bash, Write, AskUserQuestion, mcp__claude_ai_Sefaria__get_current_calendar]
@@ -15,48 +15,35 @@ metadata:
   category: configuration
 ---
 
-# Dvar Torah Plugin — Setup Wizard
+# Dvar Torah Plugin — Setup
 
-Interactive onboarding that checks your Sefaria MCP connection, configures language preference, orientation/subject stream, preferred thinkers, writing style, sets up your output directory, and generates a readiness score.
+Quick onboarding: checks Sefaria MCP connection and sets your language preference.
 
 ## When to Use
 
 - First time after installing the plugin (`/plugin install dvar-torah-plugin@yodem`)
 - When Sefaria MCP changes (Docker port, connector URL)
-- To reconfigure orientation, thinker preferences, or writing style
 - Run with `--score-only` to check current readiness
 
 ## Quick Start
 
 ```bash
-/dvar-torah:setup              # Full wizard
-/dvar-torah:setup --rescan     # Re-check MCP + score, skip preferences
+/dvar-torah:setup              # Full setup
+/dvar-torah:setup --rescan     # Re-check MCP + score
 /dvar-torah:setup --score-only # Readiness score only
-/dvar-torah:setup --plan-only  # Improvement plan only
 ```
 
-## Argument Resolution
-
-```python
-FLAG = "$ARGUMENTS[0]"  # --rescan | --score-only | --plan-only
-# No arguments → full wizard
-```
-
-## The Eight Phases
+## Phases
 
 | Phase | What | Output |
 |-------|------|--------|
-| 0. Language | Preferred language (Hebrew / English / Bilingual) | Language saved |
-| 1. Sefaria MCP | Detect and verify Sefaria connection | MCP status |
-| 2. Orientation | Which subject stream(s) to default to | Orientation saved |
-| 3. Thinkers | Choose default thinkers (filtered by orientation) | Preferences saved |
-| 4. Style | Writing register, tradition | Style saved |
-| 5. Score | Readiness score (0-10) | Score + gaps |
-| 6. Plan | Prioritized improvement steps + keybinding | Action plan |
+| 1. Language | Preferred language (Hebrew / English / Bilingual) | Language saved |
+| 2. Sefaria MCP | Detect and verify Sefaria connection | MCP status |
+| 3. Score | Readiness score (0-10) | Score + next steps |
 
 ---
 
-## Phase 0: Language Preference
+## Phase 1: Language Preference
 
 ```python
 AskUserQuestion(questions=[{
@@ -90,7 +77,7 @@ DVAR_TORAH_LANGUAGE="he"  # he | en | bilingual
 
 ---
 
-## Phase 1: Sefaria MCP Detection
+## Phase 2: Sefaria MCP Detection
 
 Sefaria MCP is required for source lookups, text retrieval, and citation verification.
 
@@ -152,131 +139,15 @@ Sefaria MCP:  ✓ Connected (Account Connector)     — Parsha: פרשת X
 
 ---
 
-## Phase 2: Orientation Preference
+## Phase 3: Readiness Score
 
-Which Jewish thought stream(s) to default to? This determines which thinkers appear in the `/dvar-torah` wizard.
-
-```python
-AskUserQuestion(questions=[{
-  "question": "באיזה זרם מחשבה תרצה להתמקד בדרך כלל? / Which Jewish thought stream(s)?",
-  "header": "אוריינטציה / Orientation",
-  "options": [
-    {
-      "label": "פילוסופיה יהודית (לא קבלה) — Rationalists",
-      "description": "רמב״ם, רס״ג, רלב״ג, קרשקש, אלבו, ר״י הלוי — Rambam, Saadia, Gersonides, Crescas, Albo, Kuzari",
-      "markdown": "```\nRationalist Philosophy\n──────────────────────\nRambam, Rasag, Ralbag, Crescas, Albo, Ibn Ezra, Kuzari\nCore: Aristotelian rationalism, harmony of Torah & reason\n```"
-    },
-    {
-      "label": "קבלה — Kabbalah",
-      "description": "זוהר, האר״י, רמ״ק, רמח״ל / Zohar, Ari, Ramak, Ramchal",
-      "markdown": "```\nKabbalah\n────────\nZohar, Pardes Rimonim, Etz Chaim, Daat Tevunot\nCore: Sefirot, Ein Sof, tzimtzum, tikkun\n```"
-    },
-    {
-      "label": "חסידות — Hasidut",
-      "description": "בעש״ט, תניא, ברסלב, קדושת לוי / Baal Shem Tov, Tanya, Breslov",
-      "markdown": "```\nHasidut\n───────\nKeter Shem Tov, Maggid, Tanya, Likkutei Moharan\nCore: Devekut, simcha, Tzaddik, avodah\n```"
-    },
-    {
-      "label": "חז״ל — Talmudic Sages",
-      "description": "משנה, גמרא, מדרש / Mishnah, Talmud, Midrash",
-      "markdown": "```\nHazal\n─────\nMishnah, Talmud Bavli, Bereishit Rabbah, Midrash Tanchuma\nCore: Halakha, Aggadah, rabbinic thought\n```"
-    },
-    {
-      "label": "חוקרים מודרניים — Modern Scholars",
-      "description": "Wissenschaft, ANE, ביקורת המקרא / biblical criticism, archaeology",
-      "markdown": "```\nModern Scholarship\n──────────────────\nKaufmann, Cassuto, Pines, Wellhausen (contrast), ANE texts\nCore: Historical context, documentary hypothesis, counter-criticism\n```"
-    }
-  ],
-  "multiSelect": true
-}])
-```
-
-Persist as env var:
-```
-DVAR_TORAH_ORIENTATION="philosophy"  # philosophy | kabbalah | hasidut | hazal | modern (comma-separated for multiple)
-```
-
----
-
-## Phase 3: Thinker Preferences
-
-Ask which thinkers to feature by default. These become the pre-selected defaults in the `/dvar-torah` wizard.
-**Filter thinker list based on orientation(s) selected in Phase 2.5.**
-
-Show thinker options filtered by the orientation(s) selected in Phase 2.5:
-
-```python
-AskUserQuestion(questions=[{
-  "question": "אילו הוגים להגדיר כברירת מחדל? / Which thinkers as defaults?",
-  "header": "הוגים / Default Thinkers",
-  # Show only thinkers from selected orientation(s):
-  # philosophy → Rambam, Rasag, Ralbag, Crescas, Albo, Ibn Ezra, Kuzari, Ibn Paquda
-  # kabbalah   → Zohar, Ramak, Ari, Ramchal
-  # hasidut    → Besht, Maggid, Admur HaZaken, Nachman, Levi Yitzchak
-  # hazal      → Tannaim, Amoraim, Midrash, individual sages
-  # modern     → Kaufmann, Cassuto, Pines, Altmann, Harvey, Wellhausen (contrast)
-  "multiSelect": true
-}])
-```
-
-Save the selection:
-
-```python
-# Env vars to persist:
-DVAR_TORAH_DEFAULT_THINKERS="רמב״ם,קרשקש"   # comma-separated
-```
-
----
-
-## Phase 4: Writing Style
-
-```python
-AskUserQuestion(questions=[{
-  "question": "What writing style should /dvar-torah use by default?",
-  "header": "Writing Style",
-  "options": [
-    {
-      "label": "Hebrew — פילוסופי (Recommended)",
-      "description": "Write in Hebrew, philosophical register, academic references",
-      "markdown": "```\nHebrew · Philosophical\n────────────────────\nLanguage:  Hebrew (עברית)\nRegister:  Philosophical, structured\nSources:   Sefaria primary texts + academic commentary\nAudience:  Hebrew-literate, philosophically inclined\n```"
-    },
-    {
-      "label": "Hebrew — מוסרי",
-      "description": "Write in Hebrew, mussar register, focus on practical ethics and character",
-      "markdown": "```\nHebrew · Mussar\n───────────────\nLanguage:  Hebrew (עברית)\nRegister:  Mussar, practical ethics\nSources:   Mesillat Yesharim, Chovot ha-Levavot, Orchot Tzaddikim\nAudience:  Hebrew-literate, character-development focus\n```"
-    },
-    {
-      "label": "English — Philosophical",
-      "description": "Write in English, philosophical register, good for English-speaking audiences",
-      "markdown": "```\nEnglish · Philosophical\n─────────────────────\nLanguage:  English\nRegister:  Philosophical, structured\nSources:   English translations + academic sources\nAudience:  English-literate, philosophically inclined\n```"
-    },
-    {
-      "label": "Bilingual — Hebrew + English",
-      "description": "Hebrew body, English summary and source citations",
-      "markdown": "```\nBilingual\n─────────\nBody:      Hebrew (עברית)\nSummary:   English\nCitations: English transliteration + Hebrew original\nAudience:  Mixed Hebrew/English audience\n```"
-    }
-  ],
-  "multiSelect": false
-}])
-```
-
-Persist as env var:
-```
-DVAR_TORAH_DEFAULT_STYLE="hebrew-philosophical"  # hebrew-philosophical | hebrew-mussar | english-philosophical | bilingual
-```
-
----
-
-## Phase 5: Readiness Score
-
-Compute a score (0–10) from 4 dimensions:
+Compute a score (0–10) from 3 dimensions:
 
 | Dimension | Weight | Signals |
 |-----------|--------|---------|
-| **Sefaria MCP** | 40% | Connected + live calendar test passes |
-| **Output Directory** | 20% | `output/divrei-torah/` exists with subdirs |
-| **Preferences Configured** | 25% | Default thinkers + style set in env |
-| **Previous Writings** | 15% | ≥1 saved dvar-torah in `output/divrei-torah/` |
+| **Sefaria MCP** | 50% | Connected + live calendar test passes |
+| **Output Directory** | 25% | `output/divrei-torah/` exists with subdirs |
+| **Previous Writings** | 25% | ≥1 saved dvar-torah in `output/divrei-torah/` |
 
 Check output directory:
 ```python
@@ -286,67 +157,20 @@ Glob(pattern="output/divrei-torah/**/*.md")
 ### Score Display
 
 ```
-Dvar Torah Plugin Readiness: 7.5 / 10
+Dvar Torah Plugin Readiness: 5 / 10
 
-  Sefaria MCP          ████████████░░░░  Connected ✓
-  Output Directory     ████████████████  Set up ✓
-  Preferences          ████████░░░░░░░░  Thinkers set, style missing
+  Sefaria MCP          ████████████████  Connected ✓
+  Output Directory     ░░░░░░░░░░░░░░░░  Not set up yet
   Previous Writings    ░░░░░░░░░░░░░░░░  0 divrei torah yet
-
-  Top gap: Set writing style → run /dvar-torah:setup Phase 4
 ```
 
----
-
-## Phase 6: Improvement Plan
-
-Generate runnable next steps:
+### Next Steps
 
 ```
-Your Setup Plan:
-
-P0 (do now):
-  Sefaria connected ✓ — ready to write
-
-  Run your first dvar torah:
-    /dvar-torah
-  → Interactive wizard will guide you through language → orientation → parsha + thinkers.
-
-P1 (this week):
-  Build a writing history — run /dvar-torah 3-5 times.
-  → previous skill will start detecting your patterns.
-
-P2 (ongoing):
-  /dvar-torah:setup --rescan
-  → Re-run after writing a few divrei torah to track progress.
+Ready to go! Run:
+  /dvar-torah                    ← write your first dvar torah
+  /dvar-torah:profile            ← (optional) set default orientation, thinkers, and writing style
 ```
-
-### Keybinding Offer
-
-```python
-AskUserQuestion(questions=[{
-  "question": "Add a keyboard shortcut for /dvar-torah?",
-  "header": "Keyboard Shortcut",
-  "options": [
-    {
-      "label": "Yes — ctrl+shift+d (Recommended)",
-      "description": "Opens the /dvar-torah wizard instantly"
-    },
-    {
-      "label": "Skip",
-      "description": "No shortcut"
-    }
-  ],
-  "multiSelect": false
-}])
-```
-
-If **Yes**: merge into `~/.claude/keybindings.json`:
-```json
-{"key": "ctrl+shift+d", "command": "/dvar-torah", "description": "Open Dvar Torah wizard"}
-```
-
-Read the existing file first, merge (never overwrite existing keys), then write back.
 
 ---
 
@@ -354,10 +178,9 @@ Read the existing file first, merge (never overwrite existing keys), then write 
 
 | Flag | Behavior |
 |------|----------|
-| (none) | Full 6-phase wizard |
-| `--rescan` | Re-run MCP check + score, skip thinker/style phases |
-| `--score-only` | Show readiness score only (Phase 5) |
-| `--plan-only` | Show improvement plan only (Phase 6) |
+| (none) | Full setup (language + MCP + score) |
+| `--rescan` | Re-check MCP + score only |
+| `--score-only` | Show readiness score only |
 
 ---
 
@@ -367,5 +190,6 @@ Read the existing file first, merge (never overwrite existing keys), then write 
 
 ## Related Commands
 
-- `/dvar-torah` — Write a dvar torah (the main command this plugin provides)
-- `/dvar-torah:setup --rescan` — Re-check MCP + readiness score after writing a few divrei torah
+- `/dvar-torah` — Write a dvar torah (the main command)
+- `/dvar-torah:profile` — (Optional) Configure default orientation, thinkers, and writing style
+- `/dvar-torah:setup --rescan` — Re-check MCP + readiness score
