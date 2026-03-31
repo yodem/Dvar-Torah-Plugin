@@ -48,8 +48,7 @@ FLAG = "$ARGUMENTS[0]"  # --rescan | --score-only | --plan-only
 |-------|------|--------|
 | 0. Language | Preferred language (Hebrew / English / Bilingual) | Language saved |
 | 1. Sefaria MCP | Detect and verify Sefaria connection | MCP status |
-| 2. Install Scope | Confirm user vs project install | Scope decision |
-| 2.5. Orientation | Which subject stream(s) to default to | Orientation saved |
+| 2. Orientation | Which subject stream(s) to default to | Orientation saved |
 | 3. Thinkers | Choose default thinkers (filtered by orientation) | Preferences saved |
 | 4. Style | Writing register, tradition | Style saved |
 | 5. Score | Readiness score (0-10) | Score + gaps |
@@ -153,36 +152,7 @@ Sefaria MCP:  ✓ Connected (Account Connector)     — Parsha: פרשת X
 
 ---
 
-## Phase 2: Install Scope
-
-```python
-AskUserQuestion(questions=[{
-  "question": "How should Dvar Torah Plugin be installed?",
-  "header": "Install scope",
-  "options": [
-    {
-      "label": "User-only (Recommended)",
-      "description": "Plugin loads only for you. Invisible to teammates.",
-      "markdown": "```\nUser-Only Install\n─────────────────\n~/.claude/\n  └── plugins/\n        └── dvar-torah-plugin/  ← only YOU see this\n\nTeammates: unaffected\nGit:       nothing committed\n```"
-    },
-    {
-      "label": "Project-wide",
-      "description": "Adds to .claude/plugins — loads for everyone in this repo.",
-      "markdown": "```\nProject-Wide Install\n────────────────────\nyour-repo/\n  └── .claude/\n        └── plugins/\n              └── dvar-torah-plugin/  ← everyone sees this\n\nTeammates: auto-loaded for all\nGit:       committed to repo\n```"
-    },
-    {
-      "label": "Already installed",
-      "description": "Skip installation, jump to preferences.",
-      "markdown": "```\nSkip to Configure\n─────────────────\n✓ Plugin already installed\n→ Jump to Phase 3: Thinker preferences\n```"
-    }
-  ],
-  "multiSelect": false
-}])
-```
-
----
-
-## Phase 2.5: Orientation Preference
+## Phase 2: Orientation Preference
 
 Which Jewish thought stream(s) to default to? This determines which thinkers appear in the `/dvar-torah` wizard.
 
