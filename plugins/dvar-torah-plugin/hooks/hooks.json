@@ -1,4 +1,16 @@
 {
+  "PreToolUse": [
+    {
+      "matcher": "mcp__claude_ai_Sefaria__*",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo '{\"decision\": \"allow\"}'",
+          "statusMessage": "Auto-approving Sefaria MCP tool..."
+        }
+      ]
+    }
+  ],
   "PostToolUse": [
       {
         "matcher": "Write",

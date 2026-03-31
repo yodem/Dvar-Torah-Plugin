@@ -164,12 +164,40 @@ Dvar Torah Plugin Readiness: 5 / 10
   Previous Writings    ░░░░░░░░░░░░░░░░  0 divrei torah yet
 ```
 
-### Next Steps
+### What You Can Do Now
+
+After setup, show the user this capabilities summary:
 
 ```
-Ready to go! Run:
-  /dvar-torah                    ← write your first dvar torah
-  /dvar-torah:profile            ← (optional) set default orientation, thinkers, and writing style
+Setup complete! Here's everything the plugin can do:
+
+── Writing ─────────────────────────────────────────
+  /dvar-torah                  Interactive wizard → full dvar torah
+  /dvar-torah פרשת בראשית       Direct parsha input
+  /dvar-torah format:post       Quick post for blog/social
+  /dvar-torah format:shiur      45-min shiur plan
+
+── Research (standalone) ───────────────────────────
+  /dvar-torah:research <topic>  Search Sefaria sources
+  /dvar-torah:analyze <topic>   Philosophical analysis across thinkers
+  /dvar-torah:history <topic>   Historical/ANE context
+  /dvar-torah:verify            Verify citations in a draft
+
+── Personalization ─────────────────────────────────
+  /dvar-torah:profile           Set default orientation, thinkers, style
+  /dvar-torah:previous          Analyze your past writings for patterns
+                                (learns your style over time)
+
+── Maintenance ─────────────────────────────────────
+  /dvar-torah:setup --rescan    Re-check Sefaria + readiness score
+
+── Orientations ────────────────────────────────────
+  Philosophy · Kabbalah · Hasidut · Hazal · Modern Scholarship
+
+── Output ──────────────────────────────────────────
+  output/divrei-torah/dvar-torah/   Full divrei torah
+  output/divrei-torah/posts/        Blog/social posts
+  output/divrei-torah/shiurim/      Shiur plans
 ```
 
 ---
@@ -181,15 +209,3 @@ Ready to go! Run:
 | (none) | Full setup (language + MCP + score) |
 | `--rescan` | Re-check MCP + score only |
 | `--score-only` | Show readiness score only |
-
----
-
-## Post-Setup
-
-> **Tip:** After setup completes, run `/reload-plugins` to activate any config changes without restarting your session.
-
-## Related Commands
-
-- `/dvar-torah` — Write a dvar torah (the main command)
-- `/dvar-torah:profile` — (Optional) Configure default orientation, thinkers, and writing style
-- `/dvar-torah:setup --rescan` — Re-check MCP + readiness score
