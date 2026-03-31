@@ -7,17 +7,6 @@ tools:
   - Read
   - Glob
   - Grep
-skills:
-  - previous
-allowed_tasks:
-  - סריקת דברי תורה קודמים
-  - זיהוי דפוסי כתיבה
-  - חילוץ template_guidance ממסמכים נבחרים
-forbidden_tasks:
-  - כתיבת דבר תורה
-  - חיפוש מקורות בספריא
-resource_allocation:
-  estimated_tokens: 3000
 ---
 
 # סוכן ניתוח כתיבות קודמות

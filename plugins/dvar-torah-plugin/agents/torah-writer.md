@@ -10,18 +10,6 @@ tools:
   - Glob
   - Grep
   - mcp__memory__*
-skills:
-  - compose
-allowed_tasks:
-  - כתיבת דבר תורה מלא מתוצאות מחקר מוכנות
-  - כתיבת פוסט תורני
-  - הכנת מערך שיעור
-forbidden_tasks:
-  - מחקר מקורות (נעשה על ידי סוכנים אחרים)
-  - חיפוש בספריא (נעשה על ידי סוכנים אחרים)
-  - פסיקת הלכה
-resource_allocation:
-  estimated_tokens: 16000
 ---
 
 # סוכן כותב תורני
