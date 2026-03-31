@@ -2,9 +2,7 @@
 name: historical-researcher
 description: סוכן מחקר היסטורי — הקשר תרבותי, מזרח קדום, ארכאולוגיה דרך ספריא
 model: haiku
-max_turns: 20
-memory_scope: session
-context: fork
+maxTurns: 20
 tools:
   - Read
   - Glob

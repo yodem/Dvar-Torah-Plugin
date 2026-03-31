@@ -2,9 +2,7 @@
 name: torah-writer
 description: כותב דבר תורה — מקבל תוצאות מחקר מוכנות וכותב את התוצר הסופי בלבד
 model: opus
-max_turns: 30
-memory_scope: project
-context: fork
+maxTurns: 30
 tools:
   - Read
   - Write

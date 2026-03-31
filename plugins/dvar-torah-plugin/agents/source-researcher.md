@@ -2,9 +2,7 @@
 name: source-researcher
 description: סוכן מחקר מקורות — מחפש ומאסוף מקורות מספריית ספריא
 model: haiku
-max_turns: 20
-memory_scope: session
-context: fork
+maxTurns: 20
 tools:
   - Read
   - Glob

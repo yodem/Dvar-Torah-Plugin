@@ -2,9 +2,7 @@
 name: source-verifier
 description: סוכן אימות מקורות — מאמת ציטוטים דרך ספריא ומפרמט מראי מקומות
 model: haiku
-max_turns: 20
-memory_scope: session
-context: fork
+maxTurns: 20
 tools:
   - Read
   - Glob

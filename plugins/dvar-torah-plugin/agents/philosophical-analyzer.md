@@ -2,9 +2,7 @@
 name: philosophical-analyzer
 description: סוכן ניתוח פילוסופי — מיפוי עמדות, דיאלוג ביקורתי, וסינתזה
 model: sonnet
-max_turns: 25
-memory_scope: session
-context: fork
+maxTurns: 25
 tools:
   - Read
   - Glob

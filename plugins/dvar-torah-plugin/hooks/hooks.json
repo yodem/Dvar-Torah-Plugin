@@ -1,6 +1,5 @@
 {
-  "hooks": {
-    "PostToolUse": [
+  "PostToolUse": [
       {
         "matcher": "Write",
         "hooks": [
@@ -23,5 +22,4 @@
         ]
       }
     ]
-  }
 }

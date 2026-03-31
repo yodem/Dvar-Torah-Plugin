@@ -2,9 +2,7 @@
 name: previous-analyzer
 description: סוכן ניתוח כתיבות קודמות — סורק קבצי פלט ומזהה דפוסים
 model: haiku
-max_turns: 15
-memory_scope: session
-context: fork
+maxTurns: 15
 tools:
   - Read
   - Glob
