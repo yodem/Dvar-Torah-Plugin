@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-4.2-blue" alt="Version 4.2">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue" alt="Version 4.2">
   <img src="https://img.shields.io/badge/Claude_Code-Plugin-blueviolet" alt="Claude Code Plugin">
   <img src="https://img.shields.io/badge/Sefaria-MCP_Powered-orange" alt="Sefaria MCP">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License">
@@ -48,7 +48,42 @@ Then run `claude` in your terminal and log in.
 
 All commands below are typed **inside a Claude Code session** (in your terminal after running `claude`, or in the VS Code Claude Code panel).
 
-### Step 1 — Connect Sefaria (required)
+### Step 1 — Add the Marketplace
+
+The plugin is published on a custom marketplace. Add it once to your Claude Code settings:
+
+```bash
+# Open your Claude Code settings file:
+# ~/.claude/settings.json  (global)
+# or .claude/settings.json  (project-specific)
+```
+
+Add this to your `settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "yodem": {
+      "source": {
+        "source": "github",
+        "repo": "yodem/Dvar-Torah-Plugin"
+      }
+    }
+  }
+}
+```
+
+### Step 2 — Install the Plugin
+
+Inside Claude Code, type:
+
+```
+/plugin install dvar-torah-plugin@yodem
+```
+
+No restart needed — the plugin is available immediately.
+
+### Step 3 — Connect Sefaria (required)
 
 The plugin retrieves and verifies every source from Sefaria in real time.
 
@@ -81,15 +116,7 @@ Add to `.mcp.json` in your project folder:
 }
 ```
 
-### Step 2 — Install the Plugin
-
-Inside Claude Code, type:
-
-```
-/plugin install dvar-torah-plugin@yodem
-```
-
-### Step 3 — First-Time Setup (~2 min)
+### Step 4 — First-Time Setup (~2 min)
 
 ```
 /dvar-torah:setup
@@ -97,7 +124,7 @@ Inside Claude Code, type:
 
 This checks your Sefaria connection and saves your language preference, default orientation, and writing style. You only need to do this once.
 
-### Step 4 — Write Your First Dvar Torah
+### Step 5 — Write Your First Dvar Torah
 
 ```
 /dvar-torah
