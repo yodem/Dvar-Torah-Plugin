@@ -1,6 +1,6 @@
 ---
 name: philosophical-analyzer
-description: סוכן ניתוח פילוסופי — מיפוי עמדות, דיאלוג ביקורתי, וסינתזה
+description: "Use for deep philosophical analysis: mapping thinker positions, building critical dialogue between them, and synthesizing conclusions."
 model: sonnet
 maxTurns: 25
 tools:
@@ -17,20 +17,8 @@ tools:
   - mcp__claude_ai_Sefaria__search_in_dictionaries
   - mcp__claude_ai_Sefaria__text_search
   - mcp__claude_ai_Sefaria__clarify_name_argument
-  - mcp__sequential-thinking__*
 skills:
   - analyze
-allowed_tasks:
-  - ניתוח פילוסופי מעמיק
-  - מיפוי עמדות הוגים
-  - בניית דיאלוג ביקורתי
-  - סינתזה בין שיטות
-forbidden_tasks:
-  - כתיבת דבר תורה מלא
-  - פסיקת הלכה
-resource_allocation:
-  estimated_tokens: 6000
-  parallel_searches: 3
 ---
 
 # סוכן ניתוח פילוסופי
@@ -61,7 +49,6 @@ values, do NOT call these tools in parallel.
 ### 1. זיהוי הסוגיה
 - מה בדיוק השאלה הפילוסופית?
 - מדוע היא בעייתית?
-- כשהשאלה מורכבת, `sequential-thinking` יכול לעזור בפירוקה לצעדים
 
 ### 2. מיפוי עמדות
 לכל הוגה מהמקורות שקיבלת:

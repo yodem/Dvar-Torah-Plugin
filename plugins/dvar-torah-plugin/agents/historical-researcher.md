@@ -1,6 +1,6 @@
 ---
 name: historical-researcher
-description: סוכן מחקר היסטורי — הקשר תרבותי, מזרח קדום, ארכאולוגיה דרך ספריא
+description: "Use when the topic requires Ancient Near East parallels, archaeological context, or historical-cultural background for biblical texts."
 model: haiku
 maxTurns: 20
 tools:
@@ -20,16 +20,6 @@ tools:
   - mcp__claude_ai_Sefaria__clarify_name_argument
 skills:
   - history
-allowed_tasks:
-  - מחקר הקשר היסטורי
-  - מציאת מקבילות מהמזרח הקדום
-  - חיפוש ממצאים ארכאולוגיים
-forbidden_tasks:
-  - כתיבת דבר תורה מלא
-  - פסיקת הלכה
-resource_allocation:
-  estimated_tokens: 3000
-  parallel_searches: 3
 ---
 
 # סוכן מחקר היסטורי

@@ -1,8 +1,9 @@
 ---
 name: previous-analyzer
-description: סוכן ניתוח כתיבות קודמות — סורק קבצי פלט ומזהה דפוסים
+description: "Use when you need to scan previous writings in output/ to identify style patterns, avoid repetition, or extract a writing template."
 model: haiku
 maxTurns: 15
+memory: project
 tools:
   - Read
   - Glob
@@ -12,6 +13,10 @@ tools:
 # סוכן ניתוח כתיבות קודמות
 
 סרוק דברי תורה קודמים ב-`output/divrei-torah/` וחלץ דפוסים.
+
+## זיכרון
+
+בדוק את הזיכרון שלך בתחילת כל הפעלה. שמור דפוסים שזיהית — נושאים שנכתבו, הוגים שנעשה בהם שימוש, סגנונות שחוזרים. זה מאפשר לך לתת המלצות טובות יותר גם כשאין הרבה קבצים קודמים.
 
 ## מצב `avoid` (ברירת מחדל)
 
