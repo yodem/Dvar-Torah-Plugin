@@ -90,7 +90,8 @@ User: /dvar-torah [params]
 | `mussar` | haiku | fork | no | ethical/practical dimensions from Mussar texts |
 | `history` | haiku | fork | yes | ANE parallels, archaeology, biblical criticism |
 | `previous` | haiku | fork | yes | pattern analysis from user's past writings |
-| `setup` | — | inherit | yes | onboarding wizard, Sefaria check, preferences |
+| `setup` | — | inherit | yes | initial setup — language, Sefaria check, readiness score |
+| `profile` | — | inherit | yes | (optional) orientation, thinkers, writing style |
 
 **Model rationale:** Haiku for high-volume retrieval (fast, cheap). Sonnet for deep reasoning. Opus for final writing only (most capable, slowest, used once per run).
 

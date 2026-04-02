@@ -52,7 +52,8 @@ Phase 3 — Writing (opus)                      ~30s
 /dvar-torah:history     ← standalone historical context
 /dvar-torah:previous    ← analyze previous writings (patterns + recommendations)
 /dvar-torah:previous --base  ← extract writing template from selected pieces
-/dvar-torah:setup       ← configuration wizard
+/dvar-torah:profile     ← (optional) set orientation, thinkers, writing style
+/dvar-torah:setup       ← initial setup (language + Sefaria check)
 ```
 
 ## Formats & Lengths
@@ -102,7 +103,7 @@ Use MCP `english_semantic_search` for discovery; API script for targeted lookups
 > 5. הכבד כל זרם מחשבה — ללא דחייה פסקנית
 > 6. **חכמת מודלים**: haiku לבחירות ומחקר, sonnet לניתוח, opus לכתיבה בלבד
 
-## Skills (9)
+## Skills (10)
 
 | # | Skill | Displays as | תיאור |
 |---|-------|-------------|-------|
@@ -114,7 +115,8 @@ Use MCP `english_semantic_search` for discovery; API script for targeted lookups
 | 6 | **mussar** | `dvar-torah:mussar` | שילוב ממד מוסרי-מעשי |
 | 7 | **history** | `dvar-torah:history` | מחקר היסטורי — המזרח הקדום, ארכאולוגיה |
 | 8 | **previous** | `dvar-torah:previous` | ניתוח כתיבות קודמות — דפוסים, סגנון |
-| 9 | **setup** | `dvar-torah:setup` | אשף הגדרות |
+| 9 | **setup** | `dvar-torah:setup` | הגדרה ראשונית — שפה, Sefaria, ציון מוכנות |
+| 10 | **profile** | `dvar-torah:profile` | (אופציונלי) אוריינטציה, הוגים, סגנון כתיבה |
 
 ## Agents (7)
 
