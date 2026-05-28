@@ -160,7 +160,7 @@ def call_gemini_api(system_prompt: str, user_prompt: str, *,
     """Call Gemini REST API and return generated text."""
     if not api_key:
         raise ValueError("GEMINI_API_KEY is not set. Export it in your shell profile.")
-    url = f"{GEMINI_API_BASE}/{model}:generateContent?key={api_key}"
+    url = f"{GEMINI_API_BASE}/{model}:generateContent"
     payload = {
         "system_instruction": {"parts": [{"text": system_prompt}]},
         "contents": [{"parts": [{"text": user_prompt}]}],
@@ -171,7 +171,8 @@ def call_gemini_api(system_prompt: str, user_prompt: str, *,
     }
     data = json.dumps(payload).encode()
     req = urllib.request.Request(url, data=data,
-                                 headers={"Content-Type": "application/json"})
+                                 headers={"Content-Type": "application/json",
+                                          "x-goog-api-key": api_key})
     for attempt in range(MAX_RETRIES):
         try:
             with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
