@@ -33,6 +33,61 @@ allowed-tools:
 
 ---
 
+### שלב -1: טעינת פרופיל קול
+
+בדוק אם קיים פרופיל קול פעיל:
+
+```python
+Glob(pattern="voices/*.yaml")
+```
+
+אם נמצאו פרופילים:
+1. טען את הפרופיל הראשון (או `default.yaml` כ-fallback)
+2. קרא את שדה `defaults` — השתמש בו כברירות מחדל לכל השלבים הבאים
+3. אם `defaults.format_preference == "bridge-post"` — דלג ישירות לתהליך bridge-post
+
+אם `defaults.format_preference` מוגדר ו-`defaults.orientation` מוגדר ו-`defaults.thinkers` לא ריק:
+- דלג על שלבים 0, 0.5, 1, 2, 4 — כולם מכוסים על ידי הפרופיל
+- התחל ישירות משלב 3 (בחירת נושא)
+
+### תהליך bridge-post (במקום התהליך הרגיל)
+
+אם `format == "bridge-post"` (מפרופיל או מבחירת משתמש):
+
+```
+שאלה: "תאר את הפוסט שאתה רוצה לכתוב — מה המושג הטכני ולאן תרצה לחבר אותו?"
+header: "Bridge Post"
+```
+
+זהו **שלב יחיד**. מהתיאור חלץ:
+- `bridge.source_domain` — זהה מילות מפתח (פיתוח/tech/code → "tech")
+- `bridge.concept` — נושא המשפט הראשון
+- `topic.value` — התוכן מצד התורה
+- `orientation` — מהפניה ליעד או מברירת מחדל בפרופיל
+
+מלא את שאר הconfig מברירות המחדל של הפרופיל:
+```yaml
+config:
+  language: defaults.language or profile.language
+  format: "bridge-post"
+  length: "short"
+  bridge:
+    source_domain: <inferred>
+    concept: <inferred>
+    web_research: defaults.web_research
+    sign_off: "auto"
+  orientation: <inferred or defaults.orientation>
+  topic:
+    type: "philosophical"
+    value: <inferred>
+  thinkers: defaults.thinkers
+  voice_profile: <profile.name>
+```
+
+העבר ל-compose עם `format: "bridge-post"`.
+
+---
+
 ### שלב 0: בחירת שפה
 
 ```
