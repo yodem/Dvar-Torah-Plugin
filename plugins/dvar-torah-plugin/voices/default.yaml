@@ -1,0 +1,45 @@
+# plugins/dvar-torah-plugin/voices/default.yaml
+name: "default"
+mined_from: "manual"
+mined_date: "2026-05-28"
+sample_count: 0
+
+register: "formal-academic"
+language: "he"
+
+sentence_style:
+  avg_length: "medium"
+  structure: "structured, analytical"
+
+paragraph_style:
+  pattern: "question → sources → analysis → synthesis"
+  max_paragraphs: 15
+
+torah_integration:
+  citation_style: "inline-quoted"
+  citation_density: "3-5 per piece"
+  preferred_thinkers: []
+
+tone:
+  personal_anecdotes: false
+  humor: "none"
+  self_reference: "rare"
+  community_address: "formal"
+
+sign_off:
+  prayer_for_soldiers: false
+  holiday_awareness: true
+  call_to_action: false
+  hashtags: []
+
+defaults:
+  orientation: "philosophy"
+  thinkers: []
+  web_research: false
+  format_preference: "dvar-torah"
+
+writer:
+  provider: "claude"
+  model: "opus"
+  temperature: 0.7
+  max_tokens: 4000
