@@ -29,9 +29,12 @@ if ! echo "$CONTENT" | grep -qE '^# '; then
   ERRORS+=("missing title (no # heading)")
 fi
 
-# 2. Must have a sources / מראי מקומות section
-if ! echo "$CONTENT" | grep -qiE '## מראי מקומות|## Sources|## Bibliography|## מקורות'; then
-  ERRORS+=("missing sources section (## מראי מקומות or ## Sources)")
+# 2. Must have a sources section (unless bridge-post format which uses inline citations)
+FORMAT=$(echo "$CONTENT" | head -20 | sed -n 's/^format: *//p' | head -1)
+if [[ "$FORMAT" != "bridge-post" ]]; then
+  if ! echo "$CONTENT" | grep -qiE '## מראי מקומות|## Sources|## Bibliography|## מקורות'; then
+    ERRORS+=("missing sources section (## מראי מקומות or ## Sources)")
+  fi
 fi
 
 # 3. Must have YAML frontmatter
