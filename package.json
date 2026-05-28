@@ -1,13 +1,10 @@
 {
   "name": "dvar-torah-plugin",
-  "version": "4.2.0",
-  "description": "Claude Code plugin for writing Dvar Torah, posts, and shiurim across all Jewish thought streams — philosophy, kabbalah, hasidut, hazal, modern scholars — using Sefaria MCP",
+  "version": "5.0.0",
+  "description": "Claude Code plugin for writing Dvar Torah, posts, shiurim, and bridge-posts across all Jewish thought streams — with Gemini writing support",
   "author": "yodem",
   "license": "MIT",
   "scripts": {
     "build": "bash scripts/build-plugin.sh"
   },
-  "engines": {
-    "node": ">=20.0.0"
-  }
 }

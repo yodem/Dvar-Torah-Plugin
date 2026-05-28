@@ -1,17 +1,3 @@
 {
-  "mcpServers": {
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["@anthropic/sequential-thinking"],
-      "description": "Complex multi-step reasoning for philosophical analysis"
-    },
-    "memory": {
-      "command": "npx",
-      "args": ["@anthropic/memory-mcp"],
-      "env": {
-        "MEMORY_FILE": ".claude/memory/memory.json"
-      },
-      "description": "Persistent knowledge graph for thinker profiles and recurring themes"
-    }
-  }
+  "mcpServers": {}
 }
