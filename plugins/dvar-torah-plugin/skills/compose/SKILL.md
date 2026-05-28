@@ -380,3 +380,182 @@ Research agents use tools in this order:
 9. `text_search` — general fallback
 
 This orchestrator uses only `get_current_calendar` (Step 1) or `python scripts/sefaria_api.py get-calendar`.
+
+---
+
+## Bridge-Post Pipeline
+
+When `config.format == "bridge-post"`, use this pipeline instead of the standard one.
+
+### PHASE 0 — Parse Input (inline, no agent)
+
+Extract config from the user's one-line description + voice profile defaults:
+
+```python
+# 1. Load voice profile
+voice_path = f"voices/{config.voice_profile or 'default'}.yaml"
+Read(file_path=voice_path)
+
+# 2. Parse description to extract:
+#    - bridge.source_domain (keyword detection: "פיתוח"/"tech"/"code" → "tech")
+#    - bridge.concept (first sentence subject)
+#    - topic.value (Torah-side content from second sentence)
+#    - orientation (from target reference or voice profile default)
+
+# 3. Fill remaining config from voice profile defaults:
+#    - language, thinkers, web_research, sign_off from profile.defaults
+```
+
+If any required field is ambiguous, propose best guess and ask user to confirm (one question max).
+
+### PHASE 1 — Research (parallel, haiku, background)
+
+Launch ALL of these agents in a **single message** with `background: true`:
+
+#### Agent: domain-researcher (haiku, CONDITIONAL)
+Only launch if `bridge.web_research == true`:
+```
+Agent(
+  subagent_type: "dvar-torah:domain-researcher",
+  model: "haiku",
+  background: true,
+  prompt: """
+    CONCEPT: {bridge.concept}
+    SOURCE_DOMAIN: {bridge.source_domain}
+
+    Search the web for this concept. Return structured YAML with
+    definition, key points, industry context, and real-world examples.
+
+    If Tavily is unavailable, use general knowledge and mark verified: false.
+  """
+)
+```
+
+#### Agent: source-researcher (haiku)
+```
+Agent(
+  subagent_type: "dvar-torah:source-researcher",
+  model: "haiku",
+  background: true,
+  prompt: """
+    TOPIC: {topic.value}
+    ORIENTATION: {orientation}
+    THINKERS: {thinkers}
+
+    Search Sefaria for sources relevant to this topic.
+    Focus on sources that could connect to the concept: {bridge.concept}
+    Return structured YAML with sources, quotes, and sefaria_refs.
+  """
+)
+```
+
+#### Agent: previous-analyzer (haiku)
+```
+Agent(
+  subagent_type: "dvar-torah:previous-analyzer",
+  model: "haiku",
+  background: true,
+  prompt: """
+    MODE: avoid
+    Scan output/divrei-torah/bridge-posts/ for existing posts.
+    Return list of covered concepts and recommendations.
+  """
+)
+```
+
+**Wait for all Phase 1 agents to complete.**
+
+### PHASE 2 — Bridge Analysis + Verification (parallel, background)
+
+Launch BOTH agents in a **single message** with `background: true`:
+
+#### Agent: bridge-analyzer (sonnet)
+```
+Agent(
+  subagent_type: "dvar-torah:bridge-analyzer",
+  model: "sonnet",
+  background: true,
+  prompt: """
+    CONCEPT: {bridge.concept}
+    SOURCE_DOMAIN: {bridge.source_domain}
+
+    DOMAIN RESEARCH:
+    {domain_researcher_results}
+
+    TORAH SOURCES:
+    {source_researcher_results}
+
+    Find the strongest analogy between these two domains.
+    Return structured YAML with primary bridge, secondary points, and bridge sentence.
+  """
+)
+```
+
+#### Agent: source-verifier (haiku)
+```
+Agent(
+  subagent_type: "dvar-torah:source-verifier",
+  model: "haiku",
+  background: true,
+  prompt: """
+    CITATIONS TO VERIFY:
+    {all citations from source_researcher_results}
+
+    Verify each citation through Sefaria MCP.
+    Return verified/corrected citations.
+  """
+)
+```
+
+**Wait for both Phase 2 agents to complete.**
+
+### PHASE 3 — Writing (Gemini via bridge-writer)
+
+Launch the bridge-writer with ALL collected results:
+
+```
+Agent(
+  subagent_type: "dvar-torah:bridge-writer",
+  model: "haiku",
+  prompt: """
+    VOICE_PROFILE: {voice_profile}
+    FORMAT: bridge-post
+
+    RESEARCH BUNDLE:
+    ================
+
+    DOMAIN RESEARCH:
+    {domain_researcher_results}
+
+    TORAH SOURCES (VERIFIED):
+    {source_verifier_results}
+
+    BRIDGE ANALYSIS:
+    {bridge_analyzer_results}
+
+    PREVIOUS POSTS:
+    {previous_analyzer_results}
+
+    CONFIG:
+    - Concept: {bridge.concept}
+    - Source domain: {bridge.source_domain}
+    - Orientation: {orientation}
+    - Topic: {topic.value}
+    - Thinkers: {thinkers}
+    - Language: {language}
+    - Sign-off: {bridge.sign_off}
+
+    INSTRUCTIONS:
+    1. Read the voice profile from voices/{voice_profile}.yaml
+    2. Read the template from references/bridge-post-template.md
+    3. Assemble research bundle JSON
+    4. Compute sign-off from Sefaria calendar + voice profile rules
+    5. Call gemini_writer.py with voice, template, and bundle
+    6. Validate output structure
+    7. Add frontmatter + sign-off + hashtags
+    8. Save to: output/divrei-torah/bridge-posts/YYYY-MM-DD-{concept_slug}.md
+  """
+)
+```
+
+**This agent runs in FOREGROUND — wait for it to complete.**
