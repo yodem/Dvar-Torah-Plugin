@@ -16,18 +16,28 @@ Dvar-Torah-Plugin/
 ├── .mcp.json                          ← Sefaria MCP config for local dev
 ├── plugins/
 │   └── dvar-torah-plugin/             ← canonical plugin root
-│       ├── .claude-plugin/plugin.json ← plugin manifest
+│       ├── .claude-plugin/plugin.json ← plugin manifest (declares Gemini MCP)
 │       ├── CLAUDE.md                  ← full architecture + agent routing
 │       ├── skills/                    ← 9 SKILL.md files
 │       ├── agents/                    ← 7 agent definitions
 │       ├── hooks/                     ← PostToolUse + Stop hooks
 │       ├── commands/
 │       │   └── dvar-torah.md          ← /dvar-torah entry point
+│       ├── mcp/
+│       │   └── gemini-server/         ← bundled Gemini MCP (TypeScript, esbuild)
 │       └── scripts/
 │           └── sefaria_api.py         ← direct REST fallback
 └── scripts/
-    └── build-plugin.sh                ← packaging helper
+    └── build-plugin.sh                ← packaging helper (also builds Gemini MCP)
 ```
+
+## Gemini MCP (v1.1+)
+
+The plugin ships an optional bundled Gemini MCP server at `plugins/dvar-torah-plugin/mcp/gemini-server/`. When `GOOGLE_API_KEY` is set (env var or `.dvar-torah/secrets.json`), the `torah-writer` agent routes prose drafting and cross-section synthesis to Gemini; otherwise it falls back to in-context Claude drafting. **Sefaria source verification stays on Claude (`source-verifier` agent) regardless** — Gemini never sees Sefaria and never verifies citations.
+
+The MCP server exposes five tools: `gemini_write_section`, `gemini_synthesize`, `gemini_edit`, `gemini_calibrate_sample`, `gemini_raw`. Signatures are identical to the same tools in academic-writer (cross-plugin uniformity); only the calibration bundle (loaded from `.dvar-torah/profile.md` + `AUTHOR_VOICE.md` if present) and default model/thinking-budget pairs differ. Defaults are tuned for shorter dvar torah / shiur output: Pro for write/edit, Flash for synthesis/calibration, thinking budgets roughly half of academic-writer's.
+
+Build: `npm run build` at the repo root invokes `scripts/build-plugin.sh`, which installs and bundles the MCP server via esbuild (`dist/index.js`, ESM, Node 20+). The bundle is gitignored; the source is checked in.
 
 ---
 

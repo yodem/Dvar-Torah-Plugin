@@ -36,6 +36,20 @@ else
 fi
 
 echo ""
+echo "=== Building bundled Gemini MCP server ==="
+MCP_DIR="$PLUGIN_DIR/mcp/gemini-server"
+if [ -d "$MCP_DIR" ]; then
+  if [ ! -d "$MCP_DIR/node_modules" ]; then
+    echo "Installing MCP server dependencies..."
+    (cd "$MCP_DIR" && npm install --silent)
+  fi
+  (cd "$MCP_DIR" && npm run build)
+  echo "Gemini MCP server built: $MCP_DIR/dist/index.js"
+else
+  echo "WARNING: $MCP_DIR not found; skipping Gemini MCP build."
+fi
+
+echo ""
 echo "=== Build complete ==="
 echo "Plugin root: $PLUGIN_DIR"
 echo ""

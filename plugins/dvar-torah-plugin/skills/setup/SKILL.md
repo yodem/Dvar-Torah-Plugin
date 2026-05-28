@@ -5,12 +5,12 @@ compatibility: "Claude Code 2.1.59+."
 description: "Quick setup for Dvar Torah Plugin. Checks Sefaria MCP connection and configures language preference."
 argument-hint: "[--rescan] [--score-only]"
 context: inherit
-version: 4.3.0
+version: 4.4.0
 author: yodem
-tags: [onboarding, setup, wizard, configuration, sefaria, mcp, language]
+tags: [onboarding, setup, wizard, configuration, sefaria, mcp, language, gemini]
 user-invocable: true
 disable-model-invocation: false
-allowed-tools: [Read, Grep, Glob, Bash, Write, AskUserQuestion, mcp__claude_ai_Sefaria__get_current_calendar]
+allowed-tools: [Read, Grep, Glob, Bash, Write, AskUserQuestion, mcp__claude_ai_Sefaria__get_current_calendar, mcp__gemini-api__gemini_raw]
 metadata:
   category: configuration
 ---
@@ -39,6 +39,7 @@ Quick onboarding: checks Sefaria MCP connection and sets your language preferenc
 |-------|------|--------|
 | 1. Language | Preferred language (Hebrew / English / Bilingual) | Language saved |
 | 2. Sefaria MCP | Detect and verify Sefaria connection | MCP status |
+| 2.5. Gemini (optional) | Configure GOOGLE_API_KEY for prose drafting | Key stored in `.dvar-torah/secrets.json` |
 | 3. Score | Readiness score (0-10) | Score + next steps |
 
 ---
@@ -139,15 +140,77 @@ Sefaria MCP:  ✓ Connected (Account Connector)     — Parsha: פרשת X
 
 ---
 
+## Phase 2.5: Gemini (Optional) — Prose Drafting
+
+The plugin ships with a bundled Gemini MCP server. When configured, the `torah-writer` agent routes the prose-drafting step to Gemini (faster, cheaper for long shiurim) while every Sefaria citation continues to be verified by Claude. This phase is optional — skipping leaves drafting on Claude.
+
+### Check current state
+
+```python
+import os
+have_env = bool(os.environ.get("GOOGLE_API_KEY", "").strip())
+have_secrets = bool(Read(file_path=".dvar-torah/secrets.json").get("google_api_key"))
+```
+
+If either is set, show:
+```
+Gemini drafting:  ✓ Configured — torah-writer will use Gemini for prose
+```
+and skip the prompt below.
+
+### Otherwise, offer setup
+
+```python
+AskUserQuestion(questions=[{
+  "question": "Configure Gemini for prose drafting? (optional — Sefaria verification stays on Claude either way)",
+  "header": "Gemini API Key",
+  "options": [
+    {
+      "label": "Yes — paste my Google API key",
+      "description": "Saved locally to .dvar-torah/secrets.json (gitignored). Used only by the bundled Gemini MCP server.",
+      "markdown": "```\nKey → .dvar-torah/secrets.json\nUsed by torah-writer (drafting + synthesis)\nSefaria citations still verified by Claude\nGet a key: https://aistudio.google.com/apikey\n```"
+    },
+    {
+      "label": "Skip — keep drafting on Claude",
+      "description": "You can configure later by running /dvar-torah:setup again.",
+      "markdown": "```\nDrafting:        Claude (opus)\nVerification:    Claude + Sefaria MCP\nGemini server:   inactive (no-op)\n```"
+    }
+  ],
+  "multiSelect": false
+}])
+```
+
+If user picked "Yes":
+
+1. `AskUserQuestion` for the key (single text input — "Paste your Google API key").
+2. Write the secrets file:
+   ```python
+   import json
+   Bash(command="mkdir -p .dvar-torah")
+   Write(file_path=".dvar-torah/secrets.json", content=json.dumps({"google_api_key": "<pasted>"}, indent=2))
+   Bash(command="chmod 600 .dvar-torah/secrets.json")
+   ```
+3. Smoke-test the key via `mcp__gemini-api__gemini_raw` with a trivial system/prompt (e.g. `system="reply with OK"`, `prompt="ping"`, `max_output_tokens=8`). Report PASS / FAIL.
+4. On PASS, write `.dvar-torah/gemini-approved` after the per-install calibration gate in `/dvar-torah:compose`.
+
+```
+Gemini drafting:  ✓ Configured + smoke-tested
+                  Key stored in .dvar-torah/secrets.json (chmod 600, gitignored)
+                  Calibration gate will run on first /dvar-torah session.
+```
+
+---
+
 ## Phase 3: Readiness Score
 
-Compute a score (0–10) from 3 dimensions:
+Compute a score (0–10) from 4 dimensions:
 
 | Dimension | Weight | Signals |
 |-----------|--------|---------|
-| **Sefaria MCP** | 50% | Connected + live calendar test passes |
-| **Output Directory** | 25% | `output/divrei-torah/` exists with subdirs |
-| **Previous Writings** | 25% | ≥1 saved dvar-torah in `output/divrei-torah/` |
+| **Sefaria MCP** | 40% | Connected + live calendar test passes |
+| **Gemini drafting** | 20% | `GOOGLE_API_KEY` set or `.dvar-torah/secrets.json` present (optional — not having this scores 0 on this dimension but does not block use) |
+| **Output Directory** | 20% | `output/divrei-torah/` exists with subdirs |
+| **Previous Writings** | 20% | ≥1 saved dvar-torah in `output/divrei-torah/` |
 
 Check output directory:
 ```python

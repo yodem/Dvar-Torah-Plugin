@@ -23,6 +23,8 @@ allowed-tools:
   - Agent
   - AskUserQuestion
   - mcp__claude_ai_Sefaria__get_current_calendar
+  - mcp__gemini-api__gemini_calibrate_sample
+  - mcp__gemini-api__gemini_raw
 ---
 
 # דבר תורה — Orchestrator (v4.2)
@@ -91,6 +93,38 @@ config:
 ### Step 0: Interactive Wizard (if needed)
 
 If the user did not provide full config — invoke `wizard` skill to collect parameters. Once config is complete, proceed to orchestration.
+
+### Step 0.5: Gemini pre-flight (once per session)
+
+The plugin bundles a Gemini MCP server for prose drafting. Before Phase 3, decide which route the `torah-writer` will use.
+
+```python
+# Read env var (set by /dvar-torah:setup or user shell)
+import os
+google_key = os.environ.get("GOOGLE_API_KEY", "").strip()
+
+if google_key:
+    gemini_route = "gemini"   # torah-writer will call mcp__gemini-api__gemini_write_section
+else:
+    gemini_route = "claude"
+    # one-time warning per session
+    print("ℹ Gemini API key not configured. Using Claude for drafting. Run /dvar-torah:setup to enable Gemini drafting (faster, optional).")
+```
+
+**One-time approval gate (first run on this plugin install)**:
+
+If `gemini_route == "gemini"` AND `.dvar-torah/gemini-approved` does not exist:
+
+1. Call `mcp__gemini-api__gemini_calibrate_sample` with a short topic brief in the user's `config.language`.
+2. Have the torah-writer (Claude, opus) produce one calibration paragraph on the same brief.
+3. Show both side-by-side via `AskUserQuestion`:
+   - "Approve Gemini for drafting on this plugin install?" — Yes / No / Show again
+4. On Yes → `Write(file_path=".dvar-torah/gemini-approved", content="approved-YYYY-MM-DD")` and continue with `gemini_route = "gemini"`.
+5. On No → `Write(file_path=".dvar-torah/gemini-skipped", content="...")` and set `gemini_route = "claude"`.
+
+After this gate, future sessions read the marker file and skip the comparison.
+
+Pass `gemini_route` to the torah-writer prompt in Phase 3.
 
 ### Step 1: Resolve topic
 
@@ -280,6 +314,13 @@ Agent(
   model: "opus",
   prompt: """
     WRITE a {format} in {language}.
+
+    DRAFTING ROUTE: {gemini_route}
+      # "gemini" → call mcp__gemini-api__gemini_write_section per section,
+      #            then mcp__gemini-api__gemini_synthesize on the assembled draft.
+      # "claude" → draft inline in this context (no external MCP calls).
+      # On any Gemini error, gracefully fall back to "claude" per the agent's
+      # fallback rules. Never invent citations beyond verified_citations.
 
     CONFIG:
     - Format: {format}
