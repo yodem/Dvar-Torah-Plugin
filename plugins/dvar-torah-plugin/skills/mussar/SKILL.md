@@ -3,7 +3,7 @@ name: mussar
 license: MIT
 compatibility: "Claude Code 2.1.59+."
 author: yodem
-description: Add ethical dimensions from Mussar literature.
+description: Add ethical and practical dimensions from Mussar literature (Mesillat Yesharim, Sha'arei Teshuvah, Orchot Tzadikim). Use when a dvar torah needs a takeaway or action point, when exploring middot (character traits), or when the topic touches on teshuvah, humility, or human growth.
 version: 4.2.0
 tags: [mussar, ethics, middot, mesillat-yesharim, ramchal]
 user-invocable: false
