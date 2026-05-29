@@ -1,6 +1,6 @@
 {
   "name": "dvar-torah-plugin",
-  "version": "1.1.0",
+  "version": "5.1.0",
   "description": "Write Dvar Torah, posts, and shiurim across all major Jewish thought streams — philosophy, kabbalah, hasidut, hazal, and modern scholars. Powered by Sefaria MCP (bundled) and an optional bundled Gemini MCP server for prose drafting.",
   "author": {
     "name": "yodem",
@@ -21,10 +21,12 @@
     "jewish-thought",
     "shiur",
     "torah",
+    "bridge-post",
     "gemini"
   ],
   "skills": "./skills/",
   "commands": "./commands/",
+  "agents": "./agents/",
   "hooks": "./hooks/hooks.json",
   "mcpServers": {
     "gemini-api": {

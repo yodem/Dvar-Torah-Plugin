@@ -1,0 +1,91 @@
+# plugins/dvar-torah-plugin/voices/yahadotech.yaml
+name: "יהדוטכנולוגיה"
+mined_from: "google-docs:1NI5-VpdFkgcOrhXjDvbBsqg5TSUbeotJjCzRI4-TJ_8"
+mined_date: "2026-05-28"
+sample_count: 26
+
+register: "casual-linkedin"
+language: "he"
+
+sentence_style:
+  avg_length: "short-to-medium"
+  structure: "direct, conversational, rhetorical questions"
+
+paragraph_style:
+  pattern: "tech-hook → tech-explanation → bridge-sentence → torah-source → takeaway"
+  max_paragraphs: 8-10
+
+tech_integration:
+  jargon_style: "natural-mixed"
+  examples:
+    - "copilot"
+    - "CR"
+    - "best practices"
+    - "monolith"
+    - "microservices"
+    - "lint"
+    - "pipeline"
+    - "refactor"
+    - "daily"
+    - "sprint"
+    - "OOP"
+    - "async"
+    - "deploy"
+    - "MCP"
+
+torah_integration:
+  citation_style: "inline-quoted"
+  citation_density: "1-2 per post"
+  citation_format: "\"ציטוט\"(ספר, פרק, פסוק)"
+  preferred_thinkers:
+    - "רמב״ם"
+    - "חז״ל"
+    - "משלי"
+    - "תהילים"
+    - "מסכת אבות"
+
+tone:
+  personal_anecdotes: true
+  humor: "light"
+  self_reference: "frequent"
+  community_address: "direct-imperative-plural"
+  opening_patterns:
+    - "כולנו מכירים את..."
+    - "בעולם הפיתוח..."
+    - "איזה כיף זה..."
+    - "כשאנו רוצים..."
+  bridge_patterns:
+    - "בשביל זה היהדות מציעה..."
+    - "גם ביהדות..."
+    - "היהדות באה להגיד לנו ש..."
+    - "זה בעצם הסיפור של..."
+  closing_patterns:
+    - "שנזכה כולנו..."
+    - "בעז\"ה ש..."
+    - "אשמח לשמוע..."
+
+sign_off:
+  prayer_for_soldiers: true
+  holiday_awareness: true
+  call_to_action: true
+  call_to_action_patterns:
+    - "אשמח לשמוע איך אתם..."
+    - "תעקבו, תגיבו, תציעו תכנים"
+    - "מה אתם חושבים?"
+  hashtags:
+    - "יהדוטכנולוגיה"
+    - "SoftwareEngineering"
+
+defaults:
+  orientation: "philosophy"
+  thinkers:
+    - "רמב״ם"
+    - "חז״ל"
+  web_research: true
+  format_preference: "bridge-post"
+
+writer:
+  provider: "gemini"
+  model: "gemini-2.5-flash"
+  temperature: 0.8
+  max_tokens: 2000

@@ -20,6 +20,25 @@ Phase 3 — Writing (opus)                      ~30s
   └── torah-writer           ← compose final piece
 ```
 
+### Bridge-Post Pipeline (when format: bridge-post)
+
+```
+Phase 0 — Parse (inline)                       ~2s
+  └── voice profile + description inference
+
+Phase 1 — Research (parallel, haiku)           ~15s
+  ├── domain-researcher     ← Tavily web search (conditional)
+  ├── source-researcher     ← Sefaria lookups
+  └── previous-analyzer     ← scan bridge-posts/ for repetition
+
+Phase 2 — Bridge + Verification (parallel)     ~20s
+  ├── bridge-analyzer       ← sonnet: find analogy
+  └── source-verifier       ← haiku: verify citations
+
+Phase 3 — Writing (Gemini 2.5 Flash)          ~10s
+  └── bridge-writer         ← haiku: assemble → Gemini API → validate → save
+```
+
 ## Agent Routing Index
 
 | בקשה | סוכן | Model | תפקיד |
@@ -41,6 +60,7 @@ Phase 3 — Writing (opus)                      ~30s
 /dvar-torah אוריינטציה: קבלה, נושא: ספירות               ← קבלה
 /dvar-torah אוריינטציה: חסידות, הקשר: חתונה               ← חסידות + הקשר
 /dvar-torah סוג: מחקרי, נושא: חוקי חמורבי בפרשת משפטים    ← מחקרי
+/dvar-torah format: bridge-post "לינטרים וציצית"    ← bridge-post with yahadotech voice
 ```
 
 ## Standalone Skills
@@ -63,6 +83,7 @@ Phase 3 — Writing (opus)                      ~30s
 | **דבר תורה** | קצר (5 דק) · בינוני (10-15 דק) · ארוך (30 דק) | מובנה עם ניתוח |
 | **פוסט** | קצר (5 דק) | נגיש, ממוקד, לרשתות/בלוג |
 | **שיעור** | שיעור (45 דק) | מערך שיעור עם מקורות ושאלות |
+| **bridge-post** | קצר (5 דק) | מושג מתחום → גשר → מקור תורני. Gemini כותב |
 
 ## Orientations (5)
 
@@ -118,7 +139,7 @@ Use MCP `english_semantic_search` for discovery; API script for targeted lookups
 | 9 | **setup** | `dvar-torah:setup` | הגדרה ראשונית — שפה, Sefaria, ציון מוכנות |
 | 10 | **profile** | `dvar-torah:profile` | (אופציונלי) אוריינטציה, הוגים, סגנון כתיבה |
 
-## Agents (7)
+## Agents (9)
 
 | Agent | Skill | Model | Role | Phase |
 |-------|-------|-------|------|-------|
@@ -129,6 +150,9 @@ Use MCP `english_semantic_search` for discovery; API script for targeted lookups
 | **source-verifier** | verify | haiku | אימות ציטוטים ופורמט | 2 |
 | **philosophical-analyzer** | analyze | sonnet | ניתוח פילוסופי ודיאלוג | 2 |
 | **torah-writer** | compose | opus | כתיבה סופית בלבד | 3 |
+| **domain-researcher** | (bridge-post) | haiku | חיפוש מושגים באינטרנט | 1 |
+| **bridge-analyzer** | (bridge-post) | sonnet | מציאת אנלוגיות | 2 |
+| **bridge-writer** | (bridge-post) | haiku | הרכבה → Gemini → אימות | 3 |
 
 ## Output Directory
 

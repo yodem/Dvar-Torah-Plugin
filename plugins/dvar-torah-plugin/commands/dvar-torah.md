@@ -74,6 +74,27 @@ Once the parasha is resolved, proceed normally with `topic.type = "parsha"` and 
 /dvar-torah פורמט: דבר-תורה, אורך: ארוך, נושא: נבואה, הוגים: רמב״ם, רלב״ג, ר״י הלוי
 ```
 
+### bridge-post — פוסט גשר בין תחומים
+
+```
+/dvar-torah format: bridge-post
+"לינטרים בעולם הפיתוח. רוצה לחבר לציצית"
+```
+
+תיאור קצר → הסקה אוטומטית → מחקר → כתיבה בGemini.
+
+```
+/dvar-torah format: bridge-post, voice: yahadotech
+"סוכות וcopilot — תלות בכלים חיצוניים"
+```
+
+דוגמאות נוספות:
+```
+/dvar-torah format: bridge-post "OOP ואובייקט — הכרח המציאות"
+/dvar-torah format: bridge-post "daily ותפילה — הלמה מאחורי הסנכרון"
+/dvar-torah format: bridge-post "קוד פתוח — התורה כopen source"
+```
+
 ## כללים
 
 - כל מקור מאומת ב-Sefaria MCP — אף ציטוט בלי אימות

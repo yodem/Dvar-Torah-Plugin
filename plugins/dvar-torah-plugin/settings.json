@@ -35,6 +35,18 @@
     "torah-writer": {
       "model": "claude-opus-4-5",
       "description": "Composes the final dvar torah, post, or shiur"
+    },
+    "domain-researcher": {
+      "model": "claude-haiku-4-5",
+      "description": "Searches the web for source-domain concepts (tech, sports, etc.)"
+    },
+    "bridge-analyzer": {
+      "model": "claude-sonnet-4-5",
+      "description": "Finds creative analogies between two domains"
+    },
+    "bridge-writer": {
+      "model": "claude-haiku-4-5",
+      "description": "Assembles prompt, calls Gemini API, validates and saves output"
     }
   }
 }
