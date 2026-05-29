@@ -98,13 +98,22 @@ If the user did not provide full config — invoke `wizard` skill to collect par
 
 The plugin bundles a Gemini MCP server for prose drafting. Before Phase 3, decide which route the `torah-writer` will use.
 
+**Two conditions must both be true to use Gemini:** (1) `GOOGLE_API_KEY` is set, AND (2) the tool `mcp__gemini-api__gemini_write_section` is present in your available tools. An API key with no registered tool means the MCP server is not running — go straight to the Claude path. Do not attempt to call a tool that is not in your toolset.
+
 ```python
 # Read env var (set by /dvar-torah:setup or user shell)
 import os
 google_key = os.environ.get("GOOGLE_API_KEY", "").strip()
 
-if google_key:
+# Check: is the Gemini tool actually registered and available?
+gemini_tool_available = "mcp__gemini-api__gemini_write_section" in available_tools  # inspect your toolset
+
+if google_key and gemini_tool_available:
     gemini_route = "gemini"   # torah-writer will call mcp__gemini-api__gemini_write_section
+elif google_key and not gemini_tool_available:
+    gemini_route = "claude"
+    # one-time warning per session
+    print("ℹ GOOGLE_API_KEY is set but the Gemini MCP server is not registered. Using Claude for drafting.")
 else:
     gemini_route = "claude"
     # one-time warning per session
@@ -319,8 +328,10 @@ Agent(
       # "gemini" → call mcp__gemini-api__gemini_write_section per section,
       #            then mcp__gemini-api__gemini_synthesize on the assembled draft.
       # "claude" → draft inline in this context (no external MCP calls).
-      # On any Gemini error, gracefully fall back to "claude" per the agent's
-      # fallback rules. Never invent citations beyond verified_citations.
+      # IMPORTANT: If mcp__gemini-api__gemini_write_section is not in your
+      # available tools (tool-absence, not error), switch immediately to "claude".
+      # Also fall back on any Gemini error per the agent's fallback rules.
+      # Never invent citations beyond verified_citations.
 
     CONFIG:
     - Format: {format}
