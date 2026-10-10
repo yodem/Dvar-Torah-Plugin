@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "yodem",
+  "name": "dvar-torah",
   "version": "5.1.0",
   "description": "Dvar Torah — write shiurim, posts, and divrei Torah across all major Jewish thought streams. Powered by Sefaria MCP.",
   "owner": {

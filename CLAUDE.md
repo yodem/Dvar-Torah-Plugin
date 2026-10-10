@@ -193,4 +193,4 @@ The `source-verifier` agent runs in parallel with analysis (Phase 2) and rejects
 2. Commit + push to `main`
 3. Tag the release: `git tag v{version} && git push origin v{version}`
 
-Users will get the new version on next `/plugin install dvar-torah-plugin@yodem`.
+Users will get the new version on next `/plugin install dvar-torah-plugin@dvar-torah`.
