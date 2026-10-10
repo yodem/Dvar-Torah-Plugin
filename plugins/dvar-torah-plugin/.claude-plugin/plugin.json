@@ -26,12 +26,13 @@
   ],
   "skills": "./skills/",
   "commands": "./commands/",
-  "agents": "./agents/",
   "hooks": "./hooks/hooks.json",
   "mcpServers": {
     "gemini-api": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/gemini-server/dist/index.js"],
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/gemini-server/dist/index.js"
+      ],
       "env": {
         "GOOGLE_API_KEY": "${GOOGLE_API_KEY}",
         "CLAUDE_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}",
